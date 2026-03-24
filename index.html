@@ -1247,23 +1247,49 @@
 
   <div id="screen-results" class="screen">
 
+        <!-- Orçamento Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3)">Orçamento</div>
+            <div id="resNumOrc" style="font-family:'Clash Display',sans-serif;font-size:15px;font-weight:800;color:var(--txt)">Nº 0001</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3)">Cliente</div>
+            <div id="resCliente" style="font-size:13px;font-weight:700;color:var(--txt)">—</div>
+          </div>
+        </div>
+
         <!-- Hero -->
         <div class="result-hero">
-          <div class="result-hero-label">⚡ Valor Sugerido</div>
+          <div class="result-hero-label">⚡ Valor Total do Orçamento</div>
           <div class="result-hero-value" id="displayPrecoFinal">R$ 0,00</div>
           <div class="result-mini-grid">
             <div class="result-mini">
-              <div class="result-mini-label">Lucro Líquido</div>
+              <div class="result-mini-label">💰 Lucro Líquido</div>
               <div class="result-mini-val green" id="displayLucroLiquido">R$ 0,00</div>
             </div>
             <div class="result-mini">
-              <div class="result-mini-label">Despesas</div>
+              <div class="result-mini-label">📉 Despesas Totais</div>
               <div class="result-mini-val red" id="displayDespesas">R$ 0,00</div>
             </div>
           </div>
         </div>
 
-        <!-- Stats -->
+        <!-- Sinal + Saldo cards -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="background:rgba(249,115,22,.08);border:1.5px solid rgba(249,115,22,.2);border-radius:14px;padding:12px 14px">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#f97316;margin-bottom:4px">🤝 Sinal</div>
+            <div id="resSinal" style="font-family:'Clash Display',sans-serif;font-size:16px;font-weight:800;color:#f97316">R$ 0,00</div>
+            <div id="resSinalPct" style="font-size:9px;color:var(--txt3);margin-top:2px">30% do total</div>
+          </div>
+          <div style="background:rgba(34,197,94,.08);border:1.5px solid rgba(34,197,94,.2);border-radius:14px;padding:12px 14px">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#22c55e;margin-bottom:4px">✅ Saldo Final</div>
+            <div id="resSaldo" style="font-family:'Clash Display',sans-serif;font-size:16px;font-weight:800;color:#22c55e">R$ 0,00</div>
+            <div id="resValidade" style="font-size:9px;color:var(--txt3);margin-top:2px">Válido por 15 dias</div>
+          </div>
+        </div>
+
+        <!-- Stats breakdown -->
         <div class="result-stats-row">
           <div class="stat-card">
             <div class="stat-card-icon">🚗</div>
@@ -1279,6 +1305,23 @@
             <div class="stat-card-icon">📦</div>
             <div class="stat-card-label">Materiais</div>
             <div class="stat-card-val" id="displayMateriais">R$ 0</div>
+          </div>
+        </div>
+
+        <!-- Services breakdown accordion -->
+        <div class="accordion" id="acc-breakdown" style="margin-bottom:8px">
+          <button class="accordion-trigger" onclick="toggleAcc('acc-breakdown')" style="background:var(--surface2)">
+            <span class="accordion-trigger-label">
+              <span style="font-size:13px">📋</span>
+              <span style="font-size:12px;font-weight:700">Detalhamento dos Serviços</span>
+            </span>
+            <svg class="ico accordion-chevron"><use href="#i-chevron-down"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-inner" style="padding:0">
+              <div id="resSrvList" style="padding:0"></div>
+              <div id="resMatList" style="padding:0;border-top:1px solid var(--border)"></div>
+            </div>
           </div>
         </div>
 
@@ -1564,67 +1607,105 @@
 
 <div id="printable-area">
   <div style="font-family:'DM Sans',sans-serif;color:#1e293b;max-width:760px;margin:0 auto;padding:32px;background:#fff">
-    <!-- PDF Header com watermark -->
-    <div style="background:#0f172a;border-radius:16px 16px 0 0;padding:28px 28px 50px;position:relative;overflow:hidden;margin-bottom:0">
-      <div style="position:absolute;right:20px;top:10px;font-size:100px;opacity:0.05;line-height:1;user-select:none">⚡</div>
+    <!-- PDF Header -->
+    <div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:16px 16px 0 0;padding:28px 28px 50px;position:relative;overflow:hidden;margin-bottom:0">
+      <div style="position:absolute;right:20px;top:10px;font-size:100px;opacity:0.04;line-height:1;user-select:none">⚡</div>
+      <div style="position:absolute;bottom:-20px;left:-20px;width:120px;height:120px;background:rgba(249,115,22,.15);border-radius:50%;pointer-events:none"></div>
       <div style="display:flex;align-items:center;gap:16px;position:relative;z-index:1;">
         <img id="printLogo" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" style="height:56px;width:auto;object-fit:contain;border-radius:8px;display:none">
         <div>
-          <div id="printPrestador" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#f1f5f9;line-height:1">Prestador</div>
+          <div id="printPrestador" style="font-size:20px;font-weight:800;color:#f1f5f9;line-height:1">Prestador</div>
           <div style="font-size:12px;color:#64748b;margin-top:4px">Orçamento Profissional · <span id="printNumOrc">Nº 0001</span></div>
+          <div id="printContactLine" style="font-size:11px;color:#94a3b8;margin-top:4px"></div>
         </div>
       </div>
       <div style="position:absolute;right:28px;top:28px;text-align:right;z-index:1;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#334155;letter-spacing:.08em">Emitido em</div>
         <div id="printData" style="font-size:15px;font-weight:700;color:#f1f5f9;margin-top:2px">--/--/----</div>
+        <div id="printValidadeLine" style="font-size:10px;color:#64748b;margin-top:2px"></div>
       </div>
     </div>
     <!-- curved divider -->
-    <div style="height:24px;background:#0f172a;position:relative;margin-bottom:20px">
+    <div style="height:24px;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);position:relative;margin-bottom:20px">
       <div style="position:absolute;bottom:0;left:0;right:0;height:24px;background:#fff;border-radius:16px 16px 0 0"></div>
     </div>
-    <!-- Cliente info -->
+    <!-- Cliente + Observações -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">Cliente</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">👤 Cliente</div>
         <div id="printCliente" style="font-size:16px;font-weight:700;color:#0f172a">Nome do Cliente</div>
         <div id="printTelefone" style="font-size:12px;color:#64748b;margin-top:3px"></div>
         <div id="printEndereco" style="font-size:12px;color:#64748b;margin-top:2px"></div>
       </div>
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">Observações</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">📝 Observações</div>
         <div id="printDetalhes" style="font-size:12px;color:#475569;line-height:1.5"></div>
       </div>
     </div>
     <!-- Services table -->
+    <div style="margin-bottom:4px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0f172a;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #0f172a">🔧 Serviços</div>
+    </div>
     <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
       <thead>
-        <tr style="border-bottom:2px solid #0f172a">
-          <th style="text-align:left;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em">Descrição do Serviço</th>
-          <th style="text-align:center;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em;width:50px">Qtd</th>
-          <th style="text-align:right;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em">Subtotal</th>
+        <tr style="background:#f8fafc">
+          <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#64748b;font-weight:700;letter-spacing:.06em;border-bottom:1px solid #e2e8f0">Descrição</th>
+          <th style="text-align:center;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#64748b;font-weight:700;letter-spacing:.06em;border-bottom:1px solid #e2e8f0;width:50px">Qtd</th>
+          <th style="text-align:right;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#64748b;font-weight:700;letter-spacing:.06em;border-bottom:1px solid #e2e8f0">Subtotal</th>
         </tr>
       </thead>
       <tbody id="printServicesList"></tbody>
     </table>
-    <!-- Totals -->
-    <div style="display:flex;justify-content:flex-end">
-      <div style="width:260px">
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:6px">
-          <span>Materiais/Peças:</span>
+    <!-- Materials table (shown if any) -->
+    <div id="printMatSection" style="display:none;margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#f97316;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #fed7aa">📦 Materiais</div>
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr style="background:#fff7ed">
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#92400e;font-weight:700;border-bottom:1px solid #fed7aa">Descrição</th>
+            <th style="text-align:center;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#92400e;font-weight:700;border-bottom:1px solid #fed7aa;width:50px">Qtd</th>
+            <th style="text-align:right;padding:8px 10px;font-size:10px;text-transform:uppercase;color:#92400e;font-weight:700;border-bottom:1px solid #fed7aa">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="printMatList"></tbody>
+      </table>
+    </div>
+    <!-- Totals block -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <div style="width:280px">
+        <div id="printMatRow" style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;padding:5px 0;border-bottom:1px solid #f1f5f9">
+          <span>📦 Materiais:</span>
           <span style="font-weight:600" id="printMateriais">R$ 0,00</span>
         </div>
-        <div style="background:#0f172a;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
+        <div id="printSinalRow" style="display:none;flex;justify-content:space-between;font-size:12px;color:#64748b;padding:5px 0;border-bottom:1px solid #f1f5f9">
+          <span>🤝 Sinal (<span id="printSinalPct">30</span>%):</span>
+          <span style="font-weight:600;color:#f97316" id="printSinal">R$ 0,00</span>
+        </div>
+        <div id="printSaldoRow" style="display:none;flex;justify-content:space-between;font-size:12px;color:#64748b;padding:5px 0;border-bottom:1px solid #f1f5f9">
+          <span>✅ Saldo na conclusão:</span>
+          <span style="font-weight:600;color:#16a34a" id="printSaldo">R$ 0,00</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:6px">
           <div>
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b">Total Geral</div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b">💰 Total Geral</div>
           </div>
-          <div id="printTotal" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f97316">R$ 0,00</div>
+          <div id="printTotal" style="font-size:22px;font-weight:800;color:#f97316">R$ 0,00</div>
         </div>
       </div>
     </div>
-    <div style="margin-top:32px;text-align:center;font-size:11px;color:#94a3b8;border-top:1px dashed #cbd5e1;padding-top:16px">
-      <p>Garantia de <span id="printGarantia" style="font-weight:700;color:#0f172a">90 dias</span> sobre os serviços prestados.</p>
-      <p style="margin-top:4px">Gerado via <strong>⚡ Eletricista Power</strong></p>
+    <!-- Payment info -->
+    <div id="printPayInfo" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 16px;margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#166534;margin-bottom:6px">💳 Informações de Pagamento</div>
+      <div id="printPixLine" style="font-size:12px;color:#15803d;font-weight:600;margin-bottom:2px"></div>
+      <div id="printCartoesLine" style="font-size:12px;color:#374151"></div>
+    </div>
+    <!-- Footer -->
+    <div style="margin-top:8px;border-top:1px dashed #cbd5e1;padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <p style="font-size:11px;color:#94a3b8">🛡 Garantia de <span id="printGarantia" style="font-weight:700;color:#0f172a">90 dias</span> sobre os serviços.</p>
+        <p style="font-size:10px;color:#cbd5e1;margin-top:4px">Gerado via ⚡ Eletricista Power</p>
+      </div>
+      <div id="printDocLine" style="font-size:10px;color:#94a3b8;text-align:right"></div>
     </div>
   </div>
 </div>
@@ -1654,231 +1735,243 @@ function atualizarPrecoInput(sel) {
 // ═══════════════════════════════════════════════
 // CONSTANTS & CATALOG
 // ═══════════════════════════════════════════════
-const SRV=[{n:"Instalacao de tomadas padrao NBR",v:150,cat:"res",icon:"🔌"},
-{n:"Instalacao de tomadas externas/quintal",v:180,cat:"res",icon:"🔌"},
-{n:"Instalacao de interruptor simples",v:100,cat:"res",icon:"🔘"},
-{n:"Instalacao de interruptor duplo",v:130,cat:"res",icon:"🔘"},
-{n:"Instalacao de interruptor triplo",v:160,cat:"res",icon:"🔘"},
-{n:"Instalacao de interruptor paralelo",v:150,cat:"res",icon:"🔘"},
-{n:"Instalacao de interruptor intermediario",v:180,cat:"res",icon:"🔘"},
-{n:"Instalacao de luminarias embutidas",v:120,cat:"res",icon:"💡"},
-{n:"Instalacao de luminarias sobrepor",v:100,cat:"res",icon:"💡"},
-{n:"Instalacao de lustres e pendentes",v:180,cat:"res",icon:"✨"},
-{n:"Instalacao de ventilador de teto",v:220,cat:"res",icon:"🌀"},
-{n:"Instalacao de chuveiro simples",v:200,cat:"res",icon:"🚿"},
-{n:"Instalacao de chuveiro blindado",v:350,cat:"res",icon:"🚿"},
-{n:"Instalacao de aquecedor eletrico",v:280,cat:"res",icon:"🔥"},
-{n:"Instalacao de quadro de distribuicao",v:500,cat:"res",icon:"📋"},
-{n:"Troca de quadro de distribuicao",v:600,cat:"res",icon:"📋"},
-{n:"Passagem de fiacao por ponto",v:180,cat:"res",icon:"🔧"},
+// ─── SERVIÇOS: nomes curtos (categoria já dá o contexto), sem duplicatas entre categorias ───
+const SRV=[
+// ── RESIDENCIAL ──────────────────────────────────────────────────────
+{n:"Tomada padrão NBR 10A",v:150,cat:"res",icon:"🔌"},
+{n:"Tomada externa / quintal 10A",v:180,cat:"res",icon:"🔌"},
+{n:"Tomada 20A (chuveiro/fogão)",v:220,cat:"res",icon:"🔌"},
+{n:"Tomada para freezer / geladeira",v:150,cat:"res",icon:"🔌"},
+{n:"Tomada para micro-ondas",v:150,cat:"res",icon:"🔌"},
+{n:"Tomada para lava-louças",v:180,cat:"res",icon:"🔌"},
+{n:"Interruptor simples",v:100,cat:"res",icon:"🔘"},
+{n:"Interruptor duplo",v:130,cat:"res",icon:"🔘"},
+{n:"Interruptor triplo",v:160,cat:"res",icon:"🔘"},
+{n:"Interruptor paralelo (two-way)",v:150,cat:"res",icon:"🔘"},
+{n:"Interruptor intermediário",v:180,cat:"res",icon:"🔘"},
+{n:"Luminária embutida (spot)",v:120,cat:"res",icon:"💡"},
+{n:"Luminária sobrepor",v:100,cat:"res",icon:"💡"},
+{n:"Lustre / pendente",v:180,cat:"res",icon:"✨"},
+{n:"Ventilador de teto",v:220,cat:"res",icon:"🌀"},
+{n:"Chuveiro simples",v:200,cat:"res",icon:"🚿"},
+{n:"Chuveiro blindado / pressurizador",v:350,cat:"res",icon:"🚿"},
+{n:"Aquecedor elétrico de passagem",v:280,cat:"res",icon:"🔥"},
+{n:"Quadro de distribuição novo",v:500,cat:"res",icon:"📋"},
+{n:"Troca de quadro de distribuição",v:600,cat:"res",icon:"📋"},
+{n:"Disjuntor bipolar / tripolar",v:150,cat:"res",icon:"⚡"},
 {n:"Troca de disjuntor simples",v:120,cat:"res",icon:"⚡"},
-{n:"Instalacao de bomba com 2 boias",v:400,cat:"res",icon:"💧"},
-{n:"Instalacao de campainha",v:120,cat:"res",icon:"🔔"},
-{n:"Instalacao de exaustor/extrator",v:180,cat:"res",icon:"🌬"},
-{n:"Instalacao de porteiro eletronico",v:350,cat:"res",icon:"📞"},
-{n:"Instalacao de tomadas 20A sobrepor",v:200,cat:"com",icon:"🔌"},
-{n:"Instalacao de tomadas trifasicas industria",v:350,cat:"com",icon:"🔌"},
-{n:"Instalacao de iluminacao comercial",v:250,cat:"com",icon:"💡"},
-{n:"Instalacao de luminaria calha",v:200,cat:"com",icon:"💡"},
-{n:"Instalacao de painel LED comercial",v:300,cat:"com",icon:"💡"},
-{n:"Instalacao de quadro trifasico",v:800,cat:"com",icon:"📋"},
-{n:"Instalacao de DPS protecao surto",v:350,cat:"com",icon:"🛡"},
-{n:"Instalacao de DR/RCCB",v:250,cat:"com",icon:"🛡"},
-{n:"Passagem de eletroduto aparente",v:90,cat:"com",icon:"🏗"},
-{n:"Instalacao de eletrocalha",v:180,cat:"com",icon:"🏗"},
-{n:"Instalacao de cerca eletrica",v:600,cat:"com",icon:"🔒"},
-{n:"Instalacao de alarme comercial",v:450,cat:"com",icon:"🚨"},
-{n:"Instalacao de ponto de rede Cat6",v:120,cat:"com",icon:"🌐"},
-{n:"Instalacao de camera CFTV",v:250,cat:"com",icon:"📹"},
-{n:"Instalacao de controle de acesso",v:600,cat:"com",icon:"🔑"},
-{n:"Instalacao de para-raios predial",v:1800,cat:"com",icon:"⚡"},
-{n:"Instalacao de gerador a diesel",v:2500,cat:"com",icon:"⚙"},
-{n:"Instalacao de nobreak/UPS",v:400,cat:"com",icon:"🔋"},
-{n:"Instalacao de tomada industrial 16A 3P",v:350,cat:"ind",icon:"⚡"},
-{n:"Instalacao de tomada industrial 32A 3P",v:500,cat:"ind",icon:"⚡"},
-{n:"Passagem de eletroduto rigido aco",v:150,cat:"ind",icon:"🏗"},
-{n:"Instalacao de bandeja porta-cabos",v:200,cat:"ind",icon:"🏗"},
-{n:"Instalacao de perfilado leito de cabos",v:180,cat:"ind",icon:"🏗"},
-{n:"Instalacao de painel de comando",v:1200,cat:"ind",icon:"🖥"},
-{n:"Ligacao de motor monofasico",v:300,cat:"ind",icon:"⚙"},
-{n:"Ligacao de motor trifasico",v:500,cat:"ind",icon:"⚙"},
-{n:"Instalacao de inversor de frequencia",v:800,cat:"ind",icon:"🔁"},
-{n:"Instalacao de soft-starter",v:700,cat:"ind",icon:"🔁"},
-{n:"Instalacao de chave seccionadora",v:400,cat:"ind",icon:"🔑"},
-{n:"Instalacao de chave estrela-triangulo",v:900,cat:"ind",icon:"⚙"},
-{n:"Instalacao de transformador de forca",v:2500,cat:"ind",icon:"⚡"},
-{n:"Instalacao de banco de capacitores",v:1200,cat:"ind",icon:"🔋"},
-{n:"Instalacao de barramento blindado",v:1800,cat:"ind",icon:"📐"},
-{n:"Instalacao de quadro industrial CGD",v:1500,cat:"ind",icon:"📋"},
-{n:"Ligacao de compressor industrial",v:600,cat:"ind",icon:"💨"},
-{n:"Instalacao de UPS industrial",v:1200,cat:"ind",icon:"🔋"},
-{n:"Instalacao de sistema energia solar",v:3500,cat:"ind",icon:"☀"},
-{n:"Instalacao de para-raios industrial",v:2500,cat:"ind",icon:"⚡"},
+{n:"DR residencial 30mA",v:200,cat:"res",icon:"🛡"},
+{n:"DPS residencial classe II",v:250,cat:"res",icon:"🛡"},
+{n:"Passagem de fiação por ponto",v:180,cat:"res",icon:"🔧"},
+{n:"Bomba com 2 bóias (caixa d'água)",v:400,cat:"res",icon:"💧"},
+{n:"Campainha / interfone simples",v:120,cat:"res",icon:"🔔"},
+{n:"Exaustor / extrator",v:180,cat:"res",icon:"🌬"},
+{n:"Iluminação externa",v:200,cat:"res",icon:"🔦"},
+{n:"Refletor externo LED",v:180,cat:"res",icon:"🔦"},
+// ── COMERCIAL ────────────────────────────────────────────────────────
+{n:"Tomada 20A sobrepor",v:200,cat:"com",icon:"🔌"},
+{n:"Tomada trifásica industrial 3P",v:350,cat:"com",icon:"🔌"},
+{n:"Iluminação comercial (por ponto)",v:250,cat:"com",icon:"💡"},
+{n:"Luminária calha LED",v:200,cat:"com",icon:"💡"},
+{n:"Painel LED comercial",v:300,cat:"com",icon:"💡"},
+{n:"Quadro trifásico",v:800,cat:"com",icon:"📋"},
+{n:"DPS proteção surto comercial",v:350,cat:"com",icon:"🛡"},
+{n:"DR/RCCB comercial",v:250,cat:"com",icon:"🛡"},
+{n:"Cerca elétrica",v:600,cat:"com",icon:"🔒"},
+{n:"Controle de acesso (leitor biométrico/RF)",v:600,cat:"com",icon:"🔑"},
+{n:"Para-raios predial",v:1800,cat:"com",icon:"⚡"},
+{n:"Gerador a diesel",v:2500,cat:"com",icon:"⚙"},
+{n:"Nobreak / UPS comercial",v:400,cat:"com",icon:"🔋"},
+{n:"Porteiro eletrônico / videoporteiro",v:350,cat:"com",icon:"📞"},
+// ── INDUSTRIAL ───────────────────────────────────────────────────────
+{n:"Tomada industrial 16A 3P",v:350,cat:"ind",icon:"⚡"},
+{n:"Tomada industrial 32A 3P",v:500,cat:"ind",icon:"⚡"},
+{n:"Eletroduto rígido aço (por metro)",v:150,cat:"ind",icon:"🏗"},
+{n:"Bandeja porta-cabos",v:200,cat:"ind",icon:"🏗"},
+{n:"Perfilado / leito de cabos",v:180,cat:"ind",icon:"🏗"},
+{n:"Painel de comando",v:1200,cat:"ind",icon:"🖥"},
+{n:"Ligação motor monofásico",v:300,cat:"ind",icon:"⚙"},
+{n:"Ligação motor trifásico",v:500,cat:"ind",icon:"⚙"},
+{n:"Inversor de frequência (VFD)",v:800,cat:"ind",icon:"🔁"},
+{n:"Soft-starter",v:700,cat:"ind",icon:"🔁"},
+{n:"Chave seccionadora",v:400,cat:"ind",icon:"🔑"},
+{n:"Chave estrela-triângulo",v:900,cat:"ind",icon:"⚙"},
+{n:"Transformador de força",v:2500,cat:"ind",icon:"⚡"},
+{n:"Banco de capacitores",v:1200,cat:"ind",icon:"🔋"},
+{n:"Barramento blindado (busway)",v:1800,cat:"ind",icon:"📐"},
+{n:"Quadro industrial CGD",v:1500,cat:"ind",icon:"📋"},
+{n:"Ligação compressor industrial",v:600,cat:"ind",icon:"💨"},
+{n:"UPS industrial",v:1200,cat:"ind",icon:"🔋"},
+{n:"Sistema energia solar",v:3500,cat:"ind",icon:"☀"},
+{n:"Para-raios industrial SPDA",v:2500,cat:"ind",icon:"⚡"},
+// ── ATERRAMENTO ──────────────────────────────────────────────────────
 {n:"Aterramento residencial 1 haste",v:600,cat:"ate",icon:"🌍"},
 {n:"Aterramento residencial 2 hastes",v:900,cat:"ate",icon:"🌍"},
 {n:"Aterramento predial",v:1500,cat:"ate",icon:"🌍"},
-{n:"Aterramento SPDA para-raios",v:1800,cat:"ate",icon:"⚡"},
+{n:"SPDA para-raios completo",v:1800,cat:"ate",icon:"⚡"},
 {n:"Malha de aterramento industrial",v:2500,cat:"ate",icon:"🕸"},
-{n:"Medicao de resistividade do solo",v:350,cat:"ate",icon:"📐"},
-{n:"Inspecao de aterramento existente",v:200,cat:"ate",icon:"🔍"},
-{n:"Instalacao de eletrodo de aterramento",v:350,cat:"ate",icon:"🌍"},
-{n:"Instalacao de caixa de inspecao",v:250,cat:"ate",icon:"📦"},
-{n:"Tratamento de solo com bentonita",v:800,cat:"ate",icon:"⚗"},
-{n:"Laudo e medicao de aterramento",v:500,cat:"ate",icon:"📄"},
+{n:"Medição de resistividade do solo",v:350,cat:"ate",icon:"📐"},
+{n:"Inspeção de aterramento existente",v:200,cat:"ate",icon:"🔍"},
+{n:"Eletrodo de aterramento",v:350,cat:"ate",icon:"🌍"},
+{n:"Caixa de inspeção de aterramento",v:250,cat:"ate",icon:"📦"},
+{n:"Tratamento de solo (bentonita)",v:800,cat:"ate",icon:"⚗"},
+{n:"Laudo e medição de aterramento",v:500,cat:"ate",icon:"📄"},
 {n:"Aterramento para gerador",v:700,cat:"ate",icon:"⚙"},
-{n:"Aterramento para tanque combustivel",v:900,cat:"ate",icon:"⛽"},
-{n:"Instalacao de equipotencializacao",v:600,cat:"ate",icon:"🔗"},
-{n:"Ponto AC ate 9.000 BTUs 1F",v:280,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 12.000 BTUs 1F",v:350,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 18.000 BTUs 1F",v:420,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 24.000 BTUs 1F",v:500,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 30.000 BTUs 2F",v:580,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 36.000 BTUs 2F",v:650,cat:"ar",icon:"❄"},
-{n:"Ponto AC ate 48.000 BTUs 2F",v:750,cat:"ar",icon:"❄"},
-{n:"Ponto AC cassete/teto 2F",v:700,cat:"ar",icon:"❄"},
+{n:"Aterramento tanque combustível",v:900,cat:"ate",icon:"⛽"},
+{n:"Equipotencialização geral",v:600,cat:"ate",icon:"🔗"},
+// ── AR-CONDICIONADO ───────────────────────────────────────────────────
+{n:"Ponto elétrico AC até 9.000 BTUs 1F",v:280,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 12.000 BTUs 1F",v:350,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 18.000 BTUs 1F",v:420,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 24.000 BTUs 1F",v:500,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 30.000 BTUs 2F",v:580,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 36.000 BTUs 2F",v:650,cat:"ar",icon:"❄"},
+{n:"Ponto elétrico AC até 48.000 BTUs 2F",v:750,cat:"ar",icon:"❄"},
+{n:"Ponto AC cassete / teto 2F",v:700,cat:"ar",icon:"❄"},
 {n:"Ponto AC piso-teto 2F",v:680,cat:"ar",icon:"❄"},
 {n:"Infraestrutura multi-split 2 evap",v:900,cat:"ar",icon:"❄"},
 {n:"Infraestrutura multi-split 3 evap",v:1200,cat:"ar",icon:"❄"},
-{n:"Instalacao de VRF inverter",v:2000,cat:"ar",icon:"❄"},
+{n:"VRF inverter (por unidade)",v:2000,cat:"ar",icon:"❄"},
 {n:"Troca de disjuntor para AC",v:150,cat:"ar",icon:"⚡"},
-{n:"Vistoria eletrica de AC",v:120,cat:"ar",icon:"🔍"},
-{n:"Visita Tecnica / Diagnostico",v:120,cat:"man",icon:"🔍"},
+{n:"Vistoria elétrica de AC",v:120,cat:"ar",icon:"🔍"},
+// ── MANUTENÇÃO ────────────────────────────────────────────────────────
+{n:"Visita técnica / diagnóstico",v:120,cat:"man",icon:"🔍"},
 {n:"Reparo em curto-circuito",v:300,cat:"man",icon:"⚡"},
-{n:"Reparo em comando eletrico",v:250,cat:"man",icon:"🔧"},
-{n:"Troca de fiacao queimada",v:400,cat:"man",icon:"🔥"},
-{n:"Medicao de consumo eletrico",v:180,cat:"man",icon:"📊"},
-{n:"Laudo eletrico / ART",v:600,cat:"man",icon:"📄"},
-{n:"Substituicao de tomada/interruptor",v:80,cat:"man",icon:"🔌"},
-{n:"Reparo em chuveiro eletrico",v:120,cat:"man",icon:"🚿"},
-{n:"Verificacao e aperto de conexoes",v:150,cat:"man",icon:"🔩"},
+{n:"Reparo em comando elétrico",v:250,cat:"man",icon:"🔧"},
+{n:"Troca de fiação queimada",v:400,cat:"man",icon:"🔥"},
+{n:"Medição de consumo elétrico",v:180,cat:"man",icon:"📊"},
+{n:"Laudo elétrico / ART",v:600,cat:"man",icon:"📄"},
+{n:"Substituição de tomada / interruptor",v:80,cat:"man",icon:"🔌"},
+{n:"Reparo em chuveiro elétrico",v:120,cat:"man",icon:"🚿"},
+{n:"Verificação e aperto de conexões",v:150,cat:"man",icon:"🔩"},
 {n:"Troca de disjuntor principal",v:180,cat:"man",icon:"⚡"},
 {n:"Reparo em curto em parede",v:450,cat:"man",icon:"🧱"},
-{n:"Substituicao de cabo chuveiro",v:200,cat:"man",icon:"🚿"},
-{n:"Revisao do SPDA",v:500,cat:"man",icon:"⚡"},
-{n:"Reparo em instalacao antiga",v:350,cat:"man",icon:"🔧"},
-{n:"Manutencao preventiva eletrica",v:400,cat:"man",icon:"📋"},
-{n:"Laudos e relatorios tecnicos",v:500,cat:"man",icon:"📄"},
-{n:"Termografia eletrica",v:800,cat:"man",icon:"🌡"},
-{n:"Revisao geral do quadro",v:300,cat:"man",icon:"📋"},
-{n:"Infraestrutura metro linear",v:80,cat:"inf",icon:"📐"},
+{n:"Substituição de cabo de chuveiro",v:200,cat:"man",icon:"🚿"},
+{n:"Revisão do SPDA",v:500,cat:"man",icon:"⚡"},
+{n:"Reparo em instalação antiga",v:350,cat:"man",icon:"🔧"},
+{n:"Manutenção preventiva elétrica",v:400,cat:"man",icon:"📋"},
+{n:"Laudos e relatórios técnicos",v:500,cat:"man",icon:"📄"},
+{n:"Termografia elétrica",v:800,cat:"man",icon:"🌡"},
+{n:"Revisão geral do quadro",v:300,cat:"man",icon:"📋"},
+// ── INFRAESTRUTURA ────────────────────────────────────────────────────
+{n:"Infraestrutura (por metro linear)",v:80,cat:"inf",icon:"📐"},
 {n:"Rasgo e fechamento de parede",v:120,cat:"inf",icon:"🧱"},
-{n:"Instalacao de eletroduto embutido",v:90,cat:"inf",icon:"🏗"},
-{n:"Instalacao de eletroduto aparente",v:70,cat:"inf",icon:"🏗"},
-{n:"Instalacao de eletrocalha aparente",v:150,cat:"inf",icon:"🏗"},
-{n:"Instalacao de perfilado DIN",v:180,cat:"inf",icon:"🏗"},
+{n:"Eletroduto embutido (por metro)",v:90,cat:"inf",icon:"🏗"},
+{n:"Eletroduto aparente (por metro)",v:70,cat:"inf",icon:"🏗"},
+{n:"Eletrocalha aparente (por metro)",v:150,cat:"inf",icon:"🏗"},
+{n:"Perfilado DIN (por metro)",v:180,cat:"inf",icon:"🏗"},
+{n:"Canaleta PVC aparente (por metro)",v:60,cat:"inf",icon:"📐"},
 {n:"Passagem de cabo CFTV",v:80,cat:"inf",icon:"📹"},
 {n:"Passagem de rede estruturada Cat6",v:100,cat:"inf",icon:"🌐"},
-{n:"Instalacao de tomada RJ45",v:100,cat:"inf",icon:"🌐"},
-{n:"Instalacao de tomada HDMI/TV",v:120,cat:"inf",icon:"📺"},
-{n:"Passagem de duto fibra optica",v:120,cat:"inf",icon:"💠"},
-{n:"Instalacao de infraestrutura predial",v:300,cat:"inf",icon:"🏗"},
+{n:"Tomada RJ45",v:100,cat:"inf",icon:"🌐"},
+{n:"Tomada HDMI / TV",v:120,cat:"inf",icon:"📺"},
+{n:"Ponto TV / antena",v:120,cat:"inf",icon:"📺"},
+{n:"Ponto de telefone",v:100,cat:"inf",icon:"📞"},
+{n:"Passagem de duto fibra óptica",v:120,cat:"inf",icon:"💠"},
+{n:"Infraestrutura predial completa",v:300,cat:"inf",icon:"🏗"},
 {n:"Passagem de cabo solar",v:150,cat:"inf",icon:"☀"},
-{n:"Instalacao de canaleta aparente",v:60,cat:"inf",icon:"📐"},
-{n:"Instalacao de suporte antena",v:200,cat:"inf",icon:"📡"},
-{n:"Projeto eletrico residencial",v:800,cat:"inf",icon:"📐"},
-{n:"Instalacao de camera CFTV interna",v:250,cat:"seg",icon:"📹"},
-{n:"Instalacao de camera CFTV externa",v:300,cat:"seg",icon:"📹"},
-{n:"Instalacao de DVR/NVR",v:350,cat:"seg",icon:"🖥"},
-{n:"Instalacao de interfone residencial",v:300,cat:"seg",icon:"📞"},
-{n:"Instalacao de interfone coletivo",v:600,cat:"seg",icon:"📞"},
-{n:"Instalacao de portao automatico",v:800,cat:"seg",icon:"🚪"},
-{n:"Instalacao de sensor de presenca",v:150,cat:"seg",icon:"👁"},
-{n:"Instalacao de sensor abertura porta",v:120,cat:"seg",icon:"🚪"},
-{n:"Instalacao de tomada USB embutida",v:120,cat:"seg",icon:"🔌"},
-{n:"Instalacao de dimmer/variador",v:180,cat:"seg",icon:"🔆"},
-{n:"Instalacao de timer/minuteria",v:180,cat:"seg",icon:"⏱"},
-{n:"Instalacao de central de alarme",v:500,cat:"seg",icon:"🚨"},
-{n:"Instalacao de automacao residencial",v:800,cat:"seg",icon:"🏠"},
-{n:"Instalacao de tomada inteligente",v:200,cat:"seg",icon:"📱"},
-{n:"Instalacao de disjuntor bipolar",v:150,cat:"res",icon:"⚡"},
-{n:"Instalacao de DR residencial",v:200,cat:"res",icon:"🛡"},
-{n:"Instalacao de DPS residencial",v:250,cat:"res",icon:"🛡"},
-{n:"Instalacao de ponto TV/antena",v:120,cat:"res",icon:"📺"},
-{n:"Instalacao de ponto de telefone",v:100,cat:"res",icon:"📞"},
-{n:"Instalacao de iluminacao externa",v:200,cat:"res",icon:"🔦"},
-{n:"Instalacao de refletor externo",v:180,cat:"res",icon:"🔦"},
-{n:"Instalacao de sensor de presenca",v:150,cat:"res",icon:"👁"},
-{n:"Instalacao de dimmer residencial",v:180,cat:"res",icon:"🔆"},
-{n:"Instalacao de minuteria escada",v:200,cat:"res",icon:"⏱"},
-{n:"Instalacao de tomada para CFTV",v:100,cat:"res",icon:"🔌"},
-{n:"Instalacao de ponto para freezer",v:150,cat:"res",icon:"🔌"},
-{n:"Instalacao de ponto para micro-ondas",v:150,cat:"res",icon:"🔌"},
-{n:"Instalacao de ponto para lava-loucas",v:180,cat:"res",icon:"🔌"}];
+{n:"Suporte de antena",v:200,cat:"inf",icon:"📡"},
+{n:"Projeto elétrico residencial",v:800,cat:"inf",icon:"📐"},
+{n:"Projeto elétrico comercial",v:1500,cat:"inf",icon:"📐"},
+// ── AUTOMAÇÃO / SEGURANÇA ─────────────────────────────────────────────
+{n:"Câmera CFTV interna",v:250,cat:"seg",icon:"📹"},
+{n:"Câmera CFTV externa",v:300,cat:"seg",icon:"📹"},
+{n:"DVR / NVR (gravador)",v:350,cat:"seg",icon:"🖥"},
+{n:"Alarme residencial (central)",v:500,cat:"seg",icon:"🚨"},
+{n:"Alarme comercial (central)",v:700,cat:"seg",icon:"🚨"},
+{n:"Interfone residencial",v:300,cat:"seg",icon:"📞"},
+{n:"Interfone coletivo predial",v:600,cat:"seg",icon:"📞"},
+{n:"Portão automático",v:800,cat:"seg",icon:"🚪"},
+{n:"Sensor de presença 360° (teto)",v:150,cat:"seg",icon:"👁"},
+{n:"Sensor abertura de porta/janela",v:120,cat:"seg",icon:"🚪"},
+{n:"Dimmer / variador de luz",v:180,cat:"seg",icon:"🔆"},
+{n:"Timer / minuteria",v:180,cat:"seg",icon:"⏱"},
+{n:"Tomada USB embutida",v:120,cat:"seg",icon:"🔌"},
+{n:"Tomada inteligente Wi-Fi",v:200,cat:"seg",icon:"📱"},
+{n:"Automação residencial (ponto)",v:800,cat:"seg",icon:"🏠"},
+];
 
-const MAT=[{n:"Fio 1,5mm rolo 100m",p:350,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 2,5mm rolo 100m",p:500,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 4mm rolo 100m",p:800,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 6mm rolo 100m",p:1200,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 10mm rolo 100m",p:1800,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 16mm rolo 100m",p:2800,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 25mm rolo 100m",p:4200,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Fio 35mm rolo 100m",p:6000,t:"fio",cat:"cond",icon:"⚡"},
-{n:"Cabo PP 2x1,5mm rolo 100m",p:400,t:"caboPP",cat:"cond",icon:"🔵"},
-{n:"Cabo PP 2x2,5mm rolo 100m",p:550,t:"caboPP",cat:"cond",icon:"🔵"},
-{n:"Cabo PP 3x2,5mm rolo 100m",p:650,t:"caboPP",cat:"cond",icon:"🔵"},
-{n:"Cabo PP 4x4mm rolo 100m",p:1100,t:"caboPP",cat:"cond",icon:"🔵"},
-{n:"Cabo PP 5x6mm rolo 100m",p:1800,t:"caboPP",cat:"cond",icon:"🔵"},
+// ─── MATERIAIS: nomes diretos e técnicos, sem prefixo redundante ───
+const MAT=[
+// ── CONDUTORES ───────────────────────────────────────────────────────
+{n:"Fio 1,5mm² rolo 100m",p:350,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 2,5mm² rolo 100m",p:500,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 4mm² rolo 100m",p:800,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 6mm² rolo 100m",p:1200,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 10mm² rolo 100m",p:1800,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 16mm² rolo 100m",p:2800,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 25mm² rolo 100m",p:4200,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Fio 35mm² rolo 100m",p:6000,t:"fio",cat:"cond",icon:"⚡"},
+{n:"Cabo PP 2x1,5mm² rolo 100m",p:400,t:"caboPP",cat:"cond",icon:"🔵"},
+{n:"Cabo PP 2x2,5mm² rolo 100m",p:550,t:"caboPP",cat:"cond",icon:"🔵"},
+{n:"Cabo PP 3x2,5mm² rolo 100m",p:650,t:"caboPP",cat:"cond",icon:"🔵"},
+{n:"Cabo PP 4x4mm² rolo 100m",p:1100,t:"caboPP",cat:"cond",icon:"🔵"},
+{n:"Cabo PP 5x6mm² rolo 100m",p:1800,t:"caboPP",cat:"cond",icon:"🔵"},
 {n:"Cabo Coaxial RG-6 rolo 100m",p:200,t:"",cat:"cond",icon:"🔵"},
 {n:"Cabo rede Cat6 caixa 305m",p:320,t:"",cat:"cond",icon:"🌐"},
-{n:"Cabo aterramento 35mm2",p:85,t:"",cat:"cond",icon:"⚡"},
-{n:"Cabo aterramento 50mm2",p:120,t:"",cat:"cond",icon:"⚡"},
-{n:"Cabo solar 6mm2 por metro",p:8,t:"",cat:"cond",icon:"☀"},
+{n:"Cabo aterramento 35mm²",p:85,t:"",cat:"cond",icon:"⚡"},
+{n:"Cabo aterramento 50mm²",p:120,t:"",cat:"cond",icon:"⚡"},
+{n:"Cabo solar 6mm² (por metro)",p:8,t:"",cat:"cond",icon:"☀"},
 {n:"Fita isolante 19mm",p:5,t:"",cat:"cond",icon:"🟡"},
-{n:"Fita auto-fusao 19mm",p:12,t:"",cat:"cond",icon:"🟡"},
-{n:"Disjuntor 10A monopolar Curva B",p:18,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 16A monopolar Curva B",p:18,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 20A monopolar Curva B",p:20,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 25A monopolar Curva C",p:22,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 32A monopolar Curva C",p:25,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 40A bipolar Curva C",p:55,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 50A bipolar Curva C",p:70,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 63A bipolar Curva C",p:80,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor 80A bipolar Curva C",p:110,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor tripolar 40A Curva C",p:120,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor tripolar 63A Curva C",p:160,t:"disjuntor",cat:"prot",icon:"⬛"},
-{n:"Disjuntor tripolar 100A Curva D",p:220,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Fita autofusão 19mm",p:12,t:"",cat:"cond",icon:"🟡"},
+// ── PROTEÇÃO ─────────────────────────────────────────────────────────
+{n:"Disjuntor 10A monopolar",p:18,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 16A monopolar",p:18,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 20A monopolar",p:20,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 25A monopolar",p:22,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 32A monopolar",p:25,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 40A bipolar",p:55,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 50A bipolar",p:70,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 63A bipolar",p:80,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor 80A bipolar",p:110,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor tripolar 40A",p:120,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor tripolar 63A",p:160,t:"disjuntor",cat:"prot",icon:"⬛"},
+{n:"Disjuntor tripolar 100A",p:220,t:"disjuntor",cat:"prot",icon:"⬛"},
 {n:"DR 25A bipolar 30mA",p:85,t:"disjuntor",cat:"prot",icon:"🛡"},
 {n:"DR 40A bipolar 30mA",p:110,t:"disjuntor",cat:"prot",icon:"🛡"},
 {n:"DR 63A bipolar 30mA",p:150,t:"disjuntor",cat:"prot",icon:"🛡"},
 {n:"DPS classe II 275V",p:95,t:"",cat:"prot",icon:"⚡"},
 {n:"DPS classe I+II surto",p:180,t:"",cat:"prot",icon:"⚡"},
-{n:"Fusivel NH tipo carne 160A",p:35,t:"",cat:"prot",icon:"🛡"},
-{n:"Eletroduto rigido PVC 3/4 3m",p:5,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido PVC 1 pol 3m",p:7.5,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido PVC 1.1/4 3m",p:9,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido PVC 1.1/2 3m",p:12,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido PVC 2 pol 3m",p:16,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido aco 3/4 3m",p:15,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido aco 1 pol 3m",p:22,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto rigido aco 2 pol 3m",p:40,t:"eletroduto",cat:"elet",icon:"🏗"},
-{n:"Eletroduto flexivel corrugado 3/4 metro",p:1.2,t:"eletroduto",cat:"elet",icon:"🌀"},
-{n:"Eletroduto flexivel corrugado 1 pol metro",p:1.8,t:"eletroduto",cat:"elet",icon:"🌀"},
-{n:"Eletroduto flexivel corrugado 1.1/2 metro",p:2.5,t:"eletroduto",cat:"elet",icon:"🌀"},
-{n:"Curva 90 PVC 3/4",p:2.5,t:"",cat:"elet",icon:"↩"},
-{n:"Curva 90 PVC 1 pol",p:3.5,t:"",cat:"elet",icon:"↩"},
+{n:"Fusível NH tipo carne 160A",p:35,t:"",cat:"prot",icon:"🛡"},
+// ── ELETRODUTOS ───────────────────────────────────────────────────────
+{n:"Eletroduto rígido PVC 3/4 (3m)",p:5,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido PVC 1 pol (3m)",p:7.5,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido PVC 1.1/4 (3m)",p:9,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido PVC 1.1/2 (3m)",p:12,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido PVC 2 pol (3m)",p:16,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido aço 3/4 (3m)",p:15,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido aço 1 pol (3m)",p:22,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto rígido aço 2 pol (3m)",p:40,t:"eletroduto",cat:"elet",icon:"🏗"},
+{n:"Eletroduto flexível corrugado 3/4 (metro)",p:1.2,t:"eletroduto",cat:"elet",icon:"🌀"},
+{n:"Eletroduto flexível corrugado 1 pol (metro)",p:1.8,t:"eletroduto",cat:"elet",icon:"🌀"},
+{n:"Eletroduto flexível corrugado 1.1/2 (metro)",p:2.5,t:"eletroduto",cat:"elet",icon:"🌀"},
+{n:"Curva 90° PVC 3/4",p:2.5,t:"",cat:"elet",icon:"↩"},
+{n:"Curva 90° PVC 1 pol",p:3.5,t:"",cat:"elet",icon:"↩"},
 {n:"Luva PVC 3/4",p:1.5,t:"",cat:"elet",icon:"🔗"},
 {n:"Luva PVC 1 pol",p:2,t:"",cat:"elet",icon:"🔗"},
-{n:"Conector flexivel 3/4",p:2,t:"",cat:"elet",icon:"🔗"},
-{n:"Eletrocalha perfurada 100x50mm metro",p:45,t:"",cat:"elet",icon:"🏗"},
-{n:"Canaleta PVC 40x25mm metro",p:12,t:"",cat:"elet",icon:"📐"},
-{n:"Caixa de passagem 4x2 PVC",p:4,t:"caixa",cat:"cxq",icon:"📦"},
-{n:"Caixa de passagem 4x4 PVC",p:6,t:"caixa",cat:"cxq",icon:"📦"},
+{n:"Conector flexível 3/4",p:2,t:"",cat:"elet",icon:"🔗"},
+{n:"Eletrocalha perfurada 100x50mm (metro)",p:45,t:"",cat:"elet",icon:"🏗"},
+{n:"Canaleta PVC 40x25mm (metro)",p:12,t:"",cat:"elet",icon:"📐"},
+// ── CAIXAS E QUADROS ─────────────────────────────────────────────────
+{n:"Caixa 4x2 PVC",p:4,t:"caixa",cat:"cxq",icon:"📦"},
+{n:"Caixa 4x4 PVC",p:6,t:"caixa",cat:"cxq",icon:"📦"},
 {n:"Caixa octogonal 4x4 PVC",p:5,t:"caixa",cat:"cxq",icon:"📦"},
-{n:"Caixa sobrepor metalica 4x2",p:12,t:"caixa",cat:"cxq",icon:"📦"},
-{n:"Caixa sobrepor metalica 4x4",p:18,t:"caixa",cat:"cxq",icon:"📦"},
-{n:"Caixa hermetica sobrepor externo",p:22,t:"caixa",cat:"cxq",icon:"📦"},
+{n:"Caixa sobrepor metálica 4x2",p:12,t:"caixa",cat:"cxq",icon:"📦"},
+{n:"Caixa sobrepor metálica 4x4",p:18,t:"caixa",cat:"cxq",icon:"📦"},
+{n:"Caixa hermética sobrepor externo",p:22,t:"caixa",cat:"cxq",icon:"📦"},
 {n:"Quadro 4 disjuntores embutir",p:45,t:"quadro",cat:"cxq",icon:"👓"},
 {n:"Quadro 8 disjuntores embutir",p:70,t:"quadro",cat:"cxq",icon:"👓"},
 {n:"Quadro 12 disjuntores embutir",p:95,t:"quadro",cat:"cxq",icon:"👓"},
 {n:"Quadro 16 disjuntores embutir",p:130,t:"quadro",cat:"cxq",icon:"👓"},
 {n:"Quadro 20 disjuntores embutir",p:160,t:"quadro",cat:"cxq",icon:"👓"},
-{n:"Quadro trifasico 16 disjuntores",p:180,t:"quadro",cat:"cxq",icon:"👓"},
-{n:"Quadro metalico industrial IP65",p:450,t:"quadro",cat:"cxq",icon:"👓"},
+{n:"Quadro trifásico 16 disjuntores",p:180,t:"quadro",cat:"cxq",icon:"👓"},
+{n:"Quadro metálico industrial IP65",p:450,t:"quadro",cat:"cxq",icon:"👓"},
 {n:"Barramento de cobre para quadro",p:35,t:"",cat:"cxq",icon:"📐"},
-{n:"DIN trilho para quadro metro",p:15,t:"",cat:"cxq",icon:"📐"},
+{n:"Trilho DIN para quadro (metro)",p:15,t:"",cat:"cxq",icon:"📐"},
 {n:"Tampa cega para disjuntor",p:3,t:"",cat:"cxq",icon:"⬜"},
-{n:"Tomada 2P+T 10A padrao NBR",p:12,t:"tomada",cat:"disp",icon:"🔌"},
-{n:"Tomada 2P+T 20A padrao NBR",p:18,t:"tomada",cat:"disp",icon:"🔌"},
+// ── DISPOSITIVOS (tomadas, interruptores) ─────────────────────────────
+{n:"Tomada 2P+T 10A padrão NBR",p:12,t:"tomada",cat:"disp",icon:"🔌"},
+{n:"Tomada 2P+T 20A padrão NBR",p:18,t:"tomada",cat:"disp",icon:"🔌"},
 {n:"Tomada dupla 2P+T 10A",p:22,t:"tomada",cat:"disp",icon:"🔌"},
 {n:"Tomada tripla 2P+T 10A",p:35,t:"tomada",cat:"disp",icon:"🔌"},
 {n:"Tomada USB-A + USB-C embutida",p:45,t:"tomada",cat:"disp",icon:"🔌"},
@@ -1891,70 +1984,72 @@ const MAT=[{n:"Fio 1,5mm rolo 100m",p:350,t:"fio",cat:"cond",icon:"⚡"},
 {n:"Interruptor duplo 10A",p:15,t:"interruptor",cat:"disp",icon:"🔘"},
 {n:"Interruptor triplo 10A",p:22,t:"interruptor",cat:"disp",icon:"🔘"},
 {n:"Interruptor paralelo 10A",p:18,t:"interruptor",cat:"disp",icon:"🔘"},
-{n:"Interruptor intermediario 10A",p:25,t:"interruptor",cat:"disp",icon:"🔘"},
+{n:"Interruptor intermediário 10A",p:25,t:"interruptor",cat:"disp",icon:"🔘"},
 {n:"Interruptor sobrepor simples",p:14,t:"interruptor",cat:"disp",icon:"🔘"},
 {n:"Dimmer rotativo 600W",p:35,t:"",cat:"disp",icon:"🔆"},
 {n:"Dimmer touch 400W",p:65,t:"",cat:"disp",icon:"🔆"},
-{n:"Minuteria/timer 16A",p:45,t:"",cat:"disp",icon:"⏱"},
-{n:"Sensor de presenca 360 teto",p:35,t:"",cat:"disp",icon:"👁"},
-{n:"Sensor de presenca parede 180",p:28,t:"",cat:"disp",icon:"👁"},
+{n:"Minuteria / timer 16A",p:45,t:"",cat:"disp",icon:"⏱"},
+{n:"Sensor de presença 360° teto",p:35,t:"",cat:"disp",icon:"👁"},
+{n:"Sensor de presença parede 180°",p:28,t:"",cat:"disp",icon:"👁"},
 {n:"Espelho cego 4x2",p:3,t:"",cat:"disp",icon:"⬜"},
-{n:"Lampada LED 9W E27 bivolt",p:12,t:"",cat:"ilu",icon:"💡"},
-{n:"Lampada LED 12W E27 bivolt",p:15,t:"",cat:"ilu",icon:"💡"},
-{n:"Lampada LED 15W E27 bivolt",p:18,t:"",cat:"ilu",icon:"💡"},
-{n:"Lampada LED 20W E27 bivolt",p:25,t:"",cat:"ilu",icon:"💡"},
-{n:"Lampada LED tubular T8 18W",p:22,t:"",cat:"ilu",icon:"💡"},
+// ── ILUMINAÇÃO ────────────────────────────────────────────────────────
+{n:"Lâmpada LED 9W E27 bivolt",p:12,t:"",cat:"ilu",icon:"💡"},
+{n:"Lâmpada LED 12W E27 bivolt",p:15,t:"",cat:"ilu",icon:"💡"},
+{n:"Lâmpada LED 15W E27 bivolt",p:18,t:"",cat:"ilu",icon:"💡"},
+{n:"Lâmpada LED 20W E27 bivolt",p:25,t:"",cat:"ilu",icon:"💡"},
+{n:"Lâmpada LED tubular T8 18W",p:22,t:"",cat:"ilu",icon:"💡"},
 {n:"Spot LED embutir 5W",p:25,t:"",cat:"ilu",icon:"💡"},
-{n:"Spot LED embutir 9W dicroica",p:35,t:"",cat:"ilu",icon:"💡"},
+{n:"Spot LED embutir 9W dicróica",p:35,t:"",cat:"ilu",icon:"💡"},
 {n:"Spot LED embutir 12W",p:42,t:"",cat:"ilu",icon:"💡"},
 {n:"Trilho de spot 1m com 3 spots",p:120,t:"",cat:"ilu",icon:"💡"},
-{n:"Fita LED 5m 2700K warm",p:45,t:"",cat:"ilu",icon:"💡"},
-{n:"Fita LED 5m 6500K cold",p:45,t:"",cat:"ilu",icon:"💡"},
-{n:"Luminaria sobrepor slim 18W",p:55,t:"",cat:"ilu",icon:"💡"},
-{n:"Luminaria calha LED 40W",p:85,t:"",cat:"ilu",icon:"💡"},
+{n:"Fita LED 5m 2700K warm white",p:45,t:"",cat:"ilu",icon:"💡"},
+{n:"Fita LED 5m 6500K cold white",p:45,t:"",cat:"ilu",icon:"💡"},
+{n:"Luminária sobrepor slim 18W",p:55,t:"",cat:"ilu",icon:"💡"},
+{n:"Luminária calha LED 40W",p:85,t:"",cat:"ilu",icon:"💡"},
 {n:"Refletor LED 20W externo",p:45,t:"",cat:"ilu",icon:"🔦"},
 {n:"Refletor LED 50W externo",p:75,t:"",cat:"ilu",icon:"🔦"},
 {n:"Refletor LED 100W externo",p:130,t:"",cat:"ilu",icon:"🔦"},
+// ── ATERRAMENTO / SPDA ────────────────────────────────────────────────
 {n:"Haste de aterramento 5/8 x 3m",p:65,t:"",cat:"ate",icon:"🌍"},
 {n:"Haste de aterramento 5/8 x 6m",p:110,t:"",cat:"ate",icon:"🌍"},
 {n:"Haste de aterramento 3/4 inox 3m",p:95,t:"",cat:"ate",icon:"🌍"},
 {n:"Conector de haste olhal bronze",p:12,t:"",cat:"ate",icon:"🔗"},
 {n:"Conector de haste grapa",p:15,t:"",cat:"ate",icon:"🔗"},
-{n:"Caixa de inspecao para aterramento",p:45,t:"",cat:"ate",icon:"📦"},
-{n:"Barramento cobre 25x3mm metro",p:35,t:"",cat:"ate",icon:"⚡"},
-{n:"Barramento cobre 50x5mm metro",p:80,t:"",cat:"ate",icon:"⚡"},
-{n:"Terminal solda exotermica",p:28,t:"",cat:"ate",icon:"🔥"},
+{n:"Caixa de inspeção aterramento",p:45,t:"",cat:"ate",icon:"📦"},
+{n:"Barramento cobre 25x3mm (metro)",p:35,t:"",cat:"ate",icon:"⚡"},
+{n:"Barramento cobre 50x5mm (metro)",p:80,t:"",cat:"ate",icon:"⚡"},
+{n:"Terminal solda exotérmica",p:28,t:"",cat:"ate",icon:"🔥"},
 {n:"Captor Franklin SPDA 40cm",p:180,t:"",cat:"ate",icon:"⚡"},
-{n:"Cabo de descida SPDA 50mm2",p:120,t:"",cat:"ate",icon:"⚡"},
+{n:"Cabo de descida SPDA 50mm²",p:120,t:"",cat:"ate",icon:"⚡"},
 {n:"Isolador para mastro SPDA",p:25,t:"",cat:"ate",icon:"🔩"},
-{n:"Bentonita tratamento de solo kg",p:8,t:"",cat:"ate",icon:"⚗"},
+{n:"Bentonita tratamento de solo (kg)",p:8,t:"",cat:"ate",icon:"⚗"},
 {n:"Gel condutor para aterramento",p:22,t:"",cat:"ate",icon:"🔬"},
-{n:"Abracadeira nylon PCT 100un",p:8,t:"",cat:"fix",icon:"⬛"},
-{n:"Abracadeira metalica 3/4 10un",p:12,t:"",cat:"fix",icon:"🔩"},
+// ── FIXAÇÃO E ACESSÓRIOS ──────────────────────────────────────────────
+{n:"Abraçadeira nylon PCT 100un",p:8,t:"",cat:"fix",icon:"⬛"},
+{n:"Abraçadeira metálica 3/4 PCT 10un",p:12,t:"",cat:"fix",icon:"🔩"},
 {n:"Bucha nylon + parafuso 6mm PCT",p:6,t:"",cat:"fix",icon:"🔩"},
 {n:"Bucha nylon + parafuso 8mm PCT",p:8,t:"",cat:"fix",icon:"🔩"},
-{n:"Parafuso cabeca chata 4x30mm PCT",p:5,t:"",cat:"fix",icon:"🔩"},
-{n:"Conector c-pin sapatilha 1.5-2.5mm PCT",p:8,t:"",cat:"fix",icon:"🔗"},
+{n:"Parafuso cab. chata 4x30mm PCT",p:5,t:"",cat:"fix",icon:"🔩"},
+{n:"Conector c-pin sapatilha 1,5-2,5mm PCT",p:8,t:"",cat:"fix",icon:"🔗"},
 {n:"Conector c-pin sapatilha 4-6mm PCT",p:12,t:"",cat:"fix",icon:"🔗"},
-{n:"Terminal de pressao 6mm2 PCT",p:15,t:"",cat:"fix",icon:"🔗"},
-{n:"Terminal de pressao 10mm2 PCT",p:18,t:"",cat:"fix",icon:"🔗"},
-{n:"Regua de bornes 10A 10 posicoes",p:25,t:"",cat:"fix",icon:"📐"},
-{n:"Regua de bornes 35A 10 posicoes",p:45,t:"",cat:"fix",icon:"📐"},
+{n:"Terminal de pressão 6mm² PCT",p:15,t:"",cat:"fix",icon:"🔗"},
+{n:"Terminal de pressão 10mm² PCT",p:18,t:"",cat:"fix",icon:"🔗"},
+{n:"Régua de bornes 10A 10 posições",p:25,t:"",cat:"fix",icon:"📐"},
+{n:"Régua de bornes 35A 10 posições",p:45,t:"",cat:"fix",icon:"📐"},
 {n:"Plugue macho 2P+T 10A",p:8,t:"",cat:"fix",icon:"🔌"},
 {n:"Plugue macho 2P+T 20A",p:12,t:"",cat:"fix",icon:"🔌"},
-{n:"Tomada femea volante 2P+T 10A",p:10,t:"",cat:"fix",icon:"🔌"},
-{n:"Duto organizador de cabos 40x25mm metro",p:15,t:"",cat:"fix",icon:"🏗"},
+{n:"Tomada fêmea volante 2P+T 10A",p:10,t:"",cat:"fix",icon:"🔌"},
+{n:"Duto organizador de cabos 40x25mm (metro)",p:15,t:"",cat:"fix",icon:"🏗"},
 {n:"Etiqueta identificadora para cabos PCT",p:10,t:"",cat:"fix",icon:"🏷"},
-{n:"Abracos para eletroduto 1 pol PCT",p:9,t:"",cat:"fix",icon:"🔩"},
+{n:"Abração para eletroduto 1 pol PCT",p:9,t:"",cat:"fix",icon:"🔩"},
 {n:"Parafuso sextavado M6 PCT",p:7,t:"",cat:"fix",icon:"🔩"},
-{n:"Aruela lisa M6 PCT",p:4,t:"",cat:"fix",icon:"🔩"},
-{n:"Porca sextavada M6 PCT",p:4,t:"",cat:"fix",icon:"🔩"},
-{n:"Vedacao borracha para caixa",p:5,t:"",cat:"fix",icon:"🔩"},
-{n:"Prensa cabo PG 7 para caixa",p:3,t:"",cat:"fix",icon:"🔩"},
-{n:"Prensa cabo PG 11 para caixa",p:4,t:"",cat:"fix",icon:"🔩"},
-{n:"Fita crepe 19mm para sinalizacao",p:5,t:"",cat:"fix",icon:"🏷"},
-{n:"Spray limpa contato eletrico",p:25,t:"",cat:"fix",icon:"💧"},
-{n:"Graxa dieletrica para conexoes",p:18,t:"",cat:"fix",icon:"💧"}];
+{n:"Aruela + Porca M6 PCT",p:5,t:"",cat:"fix",icon:"🔩"},
+{n:"Vedação borracha para caixa",p:5,t:"",cat:"fix",icon:"🔩"},
+{n:"Prensa cabo PG 7",p:3,t:"",cat:"fix",icon:"🔩"},
+{n:"Prensa cabo PG 11",p:4,t:"",cat:"fix",icon:"🔩"},
+{n:"Spray limpa contato elétrico",p:25,t:"",cat:"fix",icon:"💧"},
+{n:"Graxa dielétrica para conexões",p:18,t:"",cat:"fix",icon:"💧"},
+];
 
 const SRV_CHIPS=[
   {k:'',l:'Todos',cls:'cs-all',icon:''},
@@ -2631,7 +2726,7 @@ function _calcularTotais(totalServicos, mat) {
   return { km, horas, custoLog, custoHoras, totalFinal, percSinal, valorSinal };
 }
 
-function _exibirResultados(totais, totalServicos, mat) {
+function _exibirResultados(totais, totalServicos, mat, dados) {
   const el = id => document.getElementById(id);
   if(el('displayLogistica'))    el('displayLogistica').textContent    = fBRL(totais.custoLog);
   if(el('displayMaoObra'))      el('displayMaoObra').textContent      = fBRL(totalServicos);
@@ -2639,6 +2734,70 @@ function _exibirResultados(totais, totalServicos, mat) {
   if(el('displayPrecoFinal'))   el('displayPrecoFinal').textContent   = fBRL(totais.totalFinal);
   if(el('displayLucroLiquido')) el('displayLucroLiquido').textContent = fBRL(totalServicos - mat - totais.custoLog - totais.custoHoras);
   if(el('displayDespesas'))     el('displayDespesas').textContent     = fBRL(mat + totais.custoLog + totais.custoHoras);
+
+  // New fields
+  if(dados) {
+    if(el('resNumOrc'))   el('resNumOrc').textContent  = 'Nº ' + String(dados.seq).padStart(4,'0');
+    if(el('resCliente'))  el('resCliente').textContent = dados.cliente || '—';
+    if(el('resSinal'))    el('resSinal').textContent   = fBRL(totais.valorSinal);
+    if(el('resSinalPct')) el('resSinalPct').textContent= totais.percSinal + '% do total';
+    if(el('resSaldo'))    el('resSaldo').textContent   = fBRL(totais.totalFinal - totais.valorSinal);
+    const valDias = state.validadeDias || 15;
+    if(el('resValidade')) el('resValidade').textContent = 'Válido por ' + valDias + ' dia' + (valDias===1?'':'s');
+
+    // Services breakdown list
+    const srvList = el('resSrvList');
+    if(srvList && dados.itens && dados.itens.length) {
+      srvList.innerHTML = '';
+      const hdr = document.createElement('div');
+      hdr.style.cssText = 'padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);background:rgba(37,99,235,.06);border-bottom:1px solid var(--border)';
+      hdr.textContent = '🔧 Serviços';
+      srvList.appendChild(hdr);
+      dados.itens.forEach(i => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);gap:8px';
+        const nm = document.createElement('span');
+        nm.style.cssText = 'font-size:12px;font-weight:600;color:var(--txt);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+        nm.textContent = i.nome;
+        const qtd = document.createElement('span');
+        qtd.style.cssText = 'font-size:10px;font-weight:700;color:var(--txt3);flex-shrink:0;padding:1px 6px;background:var(--surface2);border-radius:6px';
+        qtd.textContent = 'x' + i.qtd;
+        const val = document.createElement('span');
+        val.style.cssText = 'font-family:\'Clash Display\',sans-serif;font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0';
+        val.textContent = fBRL(i.total);
+        row.appendChild(nm); row.appendChild(qtd); row.appendChild(val);
+        srvList.appendChild(row);
+      });
+    }
+
+    // Materials breakdown
+    const matList = el('resMatList');
+    if(matList && dados.itensMat && dados.itensMat.length) {
+      matList.innerHTML = '';
+      const hdr = document.createElement('div');
+      hdr.style.cssText = 'padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);background:rgba(249,115,22,.06);border-bottom:1px solid var(--border)';
+      hdr.textContent = '📦 Materiais';
+      matList.appendChild(hdr);
+      dados.itensMat.forEach(i => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);gap:8px';
+        const nm = document.createElement('span');
+        nm.style.cssText = 'font-size:12px;font-weight:600;color:var(--txt);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+        nm.textContent = i.nome;
+        const qtd = document.createElement('span');
+        qtd.style.cssText = 'font-size:10px;font-weight:700;color:var(--txt3);flex-shrink:0;padding:1px 6px;background:var(--surface2);border-radius:6px';
+        qtd.textContent = 'x' + i.qtd;
+        const val = document.createElement('span');
+        val.style.cssText = 'font-family:\'Clash Display\',sans-serif;font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0';
+        val.textContent = fBRL(i.total);
+        row.appendChild(nm); row.appendChild(qtd); row.appendChild(val);
+        matList.appendChild(row);
+      });
+    } else if(matList) {
+      matList.innerHTML = '';
+    }
+  }
+
   showScreen('screen-results');
   updFAB();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2689,7 +2848,7 @@ function calcularPrecos() {
   saveState();
 
   gerarMensagensProntas(dadosOrcamento);
-  _exibirResultados(totais, totalServicos, mat);
+  _exibirResultados(totais, totalServicos, mat, dadosOrcamento);
   checkExpiredWarranties();
 }
 
@@ -2697,16 +2856,66 @@ function calcularPrecos() {
 
 function gerarMensagensProntas(d) {
   const lista = d.itens.map(i => `• ${i.qtd}x ${i.nome} — ${fBRL(i.total)}`).join('\n');
+  const listaMatStr = d.itensMat && d.itensMat.length
+    ? '\n\n*MATERIAIS:*\n' + d.itensMat.map(i => `• ${i.qtd}x ${i.nome} — ${fBRL(i.total)}`).join('\n')
+    : '';
   const endTxt = d.endereco ? `\n📍 *Local:* ${d.endereco}` : '';
+  const pix  = state.chavePix       ? `\n\n🔑 *Chave PIX:* ${state.chavePix}` : '\n\nChave PIX: [Configurar nos Ajustes]';
+  const tel  = state.telefonePrestador ? `\n📱 ${state.telefonePrestador}` : '';
+  const insta= state.instagram       ? `\n📸 @${state.instagram}` : '';
+  const cartoes = state.cartoes      ? `\n\n💳 *Pagamento:* ${state.cartoes}` : '';
+  const valDias = state.validadeDias || 15;
+  const horaStr = d.hora ? ` às ${d.hora}h` : '';
 
   document.getElementById('txt_proposta').textContent =
-    `*ORÇAMENTO TÉCNICO — ELETRICISTA POWER*\n\nOlá ${d.cliente}! Segue o orçamento:\n\n*SERVIÇOS:*\n${lista}\n\n*OBS:* ${d.detalhes}${endTxt}\n\n*INVESTIMENTO TOTAL:* ${fBRL(d.total)}\n(Material + Mão de Obra incluso)\n\n*Garantia:* ${d.garantiaStr}\n*Data Prevista:* ${d.data} às ${d.hora}h\n\nFico no aguardo.\n${d.prestador}`;
+`*⚡ ORÇAMENTO Nº ${String(d.seq).padStart(4,'0')} — ${(d.prestador||'Eletricista').toUpperCase()}*
+
+Olá ${d.cliente}! Tudo bem? 😊
+Segue o orçamento conforme combinado:
+
+*📋 SERVIÇOS:*
+${lista}${listaMatStr}
+${d.detalhes ? '\n*📝 OBS:* ' + d.detalhes : ''}${endTxt}
+
+━━━━━━━━━━━━━━━━━
+*💰 TOTAL: ${fBRL(d.total)}*
+*(Mão de obra + Material incluso)*
+━━━━━━━━━━━━━━━━━
+
+🛡 *Garantia:* ${d.garantiaStr}
+📅 *Data Prevista:* ${d.data}${horaStr}
+⏳ *Validade do orçamento:* ${valDias} dias${cartoes}
+
+Qualquer dúvida, é só chamar! ✅
+${d.prestador}${tel}${insta}`;
 
   document.getElementById('txt_sinal').textContent =
-    `Olá ${d.cliente}! 👋\n\nPara agendarmos dia *${d.data}* e comprarmos o material, precisamos de um sinal.\n\n*Sinal (${d.sinalPercent}%): ${fBRL(d.sinal)}*\n\nChave PIX: [SUA CHAVE]\n\nPor favor, envie o comprovante. Obrigado! ✅`;
+`Olá ${d.cliente}! 👋
+
+Para agendarmos *${d.data}${horaStr}* e garantirmos o material, preciso do sinal.
+
+💰 *Total do orçamento:* ${fBRL(d.total)}
+🤝 *Sinal (${d.sinalPercent}%):* *${fBRL(d.sinal)}*
+✅ *Saldo na conclusão:* ${fBRL(d.saldo)}${pix}
+
+Por favor, envie o comprovante aqui no WhatsApp após o pagamento. 🙏
+Obrigado pela confiança!
+${d.prestador}${tel}`;
 
   document.getElementById('txt_final').textContent =
-    `✅ *Serviço Concluído!*\n\n${d.cliente}, o trabalho foi finalizado.\n\n*Saldo restante:* ${fBRL(d.saldo)}\n\nVocê tem *${d.garantiaStr}* de garantia nos serviços.\n\nObrigado pela preferência!\n${d.prestador}`;
+`✅ *Serviço Concluído com Sucesso!*
+
+${d.cliente}, o trabalho foi finalizado conforme combinado! 🎉
+
+📋 *Orçamento Nº ${String(d.seq).padStart(4,'0')}*
+💰 *Sinal pago:* ${fBRL(d.sinal)}
+💵 *Saldo restante:* *${fBRL(d.saldo)}*${pix}${cartoes}
+
+🛡 *Garantia:* ${d.garantiaStr} a partir de hoje.
+Em caso de qualquer problema no período de garantia, entre em contato!
+
+Muito obrigado pela preferência! ⚡
+${d.prestador}${tel}${insta}`;
 }
 
 /* ─── PDF ─── */
@@ -2948,12 +3157,11 @@ function addItem(e, type, d) {
 
 function alerta(msg) { showToast(msg); }
 
-function toggleAcc(el) {
-  const content = el.nextElementSibling;
-  if (!content) return;
-  const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
-  content.style.maxHeight = isOpen ? '0px' : content.scrollHeight + 'px';
-  el.classList.toggle('open', !isOpen);
+function toggleAcc(idOrEl) {
+  // Accept either an element ID string or a DOM element (the .accordion wrapper)
+  let acc = typeof idOrEl === 'string' ? document.getElementById(idOrEl) : idOrEl;
+  if (!acc) return;
+  acc.classList.toggle('open');
 }
 
 // openSettings replaced
