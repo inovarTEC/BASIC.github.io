@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ELETRICISTA POWER</title>
-  <meta name="description" content="Ferramenta PWA profissional para eletricistas.">
-  <meta name="theme-color" content="#0a0e1a">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="theme-color" content="#0f172a">
+  <title>Eletricista Power</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
   <style>
+
+
     /* ═══════════════════════════════════════════
        CSS VARIABLES – LIGHT & DARK
     ═══════════════════════════════════════════ */
     :root {
+  --font-display: 'Clash Display', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
       --bg:        #f0f4f8;
       --surface:   #ffffff;
       --surface2:  #f8fafc;
@@ -784,10 +785,132 @@
        SVG icons inline helper
     ════════════════════════════ */
     .ico { display:inline-block; width:1em; height:1em; vertical-align:-.125em; fill:currentColor; }
-  </style>
+  
 
-  <!-- SVG SPRITE (ícones limpos, sem duplicatas) -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+/* ─── PANEL & CATALOG SYSTEM ─── */
+
+/* ─── Panel Chip System ─── */
+.chips-row{display:flex;gap:4px;padding:6px 14px 5px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.chips-row::-webkit-scrollbar{display:none}
+.chip{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;border:1.5px solid transparent;user-select:none}
+.chip.on{box-shadow:0 0 0 2px currentColor;transform:scale(1.04)}
+.cs-all,.cm-all{background:rgba(100,116,139,.1);color:#64748b;border-color:rgba(100,116,139,.2)}
+.cs-res{background:rgba(34,197,94,.08);color:#16a34a;border-color:rgba(34,197,94,.2)}
+.cs-com{background:rgba(6,182,212,.08);color:#0891b2;border-color:rgba(6,182,212,.2)}
+.cs-ind{background:rgba(168,85,247,.08);color:#9333ea;border-color:rgba(168,85,247,.2)}
+.cs-ate{background:rgba(239,68,68,.08);color:#dc2626;border-color:rgba(239,68,68,.2)}
+.cs-ar{background:rgba(59,130,246,.1);color:var(--accent);border-color:rgba(59,130,246,.2)}
+.cs-man{background:rgba(234,179,8,.08);color:#ca8a04;border-color:rgba(234,179,8,.2)}
+.cs-inf{background:rgba(249,115,22,.08);color:#ea580c;border-color:rgba(249,115,22,.2)}
+.cs-seg{background:rgba(239,68,68,.06);color:#ef4444;border-color:rgba(239,68,68,.15)}
+.cm-cond{background:rgba(249,115,22,.08);color:#ea580c;border-color:rgba(249,115,22,.2)}
+.cm-prot{background:rgba(34,197,94,.08);color:#16a34a;border-color:rgba(34,197,94,.2)}
+.cm-elet{background:rgba(168,85,247,.08);color:#9333ea;border-color:rgba(168,85,247,.2)}
+.cm-cxq{background:rgba(234,179,8,.08);color:#ca8a04;border-color:rgba(234,179,8,.2)}
+.cm-disp{background:rgba(6,182,212,.08);color:#0891b2;border-color:rgba(6,182,212,.2)}
+.cm-ilu{background:rgba(253,224,71,.1);color:#a16207;border-color:rgba(253,224,71,.3)}
+.cm-ate{background:rgba(239,68,68,.08);color:#dc2626;border-color:rgba(239,68,68,.2)}
+.cm-fix{background:rgba(59,130,246,.08);color:var(--accent);border-color:rgba(59,130,246,.2)}
+/* Panel */
+.panel{overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.panel.open{max-height:9999px}
+.panel-inner{background:var(--surface2);border-bottom:1px solid var(--border)}
+.panel-hdr{padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.ph-icon{font-size:14px}
+.ph-name{font-family:var(--font-display);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt2);flex:1}
+.ph-cnt{font-size:11px;font-weight:700;background:var(--border);color:var(--txt2);padding:2px 8px;border-radius:99px}
+.ph-x{font-size:14px;color:var(--txt3);cursor:pointer;background:none;border:none;padding:0 2px;line-height:1;transition:color .15s}
+.ph-x:hover{color:var(--accent2)}
+.panel-search{position:relative;padding:6px 10px;background:var(--surface2);border-bottom:1px solid var(--border)}
+.ps-ico{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;color:var(--txt3)}
+.ps-inp{width:100%;padding:8px 10px 8px 32px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--txt);outline:none;font-family:var(--font-body);transition:border-color .2s}
+.ps-inp:focus{border-color:var(--accent)}
+.ps-orange:focus{border-color:var(--accent2)}
+.ps-inp::placeholder{color:var(--txt3)}
+.panel-item{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s}
+.panel-item:hover{background:var(--surface)}
+.panel-item:active{background:var(--border)}
+.panel-item:last-child{border:none}
+.pi-ico{font-size:18px;flex-shrink:0;width:24px;text-align:center;line-height:1}
+.pi-name{font-size:13px;font-weight:700;color:var(--txt);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pi-name em{font-style:normal;color:var(--accent);font-weight:800}
+.pi-name em.o{color:var(--accent2)}
+.pi-val{font-size:11px;font-weight:700;color:var(--txt2);flex-shrink:0;margin-left:4px;white-space:nowrap}
+.pi-add{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;border:none;flex-shrink:0;transition:all .15s;line-height:1}
+.pi-add-b{background:rgba(37,99,235,.12);color:var(--accent)}
+.pi-add-o{background:rgba(249,115,22,.12);color:var(--accent2)}
+.pi-add:hover{transform:scale(1.15)}
+.pi-add:active{transform:scale(.88)}
+.panel-empty{padding:16px;text-align:center;font-size:13px;color:var(--txt3);font-weight:600}
+/* Added rows */
+.srv-row{display:flex;align-items:center;gap:6px;padding:8px 14px 8px 16px;background:rgba(37,99,235,.04);border-left:3px solid var(--accent);border-bottom:1px solid var(--border);transition:background .15s;animation:rowIn .22s ease}
+.srv-row:last-child{border-bottom:none}
+.srv-row:hover{background:rgba(37,99,235,.07)}
+.mat-row{background:var(--surface2);border-bottom:1px solid var(--border);animation:rowIn .22s ease}
+.mat-row:hover{background:var(--surface)}
+@keyframes rowIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+.srv-name{flex:1;font-size:13px;font-weight:700;color:var(--accent);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mat-top{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.mat-name{font-size:13px;font-weight:700;color:var(--accent2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mat-ctx{display:flex;gap:4px;padding:5px 10px;flex-wrap:wrap;border-bottom:1px solid var(--border);min-height:30px;align-items:center;background:var(--surface2)}
+.ctxs{font-size:11px;font-weight:700;padding:3px 8px;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--txt2);outline:none;font-family:var(--font-body);cursor:pointer;transition:border-color .2s}
+.ctxs.bl{border-color:rgba(37,99,235,.35);color:var(--accent)}
+.ctxs.gr{border-color:rgba(22,163,74,.35);color:#16a34a}
+.ctxs.or{border-color:rgba(234,88,12,.35);color:var(--accent2)}
+.iso-b{padding:3px 8px;font-size:11px;font-weight:700;border-radius:6px;border:1.5px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.iso-b.pvc{border-color:var(--accent);background:rgba(37,99,235,.08);color:var(--accent)}
+.iso-b.xlpe{border-color:#16a34a;background:rgba(22,163,74,.08);color:#16a34a}
+.mat-bot{display:flex;align-items:center;gap:6px;padding:6px 10px}
+/* Price+qty inputs in rows */
+.rpi{padding:6px 4px 6px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:700;color:var(--txt);outline:none;width:80px;font-family:var(--font-body)}
+.rpi:focus{border-color:var(--accent)}
+.pw{position:relative;flex-shrink:0}
+.pp{position:absolute;left:5px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:var(--txt3);pointer-events:none}
+.qw{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);flex-shrink:0}
+.qb{width:24px;height:34px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--txt2);background:transparent;border:none;cursor:pointer;padding:0;transition:background .15s}
+.qb:hover{background:var(--border)}
+.qv{width:28px;text-align:center;font-size:13px;font-weight:700;color:var(--txt);border:none;background:transparent;outline:none;padding:0}
+.delbtn{font-size:18px;color:#fca5a5;cursor:pointer;background:none;border:none;padding:0 2px;line-height:1;flex-shrink:0;transition:color .15s}
+.delbtn:hover{color:#ef4444}
+/* Status bar + FAB */
+.status-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);margin:8px 0 0;transition:all .3s}
+.fab-container{position:sticky;bottom:0;padding:8px 0 12px;background:linear-gradient(0deg,var(--bg) 55%,transparent);z-index:20}
+.fab-calcular{width:100%;padding:16px;background:var(--accent2-g);color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;border-radius:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 24px rgba(249,115,22,.4);transition:all .4s cubic-bezier(.16,1,.3,1);transform:translateY(60px);opacity:0;pointer-events:none;position:relative;overflow:hidden}
+.fab-calcular::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent)}
+.fab-calcular.visible{transform:translateY(0);opacity:1;pointer-events:all}
+.fab-calcular:active{transform:scale(.97)!important}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.15)}}
+
+  
+  
+
+/* ─── SETTINGS ─── */
+.set-field{margin-bottom:10px}
+.set-field:last-child{margin:0}
+.set-lbl{display:block;font-size:12px;font-weight:700;color:var(--txt2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.set-hint{font-size:11px;color:var(--txt3);margin-top:4px;line-height:1.5}
+.settings-section{padding:14px 0;border-bottom:1px solid var(--border)}
+.settings-section:last-of-type{border:none}
+.settings-label{font-family:var(--font-display,'Clash Display',sans-serif);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.toggle-info-label{font-size:14px;font-weight:700;color:var(--txt)}
+.toggle-info-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+.toggle-switch{width:46px;height:26px;border-radius:99px;background:var(--border);cursor:pointer;position:relative;transition:background .25s;flex-shrink:0}
+.toggle-switch.on{background:var(--accent)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.toggle-switch.on .toggle-thumb{transform:translateX(20px)}
+.srv-base-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);transition:background .15s}
+.srv-base-row:hover{background:var(--surface2)}
+.srv-base-row:last-child{border:none}
+.srv-base-name{flex:1;font-size:13px;font-weight:700;color:var(--txt);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srv-base-val{font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0}
+.srv-base-del{font-size:16px;color:var(--txt3);background:none;border:none;cursor:pointer;padding:0 2px;line-height:1;transition:color .15s;flex-shrink:0}
+.srv-base-del:hover{color:#ef4444}
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="i-bolt" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288l111.5 0L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7l-111.5 0L349.4 44.6z"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></symbol>
     <symbol id="i-arrow-up-right" viewBox="0 0 512 512"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z"/></symbol>
@@ -822,14 +945,8 @@
     <symbol id="i-moon" viewBox="0 0 384 512"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></symbol>
     <symbol id="i-sun" viewBox="0 0 512 512"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0z"/></symbol>
   </svg>
-</head>
-<body>
 
-<!-- ════════════════════════════════════
-     APP SHELL
-════════════════════════════════════ -->
-<div class="app-shell">
-  <div class="app-card">
+<div class="app-card">
 
     <!-- HEADER -->
     <header class="app-header">
@@ -859,10 +976,10 @@
     </header>
 
     <!-- BODY -->
-    <div class="app-body">
 
-      <!-- ══ SCREEN: INPUT ══ -->
-      <div id="screen-input" class="screen active">
+<main class="screens-wrapper">
+
+  <div id="screen-input" class="screen active">
 
         <!-- Affiliate -->
         <a href="https://beacons.ai/josetecinstalation/eletronicos" target="_blank" class="affiliate-btn">
@@ -915,27 +1032,107 @@
           </div>
         </div>
 
-        <!-- Serviços -->
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 2px">
-            <span class="section-label" style="margin:0">
-              <svg class="ico"><use href="#i-wrench"/></svg> Serviços
+        
+        <!-- ★ TIPO DE SERVIÇO ★ -->
+        <div class="card" style="overflow:visible;margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="section-label" style="margin:0;color:var(--accent2)">
+              ⚡ Tipo de Serviço Elétrico
             </span>
-            <span style="font-size:10px;background:rgba(59,130,246,.12);color:var(--accent);padding:3px 10px;border-radius:99px;font-weight:700">Itens</span>
+            <span style="font-size:10px;background:rgba(249,115,22,.12);color:var(--accent2);padding:2px 8px;border-radius:99px;font-weight:700">Config. em Ajustes</span>
           </div>
-          <div id="services-container"></div>
-          <button class="btn btn-dashed" onclick="adicionarServico()">
-            <svg class="ico"><use href="#i-circle-plus"/></svg> ADICIONAR ITEM
-          </button>
-          <div style="position:relative;margin-top:10px">
-            <textarea id="detalhesServico" rows="2" class="input-f"
-              style="resize:none;padding-left:36px"
-              placeholder="Observações técnicas (Ex: fio 2,5mm, disjuntor 20A...)"></textarea>
-            <svg class="ico" style="position:absolute;top:12px;left:12px;font-size:12px;color:var(--txt3)"><use href="#i-pen"/></svg>
+          <div style="position:relative">
+            <select id="tipoServico" class="input-f" style="appearance:none;-webkit-appearance:none;padding-right:28px;font-weight:700;color:var(--accent2)"
+              onchange="this.style.color=this.value?'var(--accent2)':'var(--txt3)'">
+              <option value="" disabled selected style="color:var(--txt3)">— Selecione o tipo de serviço —</option>
+              <option>🏠 Instalação Residencial</option>
+              <option>🏢 Instalação Comercial</option>
+              <option>🏭 Instalação Industrial</option>
+              <option>🏗️ Instalação Predial</option>
+              <option>🔧 Manutenção Elétrica</option>
+              <option>⚡ Quadro de Distribuição</option>
+              <option>❄️ Ponto para Ar-condicionado</option>
+              <option>🌍 Aterramento Elétrico</option>
+              <option>🔍 Vistoria Técnica</option>
+            </select>
+            <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--txt3);font-size:12px">▾</span>
           </div>
+          <textarea id="detalhesGeral" rows="2" class="input-f" style="resize:none;margin-top:8px"
+            placeholder="Observações gerais do serviço..."></textarea>
         </div>
 
-        <!-- Custos -->
+        <!-- ★ SERVIÇOS ELÉTRICOS ★ -->
+        <div class="card srv-block" style="overflow:visible;margin-bottom:12px">
+          <!-- sticky header -->
+          <div class="srv-block-hdr" style="position:sticky;top:0;z-index:12;background:var(--surface);border-radius:var(--radius) var(--radius) 0 0">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0">
+              <span class="section-label" style="margin:0">
+                <svg class="ico"><use href="#i-wrench"/></svg> Serviços Elétricos
+              </span>
+              <span id="srv-badge" style="font-size:10px;background:rgba(59,130,246,.12);color:var(--accent);padding:3px 10px;border-radius:99px;font-weight:700">0 itens</span>
+            </div>
+            <!-- chips sticky -->
+            <div class="chips-row" id="srv-chips-row" style="position:sticky;top:38px;z-index:11;background:var(--surface)"></div>
+          </div>
+          <!-- panel que desce -->
+          <div class="panel" id="srv-panel">
+            <div class="panel-inner">
+              <div class="panel-hdr" style="position:sticky;top:74px;z-index:10">
+                <span class="ph-icon" id="srv-ph-icon"></span>
+                <span class="ph-name" id="srv-ph-name">Serviços</span>
+                <span class="ph-cnt" id="srv-ph-cnt">0</span>
+                <button class="ph-x" onclick="closePanel('srv')">✕</button>
+              </div>
+              <div class="panel-search" style="position:sticky;top:98px;z-index:9">
+                <span class="ps-ico">🔍</span>
+                <input class="ps-inp" id="srv-ps" placeholder="Filtrar serviços..." oninput="filterPanel('srv',this.value)" autocomplete="off">
+              </div>
+              <div id="srv-panel-items"></div>
+            </div>
+          </div>
+          <!-- added rows -->
+          <div id="srv-container" style="padding:4px 0 0"></div>
+          <div id="srv-empty" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;color:var(--txt3);font-size:12px;font-weight:600">
+            Escolha uma categoria acima para adicionar
+          </div>
+          <textarea id="detalhesServico" rows="2" class="input-f" style="resize:none;margin:8px 14px;width:calc(100% - 28px)"
+            placeholder="Observações técnicas dos serviços..."></textarea>
+        </div>
+
+        <!-- ★ MATERIAIS ELÉTRICOS ★ -->
+        <div class="card mat-block" style="overflow:visible;margin-bottom:12px">
+          <div class="srv-block-hdr" style="position:sticky;top:0;z-index:12;background:var(--surface);border-radius:var(--radius) var(--radius) 0 0">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0">
+              <span class="section-label" style="margin:0;color:var(--accent2)">
+                📦 Materiais Elétricos
+              </span>
+              <span id="mat-badge" style="font-size:10px;background:rgba(249,115,22,.12);color:var(--accent2);padding:3px 10px;border-radius:99px;font-weight:700">0 itens</span>
+            </div>
+            <div class="chips-row" id="mat-chips-row" style="position:sticky;top:38px;z-index:11;background:var(--surface)"></div>
+          </div>
+          <div class="panel" id="mat-panel">
+            <div class="panel-inner">
+              <div class="panel-hdr" style="position:sticky;top:74px;z-index:10">
+                <span class="ph-icon" id="mat-ph-icon"></span>
+                <span class="ph-name" id="mat-ph-name">Materiais</span>
+                <span class="ph-cnt" id="mat-ph-cnt">0</span>
+                <button class="ph-x" onclick="closePanel('mat')">✕</button>
+              </div>
+              <div class="panel-search" style="position:sticky;top:98px;z-index:9">
+                <span class="ps-ico">🔍</span>
+                <input class="ps-inp ps-orange" id="mat-ps" placeholder="Filtrar materiais..." oninput="filterPanel('mat',this.value)" autocomplete="off">
+              </div>
+              <div id="mat-panel-items"></div>
+            </div>
+          </div>
+          <div id="mat-container" style="padding:4px 0 0"></div>
+          <div id="mat-empty" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;color:var(--txt3);font-size:12px;font-weight:600">
+            Escolha uma categoria acima para adicionar
+          </div>
+          <textarea id="detalhesMateriais" rows="2" class="input-f" style="resize:none;margin:8px 14px;width:calc(100% - 28px)"
+            placeholder="Observações sobre materiais (marca, especificações)..."></textarea>
+        </div>
+<!-- Custos -->
         <div class="card" style="margin-top:12px">
           <div class="section-label">
             <svg class="ico"><use href="#i-calculator"/></svg> Custos Operacionais
@@ -956,15 +1153,26 @@
               <input type="number" id="tempoHoras" class="input-f" placeholder="Horas" inputmode="decimal">
             </div>
           </div>
+        
+        <!-- ★ STATUS BAR + FAB ★ -->
+        <div id="status-bar" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);margin:0 0 8px;transition:all .3s">
+          <div id="sdot" style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0;transition:all .3s"></div>
+          <span id="stxt" style="font-size:12px;font-weight:600;color:var(--txt2);flex:1">Selecione um serviço para calcular</span>
+          <span id="ssum" style="font-family:'Clash Display',sans-serif;font-size:13px;font-weight:700;color:var(--accent2);opacity:0;transition:opacity .3s"></span>
         </div>
+        <div style="position:sticky;bottom:0;padding:0 0 16px;background:linear-gradient(0deg,var(--bg) 60%,transparent);z-index:20">
+          <button id="fab-calcular" onclick="calcularPrecos()" style="width:100%;padding:16px;background:var(--accent2-g);color:#fff;font-family:'Clash Display',sans-serif;font-size:15px;font-weight:700;border-radius:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 24px rgba(249,115,22,.4);transition:all .4s cubic-bezier(.16,1,.3,1);transform:translateY(60px);opacity:0;pointer-events:none">
+            CALCULAR AGORA →
+          </button>
+        </div>
+</div>
 
         <button class="btn btn-primary" onclick="calcularPrecos()" style="margin-top:16px;margin-bottom:8px">
           CALCULAR AGORA <svg class="ico"><use href="#i-arrow-right"/></svg>
         </button>
       </div>
 
-      <!-- ══ SCREEN: RESULTS ══ -->
-      <div id="screen-results" class="screen">
+  <div id="screen-results" class="screen">
 
         <!-- Hero -->
         <div class="result-hero">
@@ -1073,13 +1281,227 @@
         </div>
       </div>
 
-    </div><!-- /app-body -->
-  </div><!-- /app-card -->
-</div><!-- /app-shell -->
+</main>
 
-<!-- ════════════════════════════════════
-     PRINTABLE PDF AREA
-════════════════════════════════════ -->
+<div id="historyOverlay" class="history-overlay">
+  <div class="history-panel">
+    <div class="history-header">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#f1f5f9;display:flex;align-items:center;gap:8px">
+          <svg class="ico"><use href="#i-clock-rotate-left"/></svg> Histórico
+        </div>
+        <div style="font-size:10px;color:#475569;margin-top:2px">Últimos orçamentos</div>
+      </div>
+      <button class="header-btn" onclick="closeHistory()">
+        <svg class="ico"><use href="#i-xmark"/></svg>
+      </button>
+    </div>
+
+    <!-- Expired warranties banner -->
+    <div id="expiredBanner" style="display:none;background:rgba(239,68,68,.08);border-bottom:1px solid rgba(239,68,68,.15);padding:12px">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#f87171;margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <svg class="ico"><use href="#i-warning"/></svg>
+        <span id="expiredTitle">Garantias Vencidas</span>
+      </div>
+      <div id="expiredList"></div>
+    </div>
+
+    <div class="history-list" id="historyList"></div>
+
+    <div class="history-footer">
+      <button onclick="limparHistorico()"
+        style="width:100%;padding:11px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;color:#ef4444;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:10px;cursor:pointer">
+        LIMPAR TUDO
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="settingsModal" class="modal-overlay" style="display:none">
+  <div class="modal-sheet" style="max-height:90vh;overflow-y:auto;border-radius:24px 24px 0 0">
+    <div class="modal-handle"></div>
+    <div class="modal-header" style="position:sticky;top:0;z-index:10;background:var(--surface)">
+      <div class="modal-title">
+        <svg class="ico" style="color:var(--accent)"><use href="#i-sliders"/></svg>
+        Ajustes
+      </div>
+      <button class="modal-close" onclick="closeSettings()">
+        <svg class="ico"><use href="#i-xmark"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="padding-bottom:32px">
+
+      <!-- APARÊNCIA -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-moon"/></svg> Aparência
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-info-label">🌙 Modo Escuro</div>
+            <div class="toggle-info-sub">Salvo automaticamente no aparelho</div>
+          </div>
+          <div id="darkToggle" class="toggle-switch" onclick="toggleDarkMode()">
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRESTADOR -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-user"/></svg> Seus Dados
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Nome do Prestador / Empresa</label>
+          <input type="text" id="configNomePrestador" class="input-f"
+            placeholder="Ex: João Elétrica ME"
+            style="font-weight:700">
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Chave PIX</label>
+          <input type="text" id="configPix" class="input-f"
+            placeholder="CPF, CNPJ, e-mail ou telefone">
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Telefone / WhatsApp</label>
+          <input type="tel" id="configTelPrestador" class="input-f"
+            placeholder="(81) 9 9999-9999" oninput="mascaraTelefone(this)">
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Instagram</label>
+          <div style="position:relative">
+            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt3);font-weight:700;font-size:13px">@</span>
+            <input type="text" id="configInstagram" class="input-f"
+              style="padding-left:28px" placeholder="seueletricista">
+          </div>
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">CPF / CNPJ</label>
+          <input type="text" id="configDocumento" class="input-f"
+            placeholder="000.000.000-00">
+        </div>
+      </div>
+
+      <!-- LOGOTIPO -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-image"/></svg> Logotipo
+        </div>
+        <div id="logoPreviewArea" style="display:none;margin-bottom:10px;text-align:center">
+          <img id="logoPreviewImg" style="max-height:60px;max-width:180px;border-radius:8px;border:1px solid var(--border)">
+        </div>
+        <label class="btn btn-secondary" style="cursor:pointer;justify-content:center;gap:8px">
+          <svg class="ico"><use href="#i-image"/></svg>
+          Escolher Logotipo
+          <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)" style="display:none">
+        </label>
+        <button onclick="removerLogo()" style="font-size:11px;font-weight:700;color:#ef4444;background:none;border:1px solid rgba(239,68,68,.25);border-radius:8px;cursor:pointer;margin-top:6px;padding:6px 12px;width:100%;transition:background .15s" onmouseover="this.style.background='rgba(239,68,68,.08)'" onmouseout="this.style.background='none'">
+          🗑 Remover Logo
+        </button>
+      </div>
+
+      <!-- PAGAMENTO -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-percent"/></svg> Pagamento
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Sinal exigido (%)</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="position:relative;flex:1">
+              <input type="number" id="configSinal" class="input-f" min="0" max="100"
+                style="padding-right:32px;text-align:center;font-size:16px!important;font-weight:700">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--txt3);font-weight:700">%</span>
+            </div>
+          </div>
+          <p class="set-hint">% cobrada na mensagem de cobrança de sinal.</p>
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Desconto padrão (%)</label>
+          <input type="number" id="configDesconto" class="input-f" min="0" max="100" placeholder="0">
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Validade do orçamento (dias)</label>
+          <input type="number" id="configValidade" class="input-f" min="1" placeholder="15">
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Formas de Pagamento aceitas</label>
+          <input type="text" id="configCartoes" class="input-f"
+            placeholder="Ex: Pix, cartão, dinheiro">
+        </div>
+      </div>
+
+      <!-- OPERACIONAL -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-route"/></svg> Operacional
+        </div>
+        <div class="set-field">
+          <label class="set-lbl">Custo por hora trabalhada (R$)</label>
+          <div style="position:relative">
+            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:11px;font-weight:700">R$</span>
+            <input type="number" id="configCustoHora" class="input-f"
+              style="padding-left:36px" min="0" placeholder="0,00">
+          </div>
+          <p class="set-hint">Usado no cálculo de horas em Custos Operacionais.</p>
+        </div>
+      </div>
+
+      <!-- SERVIÇOS BASE -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-list"/></svg> Serviços Personalizados
+        </div>
+        <p class="set-hint" style="margin-bottom:8px">Crie serviços frequentes com preço pré-definido.</p>
+        <div style="display:flex;gap:6px;margin-bottom:8px">
+          <input type="text" id="novoServicoNome" class="input-f"
+            placeholder="Nome do serviço" style="flex:1;font-size:13px!important">
+          <div style="position:relative;width:72px">
+            <span style="position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--txt3);font-weight:700;pointer-events:none">R$</span>
+            <input type="number" id="novoServicoValor" class="input-f"
+              placeholder="0" style="padding-left:22px;font-size:13px!important">
+          </div>
+          <button class="btn btn-accent" onclick="adicionarServicoBase()"
+            style="width:40px;height:42px;border-radius:10px;flex-shrink:0;padding:0;display:flex;align-items:center;justify-content:center">
+            <svg class="ico"><use href="#i-plus"/></svg>
+          </button>
+        </div>
+        <div id="listaServicosBase" style="max-height:200px;overflow-y:auto;border-radius:10px;border:1px solid var(--border)"></div>
+      </div>
+
+      <!-- BACKUP -->
+      <div class="settings-section">
+        <div class="settings-label">
+          <svg class="ico"><use href="#i-cloud-arrow-up"/></svg> Backup
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <button onclick="exportarDados()" class="btn btn-secondary"
+            style="padding:14px 10px;flex-direction:column;gap:4px;height:auto">
+            <svg class="ico" style="font-size:20px;color:#22c55e"><use href="#i-download"/></svg>
+            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Baixar Backup</span>
+          </button>
+          <label class="btn btn-secondary"
+            style="padding:14px 10px;flex-direction:column;gap:4px;height:auto;cursor:pointer">
+            <svg class="ico" style="font-size:20px;color:var(--accent)"><use href="#i-upload"/></svg>
+            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Restaurar</span>
+            <input type="file" accept=".json" onchange="importarDados(this)" style="display:none">
+          </label>
+        </div>
+        <p class="set-hint" style="text-align:center;margin-top:8px">Salve no Google Drive ou iCloud para segurança.</p>
+      </div>
+
+      <!-- SALVAR -->
+      <button class="btn btn-primary" onclick="salvarConfiguracoes()"
+        style="margin-top:8px;width:100%;padding:16px;font-size:15px;letter-spacing:.06em">
+        <svg class="ico"><use href="#i-check"/></svg>
+        SALVAR ALTERAÇÕES
+      </button>
+
+    </div>
+  </div>
+</div>
+
 <div id="printable-area">
   <div style="font-family:'DM Sans',sans-serif;color:#1e293b;max-width:760px;margin:0 auto;padding:32px;background:#fff">
     <!-- PDF Header com watermark -->
@@ -1147,169 +1569,374 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     SETTINGS MODAL
-════════════════════════════════════ -->
-<div id="settingsModal" class="modal-overlay">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title"><svg class="ico" style="color:var(--accent)"><use href="#i-sliders"/></svg> Ajustes</div>
-      <button class="modal-close" onclick="closeSettings()"><svg class="ico"><use href="#i-xmark"/></svg></button>
-    </div>
-    <div class="modal-body">
+<div id="toast-el" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#f1f5f9;color:#0f172a;font-family:'Clash Display',sans-serif;font-size:13px;font-weight:700;padding:11px 22px;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:9999;transition:transform .3s cubic-bezier(.16,1,.3,1);white-space:nowrap;pointer-events:none"></div>
 
-      <!-- DARK MODE TOGGLE -->
-      <div class="settings-section">
-        <div class="settings-label"><svg class="ico"><use href="#i-moon"/></svg> Aparência</div>
-        <div class="toggle-row">
-          <div>
-            <div class="toggle-info-label">🌙 Modo Escuro</div>
-            <div class="toggle-info-sub">Salvo automaticamente no aparelho</div>
-          </div>
-          <div id="darkToggle" class="toggle-switch" onclick="toggleDarkMode()">
-            <div class="toggle-thumb"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LOGO -->
-      <div class="settings-section">
-        <div class="settings-label"><svg class="ico"><use href="#i-image"/></svg> Logotipo</div>
-        <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)"
-          style="font-size:13px;color:var(--txt2);width:100%">
-        <button onclick="removerLogo()" style="font-size:10px;font-weight:700;color:#ef4444;background:none;border:none;cursor:pointer;margin-top:6px;text-transform:uppercase">
-          Remover Logo
-        </button>
-      </div>
-
-      <!-- SINAL -->
-      <div class="settings-section">
-        <div class="settings-label"><svg class="ico"><use href="#i-percent"/></svg> Pagamento</div>
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <span style="font-size:13px;font-weight:600;color:var(--txt)">Sinal exigido (%)</span>
-          <div style="position:relative;width:80px">
-            <input type="number" id="configSinal" class="input-f"
-              style="padding:8px 20px 8px 8px;text-align:center;font-size:14px!important">
-            <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--txt3);font-weight:700">%</span>
-          </div>
-        </div>
-        <p style="font-size:10px;color:var(--txt3);margin-top:6px">% cobrada na mensagem de cobrança de sinal.</p>
-      </div>
-
-      <!-- SERVIÇOS BASE -->
-      <div class="settings-section">
-        <div class="settings-label"><svg class="ico"><use href="#i-list"/></svg> Serviços Base</div>
-        <div style="display:flex;gap:6px;margin-bottom:10px">
-          <input type="text" id="novoServicoNome" class="input-f" placeholder="Nome do Serviço" style="flex:1;font-size:13px!important">
-          <input type="number" id="novoServicoValor" class="input-f" placeholder="R$" style="width:64px;font-size:13px!important">
-          <button class="btn btn-accent" onclick="adicionarServicoBase()" style="width:36px;height:40px;border-radius:8px;flex-shrink:0">
-            <svg class="ico"><use href="#i-plus"/></svg>
-          </button>
-        </div>
-        <div id="listaServicosBase" style="max-height:180px;overflow-y:auto"></div>
-      </div>
-
-      <!-- BACKUP -->
-      <div class="settings-section">
-        <div class="settings-label"><svg class="ico"><use href="#i-cloud-arrow-up"/></svg> Backup</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <button onclick="exportarDados()" class="btn btn-secondary" style="padding:12px;flex-direction:column;gap:4px;height:auto">
-            <svg class="ico" style="font-size:18px;color:#22c55e"><use href="#i-download"/></svg>
-            <span style="font-size:9px;font-weight:700;text-transform:uppercase">Baixar Backup</span>
-          </button>
-          <label class="btn btn-secondary" style="padding:12px;flex-direction:column;gap:4px;height:auto;cursor:pointer">
-            <svg class="ico" style="font-size:18px;color:var(--accent)"><use href="#i-upload"/></svg>
-            <span style="font-size:9px;font-weight:700;text-transform:uppercase">Restaurar</span>
-            <input type="file" accept=".json" onchange="importarDados(this)" style="display:none">
-          </label>
-        </div>
-        <p style="font-size:10px;color:var(--txt3);text-align:center;margin-top:8px">Salve no Google Drive ou iCloud.</p>
-      </div>
-
-      <button class="btn btn-primary" onclick="salvarConfiguracoes()" style="margin-top:4px">
-        SALVAR ALTERAÇÕES
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════
-     HISTORY PANEL
-════════════════════════════════════ -->
-<div id="historyOverlay" class="history-overlay">
-  <div class="history-panel">
-    <div class="history-header">
-      <div>
-        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#f1f5f9;display:flex;align-items:center;gap:8px">
-          <svg class="ico"><use href="#i-clock-rotate-left"/></svg> Histórico
-        </div>
-        <div style="font-size:10px;color:#475569;margin-top:2px">Últimos orçamentos</div>
-      </div>
-      <button class="header-btn" onclick="closeHistory()">
-        <svg class="ico"><use href="#i-xmark"/></svg>
-      </button>
-    </div>
-
-    <!-- Expired warranties banner -->
-    <div id="expiredBanner" style="display:none;background:rgba(239,68,68,.08);border-bottom:1px solid rgba(239,68,68,.15);padding:12px">
-      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#f87171;margin-bottom:8px;display:flex;align-items:center;gap:6px">
-        <svg class="ico"><use href="#i-warning"/></svg>
-        <span id="expiredTitle">Garantias Vencidas</span>
-      </div>
-      <div id="expiredList"></div>
-    </div>
-
-    <div class="history-list" id="historyList"></div>
-
-    <div class="history-footer">
-      <button onclick="limparHistorico()"
-        style="width:100%;padding:11px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;color:#ef4444;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:10px;cursor:pointer">
-        LIMPAR TUDO
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
-<div id="toast" class="toast"></div>
-
-<!-- ════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════ -->
 <script>
+
+
 'use strict';
 
-/* ─── XSS sanitizer ─── */
-function s(v) {
-  const el = document.createElement('div');
-  el.textContent = String(v ?? '');
-  return el.innerHTML;
+const STORAGE_KEY = 'eletristaPowerV3';
+
+function atualizarPrecoInput(sel) {
+  // price auto-fill handled by catalog in new system
+  const row = sel.closest('.srv-row');
+  if (!row) return;
+  const opt = sel.options[sel.selectedIndex];
+  if (opt && opt.dataset && opt.dataset.min) {
+    const pi = row.querySelector('.rpi');
+    if (pi) pi.value = parseFloat(opt.dataset.min).toFixed(2).replace('.', ',');
+    updSrvBadge();
+    updFAB();
+  }
 }
 
-/* ─── STORAGE KEY ─── */
-const STORAGE_KEY = 'eletristaaPowerV1';
+// ═══════════════════════════════════════════════
+// CONSTANTS & CATALOG
+// ═══════════════════════════════════════════════
+const SRV=[{n:"Instalacao de tomadas padrao NBR",v:150,cat:"res",icon:"&#128268;"},
+{n:"Instalacao de tomadas externas/quintal",v:180,cat:"res",icon:"&#128268;"},
+{n:"Instalacao de interruptor simples",v:100,cat:"res",icon:"&#128280;"},
+{n:"Instalacao de interruptor duplo",v:130,cat:"res",icon:"&#128280;"},
+{n:"Instalacao de interruptor triplo",v:160,cat:"res",icon:"&#128280;"},
+{n:"Instalacao de interruptor paralelo",v:150,cat:"res",icon:"&#128280;"},
+{n:"Instalacao de interruptor intermediario",v:180,cat:"res",icon:"&#128280;"},
+{n:"Instalacao de luminarias embutidas",v:120,cat:"res",icon:"&#128161;"},
+{n:"Instalacao de luminarias sobrepor",v:100,cat:"res",icon:"&#128161;"},
+{n:"Instalacao de lustres e pendentes",v:180,cat:"res",icon:"&#10024;"},
+{n:"Instalacao de ventilador de teto",v:220,cat:"res",icon:"&#127744;"},
+{n:"Instalacao de chuveiro simples",v:200,cat:"res",icon:"&#128703;"},
+{n:"Instalacao de chuveiro blindado",v:350,cat:"res",icon:"&#128703;"},
+{n:"Instalacao de aquecedor eletrico",v:280,cat:"res",icon:"&#128293;"},
+{n:"Instalacao de quadro de distribuicao",v:500,cat:"res",icon:"&#128203;"},
+{n:"Troca de quadro de distribuicao",v:600,cat:"res",icon:"&#128203;"},
+{n:"Passagem de fiacao por ponto",v:180,cat:"res",icon:"&#128295;"},
+{n:"Troca de disjuntor simples",v:120,cat:"res",icon:"&#9889;"},
+{n:"Instalacao de bomba com 2 boias",v:400,cat:"res",icon:"&#128167;"},
+{n:"Instalacao de campainha",v:120,cat:"res",icon:"&#128276;"},
+{n:"Instalacao de exaustor/extrator",v:180,cat:"res",icon:"&#127788;"},
+{n:"Instalacao de porteiro eletronico",v:350,cat:"res",icon:"&#128222;"},
+{n:"Instalacao de tomadas 20A sobrepor",v:200,cat:"com",icon:"&#128268;"},
+{n:"Instalacao de tomadas trifasicas industria",v:350,cat:"com",icon:"&#128268;"},
+{n:"Instalacao de iluminacao comercial",v:250,cat:"com",icon:"&#128161;"},
+{n:"Instalacao de luminaria calha",v:200,cat:"com",icon:"&#128161;"},
+{n:"Instalacao de painel LED comercial",v:300,cat:"com",icon:"&#128161;"},
+{n:"Instalacao de quadro trifasico",v:800,cat:"com",icon:"&#128203;"},
+{n:"Instalacao de DPS protecao surto",v:350,cat:"com",icon:"&#128737;"},
+{n:"Instalacao de DR/RCCB",v:250,cat:"com",icon:"&#128737;"},
+{n:"Passagem de eletroduto aparente",v:90,cat:"com",icon:"&#127959;"},
+{n:"Instalacao de eletrocalha",v:180,cat:"com",icon:"&#127959;"},
+{n:"Instalacao de cerca eletrica",v:600,cat:"com",icon:"&#128274;"},
+{n:"Instalacao de alarme comercial",v:450,cat:"com",icon:"&#128680;"},
+{n:"Instalacao de ponto de rede Cat6",v:120,cat:"com",icon:"&#127760;"},
+{n:"Instalacao de camera CFTV",v:250,cat:"com",icon:"&#128249;"},
+{n:"Instalacao de controle de acesso",v:600,cat:"com",icon:"&#128273;"},
+{n:"Instalacao de para-raios predial",v:1800,cat:"com",icon:"&#9889;"},
+{n:"Instalacao de gerador a diesel",v:2500,cat:"com",icon:"&#9881;"},
+{n:"Instalacao de nobreak/UPS",v:400,cat:"com",icon:"&#128267;"},
+{n:"Instalacao de tomada industrial 16A 3P",v:350,cat:"ind",icon:"&#9889;"},
+{n:"Instalacao de tomada industrial 32A 3P",v:500,cat:"ind",icon:"&#9889;"},
+{n:"Passagem de eletroduto rigido aco",v:150,cat:"ind",icon:"&#127959;"},
+{n:"Instalacao de bandeja porta-cabos",v:200,cat:"ind",icon:"&#127959;"},
+{n:"Instalacao de perfilado leito de cabos",v:180,cat:"ind",icon:"&#127959;"},
+{n:"Instalacao de painel de comando",v:1200,cat:"ind",icon:"&#128421;"},
+{n:"Ligacao de motor monofasico",v:300,cat:"ind",icon:"&#9881;"},
+{n:"Ligacao de motor trifasico",v:500,cat:"ind",icon:"&#9881;"},
+{n:"Instalacao de inversor de frequencia",v:800,cat:"ind",icon:"&#128257;"},
+{n:"Instalacao de soft-starter",v:700,cat:"ind",icon:"&#128257;"},
+{n:"Instalacao de chave seccionadora",v:400,cat:"ind",icon:"&#128273;"},
+{n:"Instalacao de chave estrela-triangulo",v:900,cat:"ind",icon:"&#9881;"},
+{n:"Instalacao de transformador de forca",v:2500,cat:"ind",icon:"&#9889;"},
+{n:"Instalacao de banco de capacitores",v:1200,cat:"ind",icon:"&#128267;"},
+{n:"Instalacao de barramento blindado",v:1800,cat:"ind",icon:"&#128208;"},
+{n:"Instalacao de quadro industrial CGD",v:1500,cat:"ind",icon:"&#128203;"},
+{n:"Ligacao de compressor industrial",v:600,cat:"ind",icon:"&#128168;"},
+{n:"Instalacao de UPS industrial",v:1200,cat:"ind",icon:"&#128267;"},
+{n:"Instalacao de sistema energia solar",v:3500,cat:"ind",icon:"&#9728;"},
+{n:"Instalacao de para-raios industrial",v:2500,cat:"ind",icon:"&#9889;"},
+{n:"Aterramento residencial 1 haste",v:600,cat:"ate",icon:"&#127757;"},
+{n:"Aterramento residencial 2 hastes",v:900,cat:"ate",icon:"&#127757;"},
+{n:"Aterramento predial",v:1500,cat:"ate",icon:"&#127757;"},
+{n:"Aterramento SPDA para-raios",v:1800,cat:"ate",icon:"&#9889;"},
+{n:"Malha de aterramento industrial",v:2500,cat:"ate",icon:"&#128376;"},
+{n:"Medicao de resistividade do solo",v:350,cat:"ate",icon:"&#128208;"},
+{n:"Inspecao de aterramento existente",v:200,cat:"ate",icon:"&#128269;"},
+{n:"Instalacao de eletrodo de aterramento",v:350,cat:"ate",icon:"&#127757;"},
+{n:"Instalacao de caixa de inspecao",v:250,cat:"ate",icon:"&#128230;"},
+{n:"Tratamento de solo com bentonita",v:800,cat:"ate",icon:"&#9879;"},
+{n:"Laudo e medicao de aterramento",v:500,cat:"ate",icon:"&#128196;"},
+{n:"Aterramento para gerador",v:700,cat:"ate",icon:"&#9881;"},
+{n:"Aterramento para tanque combustivel",v:900,cat:"ate",icon:"&#9981;"},
+{n:"Instalacao de equipotencializacao",v:600,cat:"ate",icon:"&#128279;"},
+{n:"Ponto AC ate 9.000 BTUs 1F",v:280,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 12.000 BTUs 1F",v:350,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 18.000 BTUs 1F",v:420,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 24.000 BTUs 1F",v:500,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 30.000 BTUs 2F",v:580,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 36.000 BTUs 2F",v:650,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC ate 48.000 BTUs 2F",v:750,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC cassete/teto 2F",v:700,cat:"ar",icon:"&#10052;"},
+{n:"Ponto AC piso-teto 2F",v:680,cat:"ar",icon:"&#10052;"},
+{n:"Infraestrutura multi-split 2 evap",v:900,cat:"ar",icon:"&#10052;"},
+{n:"Infraestrutura multi-split 3 evap",v:1200,cat:"ar",icon:"&#10052;"},
+{n:"Instalacao de VRF inverter",v:2000,cat:"ar",icon:"&#10052;"},
+{n:"Troca de disjuntor para AC",v:150,cat:"ar",icon:"&#9889;"},
+{n:"Vistoria eletrica de AC",v:120,cat:"ar",icon:"&#128269;"},
+{n:"Visita Tecnica / Diagnostico",v:120,cat:"man",icon:"&#128269;"},
+{n:"Reparo em curto-circuito",v:300,cat:"man",icon:"&#9889;"},
+{n:"Reparo em comando eletrico",v:250,cat:"man",icon:"&#128295;"},
+{n:"Troca de fiacao queimada",v:400,cat:"man",icon:"&#128293;"},
+{n:"Medicao de consumo eletrico",v:180,cat:"man",icon:"&#128202;"},
+{n:"Laudo eletrico / ART",v:600,cat:"man",icon:"&#128196;"},
+{n:"Substituicao de tomada/interruptor",v:80,cat:"man",icon:"&#128268;"},
+{n:"Reparo em chuveiro eletrico",v:120,cat:"man",icon:"&#128703;"},
+{n:"Verificacao e aperto de conexoes",v:150,cat:"man",icon:"&#128297;"},
+{n:"Troca de disjuntor principal",v:180,cat:"man",icon:"&#9889;"},
+{n:"Reparo em curto em parede",v:450,cat:"man",icon:"&#129521;"},
+{n:"Substituicao de cabo chuveiro",v:200,cat:"man",icon:"&#128703;"},
+{n:"Revisao do SPDA",v:500,cat:"man",icon:"&#9889;"},
+{n:"Reparo em instalacao antiga",v:350,cat:"man",icon:"&#128295;"},
+{n:"Manutencao preventiva eletrica",v:400,cat:"man",icon:"&#128203;"},
+{n:"Laudos e relatorios tecnicos",v:500,cat:"man",icon:"&#128196;"},
+{n:"Termografia eletrica",v:800,cat:"man",icon:"&#127777;"},
+{n:"Revisao geral do quadro",v:300,cat:"man",icon:"&#128203;"},
+{n:"Infraestrutura metro linear",v:80,cat:"inf",icon:"&#128208;"},
+{n:"Rasgo e fechamento de parede",v:120,cat:"inf",icon:"&#129521;"},
+{n:"Instalacao de eletroduto embutido",v:90,cat:"inf",icon:"&#127959;"},
+{n:"Instalacao de eletroduto aparente",v:70,cat:"inf",icon:"&#127959;"},
+{n:"Instalacao de eletrocalha aparente",v:150,cat:"inf",icon:"&#127959;"},
+{n:"Instalacao de perfilado DIN",v:180,cat:"inf",icon:"&#127959;"},
+{n:"Passagem de cabo CFTV",v:80,cat:"inf",icon:"&#128249;"},
+{n:"Passagem de rede estruturada Cat6",v:100,cat:"inf",icon:"&#127760;"},
+{n:"Instalacao de tomada RJ45",v:100,cat:"inf",icon:"&#127760;"},
+{n:"Instalacao de tomada HDMI/TV",v:120,cat:"inf",icon:"&#128250;"},
+{n:"Passagem de duto fibra optica",v:120,cat:"inf",icon:"&#128160;"},
+{n:"Instalacao de infraestrutura predial",v:300,cat:"inf",icon:"&#127959;"},
+{n:"Passagem de cabo solar",v:150,cat:"inf",icon:"&#9728;"},
+{n:"Instalacao de canaleta aparente",v:60,cat:"inf",icon:"&#128208;"},
+{n:"Instalacao de suporte antena",v:200,cat:"inf",icon:"&#128225;"},
+{n:"Projeto eletrico residencial",v:800,cat:"inf",icon:"&#128208;"},
+{n:"Instalacao de camera CFTV interna",v:250,cat:"seg",icon:"&#128249;"},
+{n:"Instalacao de camera CFTV externa",v:300,cat:"seg",icon:"&#128249;"},
+{n:"Instalacao de DVR/NVR",v:350,cat:"seg",icon:"&#128421;"},
+{n:"Instalacao de interfone residencial",v:300,cat:"seg",icon:"&#128222;"},
+{n:"Instalacao de interfone coletivo",v:600,cat:"seg",icon:"&#128222;"},
+{n:"Instalacao de portao automatico",v:800,cat:"seg",icon:"&#128682;"},
+{n:"Instalacao de sensor de presenca",v:150,cat:"seg",icon:"&#128065;"},
+{n:"Instalacao de sensor abertura porta",v:120,cat:"seg",icon:"&#128682;"},
+{n:"Instalacao de tomada USB embutida",v:120,cat:"seg",icon:"&#128268;"},
+{n:"Instalacao de dimmer/variador",v:180,cat:"seg",icon:"&#128262;"},
+{n:"Instalacao de timer/minuteria",v:180,cat:"seg",icon:"&#9201;"},
+{n:"Instalacao de central de alarme",v:500,cat:"seg",icon:"&#128680;"},
+{n:"Instalacao de automacao residencial",v:800,cat:"seg",icon:"&#127968;"},
+{n:"Instalacao de tomada inteligente",v:200,cat:"seg",icon:"&#128241;"},
+{n:"Instalacao de disjuntor bipolar",v:150,cat:"res",icon:"&#9889;"},
+{n:"Instalacao de DR residencial",v:200,cat:"res",icon:"&#128737;"},
+{n:"Instalacao de DPS residencial",v:250,cat:"res",icon:"&#128737;"},
+{n:"Instalacao de ponto TV/antena",v:120,cat:"res",icon:"&#128250;"},
+{n:"Instalacao de ponto de telefone",v:100,cat:"res",icon:"&#128222;"},
+{n:"Instalacao de iluminacao externa",v:200,cat:"res",icon:"&#128294;"},
+{n:"Instalacao de refletor externo",v:180,cat:"res",icon:"&#128294;"},
+{n:"Instalacao de sensor de presenca",v:150,cat:"res",icon:"&#128065;"},
+{n:"Instalacao de dimmer residencial",v:180,cat:"res",icon:"&#128262;"},
+{n:"Instalacao de minuteria escada",v:200,cat:"res",icon:"&#9201;"},
+{n:"Instalacao de tomada para CFTV",v:100,cat:"res",icon:"&#128268;"},
+{n:"Instalacao de ponto para freezer",v:150,cat:"res",icon:"&#128268;"},
+{n:"Instalacao de ponto para micro-ondas",v:150,cat:"res",icon:"&#128268;"},
+{n:"Instalacao de ponto para lava-loucas",v:180,cat:"res",icon:"&#128268;"}];
 
-/* ─── DEFAULT SERVICES ─── */
-const DEFAULT_SERVICES = [
-  { nome:"Instalação de tomadas",                         min:150 },
-  { nome:"Instalação de luminárias",                      min:120 },
-  { nome:"Instalação de lustres",                         min:180 },
-  { nome:"Instalação de chuveiro simples",                min:200 },
-  { nome:"Instalação de chuveiro blindado",               min:350 },
-  { nome:"Instalação de bomba com 2 bóias elétricas",     min:400 },
-  { nome:"Instalação de ponto para ar-condicionado 12kBTU",min:350},
-  { nome:"Instalação de quadro de distribuição",          min:500 },
-  { nome:"Troca de disjuntor",                            min:120 },
-  { nome:"Passagem de fiação (por ponto)",                min:180 },
-  { nome:"Visita Técnica / Diagnóstico",                  min:120 },
-  { nome:"Infraestrutura (Metro Linear)",                 min:80  },
-  { nome:"Reparo em comando elétrico",                    min:250 },
-  { nome:"Aterramento elétrico",                          min:600 },
-  { nome:"Instalação de interfone/câmera",                min:300 }
+const MAT=[{n:"Fio 1,5mm rolo 100m",p:350,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 2,5mm rolo 100m",p:500,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 4mm rolo 100m",p:800,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 6mm rolo 100m",p:1200,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 10mm rolo 100m",p:1800,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 16mm rolo 100m",p:2800,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 25mm rolo 100m",p:4200,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Fio 35mm rolo 100m",p:6000,t:"fio",cat:"cond",icon:"&#9889;"},
+{n:"Cabo PP 2x1,5mm rolo 100m",p:400,t:"caboPP",cat:"cond",icon:"&#128309;"},
+{n:"Cabo PP 2x2,5mm rolo 100m",p:550,t:"caboPP",cat:"cond",icon:"&#128309;"},
+{n:"Cabo PP 3x2,5mm rolo 100m",p:650,t:"caboPP",cat:"cond",icon:"&#128309;"},
+{n:"Cabo PP 4x4mm rolo 100m",p:1100,t:"caboPP",cat:"cond",icon:"&#128309;"},
+{n:"Cabo PP 5x6mm rolo 100m",p:1800,t:"caboPP",cat:"cond",icon:"&#128309;"},
+{n:"Cabo Coaxial RG-6 rolo 100m",p:200,t:"",cat:"cond",icon:"&#128309;"},
+{n:"Cabo rede Cat6 caixa 305m",p:320,t:"",cat:"cond",icon:"&#127760;"},
+{n:"Cabo aterramento 35mm2",p:85,t:"",cat:"cond",icon:"&#9889;"},
+{n:"Cabo aterramento 50mm2",p:120,t:"",cat:"cond",icon:"&#9889;"},
+{n:"Cabo solar 6mm2 por metro",p:8,t:"",cat:"cond",icon:"&#9728;"},
+{n:"Fita isolante 19mm",p:5,t:"",cat:"cond",icon:"&#128993;"},
+{n:"Fita auto-fusao 19mm",p:12,t:"",cat:"cond",icon:"&#128993;"},
+{n:"Disjuntor 10A monopolar Curva B",p:18,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 16A monopolar Curva B",p:18,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 20A monopolar Curva B",p:20,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 25A monopolar Curva C",p:22,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 32A monopolar Curva C",p:25,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 40A bipolar Curva C",p:55,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 50A bipolar Curva C",p:70,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 63A bipolar Curva C",p:80,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor 80A bipolar Curva C",p:110,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor tripolar 40A Curva C",p:120,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor tripolar 63A Curva C",p:160,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"Disjuntor tripolar 100A Curva D",p:220,t:"disjuntor",cat:"prot",icon:"&#11035;"},
+{n:"DR 25A bipolar 30mA",p:85,t:"disjuntor",cat:"prot",icon:"&#128737;"},
+{n:"DR 40A bipolar 30mA",p:110,t:"disjuntor",cat:"prot",icon:"&#128737;"},
+{n:"DR 63A bipolar 30mA",p:150,t:"disjuntor",cat:"prot",icon:"&#128737;"},
+{n:"DPS classe II 275V",p:95,t:"",cat:"prot",icon:"&#9889;"},
+{n:"DPS classe I+II surto",p:180,t:"",cat:"prot",icon:"&#9889;"},
+{n:"Fusivel NH tipo carne 160A",p:35,t:"",cat:"prot",icon:"&#128737;"},
+{n:"Eletroduto rigido PVC 3/4 3m",p:5,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido PVC 1 pol 3m",p:7.5,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido PVC 1.1/4 3m",p:9,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido PVC 1.1/2 3m",p:12,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido PVC 2 pol 3m",p:16,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido aco 3/4 3m",p:15,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido aco 1 pol 3m",p:22,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto rigido aco 2 pol 3m",p:40,t:"eletroduto",cat:"elet",icon:"&#127959;"},
+{n:"Eletroduto flexivel corrugado 3/4 metro",p:1.2,t:"eletroduto",cat:"elet",icon:"&#127744;"},
+{n:"Eletroduto flexivel corrugado 1 pol metro",p:1.8,t:"eletroduto",cat:"elet",icon:"&#127744;"},
+{n:"Eletroduto flexivel corrugado 1.1/2 metro",p:2.5,t:"eletroduto",cat:"elet",icon:"&#127744;"},
+{n:"Curva 90 PVC 3/4",p:2.5,t:"",cat:"elet",icon:"&#8617;"},
+{n:"Curva 90 PVC 1 pol",p:3.5,t:"",cat:"elet",icon:"&#8617;"},
+{n:"Luva PVC 3/4",p:1.5,t:"",cat:"elet",icon:"&#128279;"},
+{n:"Luva PVC 1 pol",p:2,t:"",cat:"elet",icon:"&#128279;"},
+{n:"Conector flexivel 3/4",p:2,t:"",cat:"elet",icon:"&#128279;"},
+{n:"Eletrocalha perfurada 100x50mm metro",p:45,t:"",cat:"elet",icon:"&#127959;"},
+{n:"Canaleta PVC 40x25mm metro",p:12,t:"",cat:"elet",icon:"&#128208;"},
+{n:"Caixa de passagem 4x2 PVC",p:4,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Caixa de passagem 4x4 PVC",p:6,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Caixa octogonal 4x4 PVC",p:5,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Caixa sobrepor metalica 4x2",p:12,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Caixa sobrepor metalica 4x4",p:18,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Caixa hermetica sobrepor externo",p:22,t:"caixa",cat:"cxq",icon:"&#128230;"},
+{n:"Quadro 4 disjuntores embutir",p:45,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro 8 disjuntores embutir",p:70,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro 12 disjuntores embutir",p:95,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro 16 disjuntores embutir",p:130,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro 20 disjuntores embutir",p:160,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro trifasico 16 disjuntores",p:180,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Quadro metalico industrial IP65",p:450,t:"quadro",cat:"cxq",icon:"&#128083;"},
+{n:"Barramento de cobre para quadro",p:35,t:"",cat:"cxq",icon:"&#128208;"},
+{n:"DIN trilho para quadro metro",p:15,t:"",cat:"cxq",icon:"&#128208;"},
+{n:"Tampa cega para disjuntor",p:3,t:"",cat:"cxq",icon:"&#11036;"},
+{n:"Tomada 2P+T 10A padrao NBR",p:12,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada 2P+T 20A padrao NBR",p:18,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada dupla 2P+T 10A",p:22,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada tripla 2P+T 10A",p:35,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada USB-A + USB-C embutida",p:45,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada 2P+T 10A sobrepor",p:15,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada 2P+T 20A sobrepor",p:22,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada industrial 2P+T 16A azul",p:35,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada industrial 3P+T 16A vermelha",p:55,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Tomada industrial 3P+T 32A",p:80,t:"tomada",cat:"disp",icon:"&#128268;"},
+{n:"Interruptor simples 10A",p:10,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Interruptor duplo 10A",p:15,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Interruptor triplo 10A",p:22,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Interruptor paralelo 10A",p:18,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Interruptor intermediario 10A",p:25,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Interruptor sobrepor simples",p:14,t:"interruptor",cat:"disp",icon:"&#128280;"},
+{n:"Dimmer rotativo 600W",p:35,t:"",cat:"disp",icon:"&#128262;"},
+{n:"Dimmer touch 400W",p:65,t:"",cat:"disp",icon:"&#128262;"},
+{n:"Minuteria/timer 16A",p:45,t:"",cat:"disp",icon:"&#9201;"},
+{n:"Sensor de presenca 360 teto",p:35,t:"",cat:"disp",icon:"&#128065;"},
+{n:"Sensor de presenca parede 180",p:28,t:"",cat:"disp",icon:"&#128065;"},
+{n:"Espelho cego 4x2",p:3,t:"",cat:"disp",icon:"&#11036;"},
+{n:"Lampada LED 9W E27 bivolt",p:12,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Lampada LED 12W E27 bivolt",p:15,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Lampada LED 15W E27 bivolt",p:18,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Lampada LED 20W E27 bivolt",p:25,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Lampada LED tubular T8 18W",p:22,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Spot LED embutir 5W",p:25,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Spot LED embutir 9W dicroica",p:35,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Spot LED embutir 12W",p:42,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Trilho de spot 1m com 3 spots",p:120,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Fita LED 5m 2700K warm",p:45,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Fita LED 5m 6500K cold",p:45,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Luminaria sobrepor slim 18W",p:55,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Luminaria calha LED 40W",p:85,t:"",cat:"ilu",icon:"&#128161;"},
+{n:"Refletor LED 20W externo",p:45,t:"",cat:"ilu",icon:"&#128294;"},
+{n:"Refletor LED 50W externo",p:75,t:"",cat:"ilu",icon:"&#128294;"},
+{n:"Refletor LED 100W externo",p:130,t:"",cat:"ilu",icon:"&#128294;"},
+{n:"Haste de aterramento 5/8 x 3m",p:65,t:"",cat:"ate",icon:"&#127757;"},
+{n:"Haste de aterramento 5/8 x 6m",p:110,t:"",cat:"ate",icon:"&#127757;"},
+{n:"Haste de aterramento 3/4 inox 3m",p:95,t:"",cat:"ate",icon:"&#127757;"},
+{n:"Conector de haste olhal bronze",p:12,t:"",cat:"ate",icon:"&#128279;"},
+{n:"Conector de haste grapa",p:15,t:"",cat:"ate",icon:"&#128279;"},
+{n:"Caixa de inspecao para aterramento",p:45,t:"",cat:"ate",icon:"&#128230;"},
+{n:"Barramento cobre 25x3mm metro",p:35,t:"",cat:"ate",icon:"&#9889;"},
+{n:"Barramento cobre 50x5mm metro",p:80,t:"",cat:"ate",icon:"&#9889;"},
+{n:"Terminal solda exotermica",p:28,t:"",cat:"ate",icon:"&#128293;"},
+{n:"Captor Franklin SPDA 40cm",p:180,t:"",cat:"ate",icon:"&#9889;"},
+{n:"Cabo de descida SPDA 50mm2",p:120,t:"",cat:"ate",icon:"&#9889;"},
+{n:"Isolador para mastro SPDA",p:25,t:"",cat:"ate",icon:"&#128297;"},
+{n:"Bentonita tratamento de solo kg",p:8,t:"",cat:"ate",icon:"&#9879;"},
+{n:"Gel condutor para aterramento",p:22,t:"",cat:"ate",icon:"&#128300;"},
+{n:"Abracadeira nylon PCT 100un",p:8,t:"",cat:"fix",icon:"&#11035;"},
+{n:"Abracadeira metalica 3/4 10un",p:12,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Bucha nylon + parafuso 6mm PCT",p:6,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Bucha nylon + parafuso 8mm PCT",p:8,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Parafuso cabeca chata 4x30mm PCT",p:5,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Conector c-pin sapatilha 1.5-2.5mm PCT",p:8,t:"",cat:"fix",icon:"&#128279;"},
+{n:"Conector c-pin sapatilha 4-6mm PCT",p:12,t:"",cat:"fix",icon:"&#128279;"},
+{n:"Terminal de pressao 6mm2 PCT",p:15,t:"",cat:"fix",icon:"&#128279;"},
+{n:"Terminal de pressao 10mm2 PCT",p:18,t:"",cat:"fix",icon:"&#128279;"},
+{n:"Regua de bornes 10A 10 posicoes",p:25,t:"",cat:"fix",icon:"&#128208;"},
+{n:"Regua de bornes 35A 10 posicoes",p:45,t:"",cat:"fix",icon:"&#128208;"},
+{n:"Plugue macho 2P+T 10A",p:8,t:"",cat:"fix",icon:"&#128268;"},
+{n:"Plugue macho 2P+T 20A",p:12,t:"",cat:"fix",icon:"&#128268;"},
+{n:"Tomada femea volante 2P+T 10A",p:10,t:"",cat:"fix",icon:"&#128268;"},
+{n:"Duto organizador de cabos 40x25mm metro",p:15,t:"",cat:"fix",icon:"&#127959;"},
+{n:"Etiqueta identificadora para cabos PCT",p:10,t:"",cat:"fix",icon:"&#127991;"},
+{n:"Abracos para eletroduto 1 pol PCT",p:9,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Parafuso sextavado M6 PCT",p:7,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Aruela lisa M6 PCT",p:4,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Porca sextavada M6 PCT",p:4,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Vedacao borracha para caixa",p:5,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Prensa cabo PG 7 para caixa",p:3,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Prensa cabo PG 11 para caixa",p:4,t:"",cat:"fix",icon:"&#128297;"},
+{n:"Fita crepe 19mm para sinalizacao",p:5,t:"",cat:"fix",icon:"&#127991;"},
+{n:"Spray limpa contato eletrico",p:25,t:"",cat:"fix",icon:"&#128167;"},
+{n:"Graxa dieletrica para conexoes",p:18,t:"",cat:"fix",icon:"&#128167;"}];
+
+const SRV_CHIPS=[
+  {k:'',l:'Todos',cls:'cs-all',icon:''},
+  {k:'res',l:'Residencial',cls:'cs-res',icon:''},
+  {k:'com',l:'Comercial',cls:'cs-com',icon:''},
+  {k:'ind',l:'Industrial',cls:'cs-ind',icon:''},
+  {k:'ate',l:'Aterramento',cls:'cs-ate',icon:''},
+  {k:'ar',l:'Ar-cond',cls:'cs-ar',icon:''},
+  {k:'man',l:'Manutencao',cls:'cs-man',icon:''},
+  {k:'inf',l:'Infraestrutura',cls:'cs-inf',icon:''},
+  {k:'seg',l:'Automacao',cls:'cs-seg',icon:''},
 ];
 
-/* ─── STATE ─── */
+const MAT_CHIPS=[
+  {k:'',l:'Todos',cls:'cm-all',icon:''},
+  {k:'cond',l:'Condutores',cls:'cm-cond',icon:''},
+  {k:'prot',l:'Protecao',cls:'cm-prot',icon:''},
+  {k:'elet',l:'Eletrodutos',cls:'cm-elet',icon:''},
+  {k:'cxq',l:'Caixas/Quadros',cls:'cm-cxq',icon:''},
+  {k:'disp',l:'Dispositivos',cls:'cm-disp',icon:''},
+  {k:'ilu',l:'Iluminacao',cls:'cm-ilu',icon:''},
+  {k:'ate',l:'Aterramento',cls:'cm-ate',icon:''},
+  {k:'fix',l:'Fixacao',cls:'cm-fix',icon:''},
+];
+
+// Contextual select options
+const CORES = ["Preto","Vermelho","Azul","Verde","Branco","Amarelo","Verde/Amarelo (terra)","Cinza","Marrom","Laranja"];
+const INST = ["Embutir","Sobrepor"];
+const TECLAS = [];
+const TAMPA = [];
+const POLO = [];
+const CURVA = [];
+const AMPER = [];
+const TELET = [];
+const UNELET = [];
+const BARR = [];
+const SCPP = [];
+const CCPP = [];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
 let state = {
   darkMode:       false,
   logoBase64:     null,
@@ -1317,20 +1944,31 @@ let state = {
   historico:      [],
   sinalPercent:   30,
   prestadorPadrao:'',
-  clientes:       [],   // NEW: saved clients
-  orcamentoSeq:   1     // NEW: sequential number for PDF
+  clientes:       [],
+  orcamentoSeq:   1,
+  chavePix:       '',
+  instagram:      '',
+  telefonePrestador:'',
+  documento:      '',
+  desconto:       0,
+  validadeDias:   15,
+  cartoes:        '',
+  custoHora:      0,
+  gasolina:       6.0,
+  veiculo:        'hatch',
 };
 
-let dadosOrcamento = null;
-
-/* ─── VEHICLE DATA (kept but simplified to hatch default) ─── */
 const CUSTO_KM = 0.45;
 const EFICIENCIA = 11.0;
-const PRECO_GASOLINA = 6.15;
+let dadosOrcamento = null;
+let srvActiveCat = null;
+let matActiveCat = null;
 
-/* ─── FORMAT HELPERS ─── */
-const fBRL = v => v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+const fBRL = v => v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
 
+// ═══════════════════════════════════════════════
+// UTILITY
+// ═══════════════════════════════════════════════
 function formatarMoeda(input) {
   let v = input.value.replace(/\D/g, '');
   if (!v) { input.value = ''; return; }
@@ -1340,8 +1978,11 @@ function formatarMoeda(input) {
 }
 
 function parseMoeda(str) {
-  if (!str || typeof str !== 'string') return 0;
-  const n = parseFloat(str.replace(/\./g, '').replace(',', '.'));
+  if (!str) return 0;
+  if (typeof str === 'number') return str;
+  // Strip currency symbols, spaces, then convert BR format
+  const cleaned = String(str).replace(/[R$\s]/g, '').replace(/\./g, '').replace(',', '.');
+  const n = parseFloat(cleaned);
   return isNaN(n) ? 0 : n;
 }
 
@@ -1355,84 +1996,12 @@ function mascaraTelefone(input) {
 }
 
 /* ─── INIT ─── */
-window.addEventListener('DOMContentLoaded', () => {
-  loadState();
-  if (state.meusServicos.length === 0)
-    state.meusServicos = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
-  document.getElementById('dataServico').valueAsDate = new Date();
-  adicionarServico();
-  applyTheme();
-  checkExpiredWarranties();
-});
+// (old init removed)
 
-/* ─── PERSISTENCE ─── */
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) state = { ...state, ...JSON.parse(raw) };
-  } catch(e) { console.warn('loadState error', e); }
-  // ensure arrays exist
-  if (!Array.isArray(state.historico))   state.historico   = [];
-  if (!Array.isArray(state.meusServicos)) state.meusServicos = [];
-  if (!Array.isArray(state.clientes))    state.clientes    = [];
-  if (!state.sinalPercent) state.sinalPercent = 30;
-  if (!state.orcamentoSeq) state.orcamentoSeq = 1;
-  applyUIFromState();
+function showToast(msg, duration) {
+  toast(msg);
 }
 
-function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-  catch(e) { console.warn('saveState error', e); }
-}
-
-function applyUIFromState() {
-  // logo
-  const logoArea = document.getElementById('headerLogoArea');
-  const logoImg  = document.getElementById('headerLogoImg');
-  const printLogo= document.getElementById('printLogo');
-  if (state.logoBase64) {
-    logoArea.classList.add('show');
-    logoImg.src = state.logoBase64;
-    printLogo.src = state.logoBase64;
-    printLogo.style.display = 'block';
-  } else {
-    logoArea.classList.remove('show');
-    printLogo.style.display = 'none';
-  }
-  // prestador
-  const npEl = document.getElementById('nomePrestador');
-  if (npEl) npEl.value = state.prestadorPadrao || '';
-  // sinal
-  const csEl = document.getElementById('configSinal');
-  if (csEl) csEl.value = state.sinalPercent || 30;
-  // dark toggle
-  const dt = document.getElementById('darkToggle');
-  if (dt) dt.classList.toggle('on', !!state.darkMode);
-}
-
-/* ─── DARK MODE ─── */
-function applyTheme() {
-  document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
-  const dt = document.getElementById('darkToggle');
-  if (dt) dt.classList.toggle('on', state.darkMode);
-}
-
-function toggleDarkMode() {
-  state.darkMode = !state.darkMode;
-  saveState();
-  applyTheme();
-  showToast(state.darkMode ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado');
-}
-
-/* ─── TOAST ─── */
-function showToast(msg, duration = 2200) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-/* ─── CLIENT AUTOCOMPLETE ─── */
 function onClienteInput(input) {
   const q = input.value.trim().toLowerCase();
   const list = document.getElementById('autocompleteList');
@@ -1487,136 +2056,585 @@ function salvarCliente(nome, telefone, endereco) {
 }
 
 /* ─── SERVICES ─── */
-function adicionarServico() {
-  const container = document.getElementById('services-container');
-  const row = document.createElement('div');
-  row.className = 'service-row';
 
-  const select = document.createElement('select');
-  select.className = 'service-select';
-  select.addEventListener('change', function() { atualizarPrecoInput(this); });
+// ═══════════════════════════════════════════════
+// WARRANTY
+// ═══════════════════════════════════════════════
+function calcWarrantyStatus(item) {
+  if (!item.dataRaw && !item.data) return null;
+  // parse date: try dataRaw (yyyy-mm-dd) first, then data (dd/mm/yyyy)
+  let d;
+  if (item.dataRaw) {
+    d = new Date(item.dataRaw + 'T00:00:00');
+  } else {
+    const parts = item.data.split('/');
+    if (parts.length !== 3) return null;
+    d = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`);
+  }
+  if (isNaN(d.getTime())) return null;
+  const garantia = item.garantia || 90;
+  const expiry = new Date(d.getTime() + garantia * 24 * 3600 * 1000);
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const diff   = Math.ceil((expiry - today) / (24 * 3600 * 1000));
+  return { expiry, daysLeft: diff };
+}
 
-  const defOpt = document.createElement('option');
-  defOpt.value = ''; defOpt.disabled = true; defOpt.selected = true;
-  defOpt.textContent = 'Selecione um serviço...';
-  select.appendChild(defOpt);
-
-  state.meusServicos.forEach(sv => {
-    const o = document.createElement('option');
-    o.value = sv.nome; o.textContent = sv.nome; o.dataset.min = sv.min;
-    select.appendChild(o);
+function checkExpiredWarranties() {
+  const expired = [];
+  const nearExpiry = [];
+  state.historico.forEach(item => {
+    const w = calcWarrantyStatus(item);
+    if (!w) return;
+    if (w.daysLeft <= 0)  expired.push({ item, w });
+    else if (w.daysLeft <= 15) nearExpiry.push({ item, w });
   });
 
-  row.innerHTML = `
-    <div class="row-select-wrapper"></div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <div class="input-prefix" style="flex:1">
-        <span class="prefix" style="font-weight:700">R$</span>
-        <input type="text" class="service-price input-f"
-          placeholder="0,00" oninput="formatarMoeda(this)" inputmode="numeric">
-      </div>
-      <div class="qty-control">
-        <button class="qty-btn" onclick="alterarQtd(this,-1)">−</button>
-        <span class="qty-val">1</span>
-        <button class="qty-btn" onclick="alterarQtd(this,1)">+</button>
-      </div>
-    </div>
-    <button class="del-btn" onclick="this.closest('.service-row').remove()">
-      <svg class="ico" style="font-size:13px"><use href="#i-trash"/></svg>
-    </button>
-  `;
-  row.querySelector('.row-select-wrapper').appendChild(select);
-  container.appendChild(row);
+  const dot = document.getElementById('alertDot');
+  dot.classList.toggle('show', expired.length > 0 || nearExpiry.length > 0);
+
+  const banner = document.getElementById('expiredBanner');
+  const list   = document.getElementById('expiredList');
+  const title  = document.getElementById('expiredTitle');
+
+  if (expired.length === 0 && nearExpiry.length === 0) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  banner.style.display = 'block';
+  title.textContent = `⚠ ${expired.length + nearExpiry.length} alerta(s) de garantia`;
+  list.innerHTML = '';
+
+  [...expired, ...nearExpiry].forEach(({ item, w }) => {
+    const div = document.createElement('div');
+    div.className = 'expired-item';
+    const icon = document.createElement('div');
+    icon.className = 'expired-icon';
+    icon.textContent = w.daysLeft <= 0 ? '🔴' : '🟠';
+    const info = document.createElement('div');
+    const name = document.createElement('div');
+    name.className = 'expired-name';
+    name.textContent = item.cliente;
+    const date = document.createElement('div');
+    date.className = 'expired-date';
+    const exp = w.expiry.toLocaleDateString('pt-BR');
+    date.textContent = w.daysLeft <= 0
+      ? `Venceu em ${exp} (+${Math.abs(w.daysLeft)}d)`
+      : `Vence em ${exp} (${w.daysLeft}d)`;
+    info.appendChild(name); info.appendChild(date);
+    const days = document.createElement('div');
+    days.className = 'expired-days';
+    days.style.color = w.daysLeft <= 0 ? '#f87171' : '#fb923c';
+    days.textContent = w.daysLeft <= 0 ? `+${Math.abs(w.daysLeft)}d` : `${w.daysLeft}d`;
+    div.appendChild(icon); div.appendChild(info); div.appendChild(days);
+    list.appendChild(div);
+  });
 }
 
-function atualizarPrecoInput(select) {
-  const min = parseFloat(select.options[select.selectedIndex].dataset.min || 0);
-  const inp = select.closest('.service-row').querySelector('.service-price');
-  inp.value = min.toFixed(2).replace('.', ',');
-  formatarMoeda(inp);
+/* ─── HISTORY ─── */
+
+// ═══════════════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════════════
+function salvarNoHistorico(dados) {
+  // FIX: avoid duplicates within same second
+  state.historico = state.historico.filter(h => h.id !== dados.id);
+  state.historico.unshift(dados);
+  if (state.historico.length > 20) state.historico.pop();
+  saveState();
 }
 
-function alterarQtd(btn, delta) {
-  const span = btn.parentElement.querySelector('.qty-val');
-  let v = parseInt(span.textContent) + delta;
-  if (v < 1) v = 1;
-  span.textContent = v;
+function openHistory() {
+  renderHistorico();
+  checkExpiredWarranties();
+  document.getElementById('historyOverlay').classList.add('open');
 }
 
-/* ─── CALCULATE ─── */
-function calcularPrecos() {
+function closeHistory() {
+  document.getElementById('historyOverlay').classList.remove('open');
+}
+
+function renderHistorico() {
+  const list = document.getElementById('historyList');
+  list.innerHTML = '';
+  if (!state.historico.length) {
+    const empty = document.createElement('div');
+    empty.style.cssText = 'text-align:center;color:var(--txt3);padding:40px 20px;font-size:13px';
+    empty.textContent = 'Nenhum orçamento salvo ainda.';
+    list.appendChild(empty);
+    return;
+  }
+  state.historico.forEach(item => {
+    const w = calcWarrantyStatus(item);
+    let badgeClass = '', badgeText = '';
+    if (w) {
+      if      (w.daysLeft <= 0)  { badgeClass = 'wb-exp';  badgeText = '✕ Vencido'; }
+      else if (w.daysLeft <= 15) { badgeClass = 'wb-warn'; badgeText = `⚠ ${w.daysLeft}d`; }
+      else                       { badgeClass = 'wb-ok';   badgeText = '✓ OK'; }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'history-item';
+    card.onclick = () => carregarDoHistorico(item);
+
+    const top = document.createElement('div');
+    top.className = 'history-item-top';
+    const nm = document.createElement('div'); nm.className = 'history-item-name';
+    nm.textContent = item.cliente;
+    const vl = document.createElement('div'); vl.className = 'history-item-val';
+    vl.textContent = fBRL(item.total);
+    top.appendChild(nm); top.appendChild(vl);
+
+    const meta = document.createElement('div');
+    meta.className = 'history-item-meta';
+    const dt = document.createElement('span'); dt.textContent = item.data;
+    const badge = document.createElement('span');
+    badge.className = `w-badge ${badgeClass}`;
+    badge.textContent = badgeText;
+    meta.appendChild(dt); meta.appendChild(badge);
+
+    card.appendChild(top); card.appendChild(meta);
+    list.appendChild(card);
+  });
+}
+
+function carregarDoHistorico(item) {
+  if (!confirm('Carregar orçamento de ' + item.cliente + '?')) return;
+  closeHistory();
+
+  // Fill client info
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+  set('nomeCliente',      item.cliente);
+  set('enderecoCliente',  item.endereco);
+  set('telefoneCliente',  item.telefone);
+  set('nomePrestador',    item.prestador);
+  set('detalhesServico',  item.detalhes);
+  set('detalhesGeral',    item.tipo || '');
+  set('distanciaKm',      item.km   || 0);
+  set('tempoHoras',       item.horas || 0);
+
+  // Set service type if available
+  const tipoEl = document.getElementById('tipoServico');
+  if (tipoEl && item.tipo) {
+    const opts = Array.from(tipoEl.options);
+    const match = opts.findIndex(o => o.value === item.tipo || o.text === item.tipo);
+    if (match > -1) tipoEl.selectedIndex = match;
+  }
+
+  // Rebuild service rows from history itens
+  const sc = document.getElementById('srv-container');
+  const se = document.getElementById('srv-empty');
+  if (sc) {
+    sc.innerHTML = '';
+    (item.itens || []).forEach(srv => {
+      const mockE = { stopPropagation: () => {}, target: { textContent: '+', style: {} } };
+      addSrv(mockE, { n: srv.nome || srv.name || '', v: srv.unitario || (srv.total / (srv.qtd || 1)), cat: '', icon: '🔧' });
+    });
+    if (se) se.style.display = sc.children.length ? 'none' : 'flex';
+  }
+
+  // Rebuild material rows
+  const mc = document.getElementById('mat-container');
+  const me = document.getElementById('mat-empty');
+  if (mc) {
+    mc.innerHTML = '';
+    (item.itensMat || []).forEach(mat => {
+      const mockE = { stopPropagation: () => {}, target: { textContent: '+', style: {} } };
+      addMat(mockE, { n: mat.nome || mat.name || '', p: mat.unitario || (mat.total / (mat.qtd || 1)), t: '', cat: '', icon: '📦' });
+    });
+    if (me) me.style.display = mc.children.length ? 'none' : 'flex';
+  }
+
+  updSrvBadge(); updMatBadge(); updFAB();
+  showScreen('screen-input');
+  showToast('Orçamento de ' + item.cliente + ' carregado!');
+}
+
+function limparHistorico() {
+  if (!confirm('Apagar todo o histórico?')) return;
+  state.historico = [];
+  saveState();
+  renderHistorico();
+  checkExpiredWarranties();
+  showToast('🗑 Histórico apagado');
+}
+
+/* ─── SCREEN NAVIGATION ─── */
+
+// ═══════════════════════════════════════════════
+// CONTEXTUAL MATERIAL SELECTS
+// ═══════════════════════════════════════════════
+function mkCtx(ctx,tipo){
+  ctx.innerHTML='';
+  const mk=(arr,cls,ph)=>{
+    const s=document.createElement('select');s.className='ctxs '+cls;
+    const d=document.createElement('option');d.value='';d.disabled=true;d.selected=true;d.textContent=ph;s.appendChild(d);
+    arr.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});
+    ctx.appendChild(s);
+  };
+  if(tipo==='fio'){
+    mk(['Rolo 100m','Unidade'],'','Unidade...');mk(CORES,'or','Cor...');
+    const w=document.createElement('div');w.style.cssText='display:flex;gap:3px';
+    [['PVC 70C','pvc'],['XLPE 90C','xlpe']].forEach(([l,c],i)=>{
+      const b=document.createElement('button');b.className='iso-b'+(i===0?' pvc':'');b.textContent=l;
+      b.onclick=function(){this.parentElement.querySelectorAll('.iso-b').forEach(x=>x.className='iso-b');this.className='iso-b '+c;};
+      w.appendChild(b);
+    });ctx.appendChild(w);
+  }else if(tipo==='caboPP'){mk(SCPP,'or','Secao...');mk(CCPP,'or','Condutores...');}
+  else if(tipo==='disjuntor'){mk(POLO,'gr','Polo...');mk(CURVA,'gr','Curva...');}
+  else if(tipo==='interruptor'){mk(INST,'bl','Instalacao...');mk(TECLAS,'bl','Teclas...');}
+  else if(tipo==='tomada'){mk(INST,'bl','Instalacao...');mk(AMPER,'bl','Amperagem...');}
+  else if(tipo==='caixa'){mk(INST,'bl','Instalacao...');mk(TAMPA,'bl','Tampa...');}
+  else if(tipo==='eletroduto'){mk(TELET,'or','Tipo...');}
+  else if(tipo==='quadro'){mk(BARR,'gr','Barramento...');}
+}
+
+// ═══════════════════════════════════════════════
+// CHIP + PANEL SYSTEM
+// ═══════════════════════════════════════════════
+function buildChips(cid,chips,type){
+  const c=document.getElementById(cid);
+  chips.forEach(ch=>{
+    const el=document.createElement('div');
+    el.className='chip '+ch.cls;
+    el.textContent=ch.l;
+    el.onclick=()=>togglePanel(type,ch,el);
+    c.appendChild(el);
+  });
+}
+
+function togglePanel(type,ch,el){
+  const act=type==='srv'?srvActiveCat:matActiveCat;
+  if(act===ch.k&&ch.k!==''){
+    closePanel(type);
+    document.querySelectorAll('#'+type+'-chips-row .chip').forEach(c=>c.classList.remove('on'));
+    return;
+  }
+  if(type==='srv') srvActiveCat=ch.k||null; else matActiveCat=ch.k||null;
+  document.querySelectorAll('#'+type+'-chips-row .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(type+'-ph-icon').textContent=ch.icon||'';
+  document.getElementById(type+'-ph-name').textContent=ch.l;
+  document.getElementById(type+'-ps').value='';
+  renderItems(type,'');
+  document.getElementById(type+'-panel').classList.add('open');
+}
+
+function closePanel(type){
+  document.getElementById(type+'-panel').classList.remove('open');
+  if(type==='srv') srvActiveCat=null; else matActiveCat=null;
+  document.querySelectorAll('#'+type+'-chips-row .chip').forEach(c=>c.classList.remove('on'));
+}
+
+function renderItems(type,q){
+  const data=type==='srv'?SRV:MAT;
+  const act=type==='srv'?srvActiveCat:matActiveCat;
+  let f=data;
+  if(act) f=f.filter(d=>d.cat===act);
+  if(q) f=f.filter(d=>d.n.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById(type+'-ph-cnt').textContent=f.length;
+  const c=document.getElementById(type+'-panel-items');
+  c.innerHTML='';
+  if(!f.length){
+    const e=document.createElement('div');
+    e.className='panel-empty';
+    e.textContent='Nenhum resultado para "'+q+'"';
+    c.appendChild(e);return;
+  }
+  const em=type==='srv'?'b':'o';
+  f.forEach(d=>{
+    const row=document.createElement('div');
+    row.className='panel-item';
+    const hl=q?d.n.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<em class="'+em+'">$1</em>'):d.n;
+    const val=type==='srv'
+      ?'R$ '+d.v
+      :(d.t==='fio'||d.t==='caboPP'?'R$ '+d.p+'/rolo':'R$ '+(typeof d.p==='number'?d.p.toFixed(2).replace('.',','):d.p));
+    const ac=type==='srv'?'pi-add pi-add-b':'pi-add pi-add-o';
+    const ico=document.createElement('span');ico.className='pi-ico';ico.textContent=d.icon;
+    const nm=document.createElement('span');nm.className='pi-name';nm.innerHTML=hl;
+    const vl=document.createElement('span');vl.className='pi-val';vl.textContent=val;
+    const btn=document.createElement('button');btn.className=ac;btn.textContent='+';
+    btn.addEventListener('click',function(ev){
+      ev.stopPropagation();
+      addItem(ev,type,d);
+    });
+    row.appendChild(ico);row.appendChild(nm);row.appendChild(vl);row.appendChild(btn);
+    c.appendChild(row);
+  });
+}
+
+function filterPanel(type,q){renderItems(type,q);}
+
+// ═══════════════════════════════════════════════
+// ADD / BADGE / FAB
+// ═══════════════════════════════════════════════
+function updSrvBadge(){
+  const _srvC = document.getElementById('srv-container');
+  const rows = _srvC ? _srvC.querySelectorAll('.srv-row') : [];
+  const b=document.getElementById('srv-badge');
+  if(!b) return;
+  if(!rows.length){b.textContent='0 itens';return;}
+  let s=0;
+  rows.forEach(r=>{
+    const p=parseFloat((r.querySelector('.rpi')?.value||'0').replace(/\./g,'').replace(',','.'))||0;
+    const q=parseInt(r.querySelector('.qv')?.value||1);
+    s+=p*q;
+  });
+  b.textContent=rows.length+(rows.length===1?' item':' itens')+' - '+s.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+}
+
+function updMatBadge(){
+  const _matC = document.getElementById('mat-container');
+  const rows = _matC ? _matC.querySelectorAll('.mat-row') : [];
+  const b=document.getElementById('mat-badge');
+  if(!b) return;
+  if(!rows.length){b.textContent='0 itens';return;}
+  let s=0;rows.forEach(r=>{const p=parseFloat((r.querySelector('.rpi')?.value||'0').replace(/\./g,'').replace(',','.'))||0;const q=parseInt(r.querySelector('.qv')?.value||1);s+=p*q;});
+  b.textContent=rows.length+(rows.length===1?' item':' itens')+' - '+fBRL(s);
+}
+
+function addSrv(e,s){
+  const c=document.getElementById('srv-container');
+  document.getElementById('srv-empty').style.display='none';
+  const row=document.createElement('div');
+  row.className='srv-row';
+  // icon + name
+  const nm=document.createElement('span');nm.className='srv-name';
+  nm.textContent=s.icon+' '+s.n;
+  // price input wrapper
+  const pw=document.createElement('div');pw.className='pw';
+  const pp=document.createElement('span');pp.className='pp';pp.textContent='R$';
+  const pi=document.createElement('input');
+  pi.className='rpi';
+  const pv=typeof s.v==='number'?s.v.toFixed(0)+',00':s.v;
+  pi.value=pv;
+  pi.addEventListener('input',function(){fmtPi(this);updFAB();});
+  pw.appendChild(pp);pw.appendChild(pi);
+  // qty wrapper
+  const qw=document.createElement('div');qw.className='qw';
+  const qm=document.createElement('button');qm.className='qb';qm.textContent='-';
+  qm.addEventListener('click',function(){cQ(this,-1);updFAB();});
+  const qi=document.createElement('input');
+  qi.className='qv';qi.type='number';qi.value='1';qi.min='1';
+  qi.style.cssText='width:18px;text-align:center;font-size:8px;font-weight:700;border:none;background:transparent;outline:none;color:#f1f5f9;padding:0';
+  qi.addEventListener('input',function(){updFAB();});
+  const qp=document.createElement('button');qp.className='qb';qp.textContent='+';
+  qp.addEventListener('click',function(){cQ(this,1);updFAB();});
+  qw.appendChild(qm);qw.appendChild(qi);qw.appendChild(qp);
+  // delete
+  const del=document.createElement('button');del.className='delbtn';del.textContent='x';
+  del.addEventListener('click',function(){
+    row.remove();
+    if(!document.querySelector('#srv-container .srv-row'))
+      document.getElementById('srv-empty').style.display='flex';
+    updSrvBadge();updFAB();
+  });
+  row.appendChild(nm);row.appendChild(pw);row.appendChild(qw);row.appendChild(del);
+  c.appendChild(row);
+  updSrvBadge();updFAB();
+  flash(e.target);
+  toast(s.n+' adicionado');
+}
+
+function addMat(e,m){
+  const c=document.getElementById('mat-container');
+  document.getElementById('mat-empty').style.display='none';
+  const row=document.createElement('div');row.className='mat-row';
+  // top row: name + delete
+  const top=document.createElement('div');top.className='mat-top';
+  const mnm=document.createElement('div');mnm.className='mat-name';
+  mnm.textContent=m.icon+' '+m.n;
+  const del=document.createElement('button');del.className='delbtn';
+  del.textContent='x';del.style.marginLeft='5px';
+  del.addEventListener('click',function(){
+    row.remove();
+    if(!document.querySelector('#mat-container .mat-row'))
+      document.getElementById('mat-empty').style.display='flex';
+    updMatBadge();
+  });
+  top.appendChild(mnm);top.appendChild(del);
+  // contextual selects
+  const ctx=document.createElement('div');ctx.className='mat-ctx';
+  mkCtx(ctx,m.t||'');
+  // bottom: price + qty
+  const bot=document.createElement('div');bot.className='mat-bot';
+  const pw=document.createElement('div');pw.className='pw';
+  const pp=document.createElement('span');pp.className='pp';pp.textContent='R$';
+  const pi=document.createElement('input');pi.className='rpi';
+  const pv=typeof m.p==='number'?m.p.toFixed(2).replace('.',','):String(m.p);
+  pi.value=pv;
+  pi.addEventListener('input',function(){fmtPi(this);updMatBadge();});
+  pw.appendChild(pp);pw.appendChild(pi);
+  const qw=document.createElement('div');qw.className='qw';
+  const qm=document.createElement('button');qm.className='qb';qm.textContent='-';
+  qm.addEventListener('click',function(){cQ(this,-1);updMatBadge();});
+  const qi=document.createElement('input');
+  qi.className='qv';qi.type='number';qi.value='1';qi.min='1';
+  qi.style.cssText='width:18px;text-align:center;font-size:8px;font-weight:700;border:none;background:transparent;outline:none;color:#f1f5f9;padding:0';
+  qi.addEventListener('input',function(){updMatBadge();});
+  const qp=document.createElement('button');qp.className='qb';qp.textContent='+';
+  qp.addEventListener('click',function(){cQ(this,1);updMatBadge();});
+  qw.appendChild(qm);qw.appendChild(qi);qw.appendChild(qp);
+  bot.appendChild(pw);bot.appendChild(qw);
+  row.appendChild(top);row.appendChild(ctx);row.appendChild(bot);
+  c.appendChild(row);
+  updMatBadge();
+  flash(e.target);
+  toast(m.n+' adicionado');
+}
+
+function updFAB(){
+  const _srvC = document.getElementById('srv-container');
+  const rows = _srvC ? _srvC.querySelectorAll('.srv-row') : [];
+  let total=0;
+  rows.forEach(r=>{
+    const p=parseFloat((r.querySelector('.rpi')?.value||'0').replace(/\./g,'').replace(',','.'))||0;
+    const q=parseInt(r.querySelector('.qv')?.value||1);
+    total+=p*q;
+  });
+  const fab=document.getElementById('fab-calcular');
+  const dot=document.getElementById('sdot');
+  const txt=document.getElementById('stxt');
+  const sum=document.getElementById('ssum');
+  const bar=document.getElementById('status-bar');
+  if(total>0){
+    fab.classList.add('visible');
+    if(dot) dot.style.cssText='width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px rgba(34,197,94,.5);flex-shrink:0;transition:all .3s';
+    if(txt){txt.style.color='var(--green)';txt.textContent='Pronto para calcular';}
+    if(sum){sum.textContent=fBRL(total);sum.style.opacity='1';}
+    if(bar){bar.style.borderColor='rgba(34,197,94,.25)';bar.style.background='rgba(34,197,94,.04)';}
+  } else {
+    fab.classList.remove('visible');
+    if(dot) dot.style.cssText='width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;transition:all .3s';
+    if(txt){txt.style.color='var(--txt2)';txt.textContent='Selecione um servico para calcular';}
+    if(sum){sum.style.opacity='0';}
+    if(bar){bar.style.borderColor='var(--border)';bar.style.background='';}
+  }
+}
+
+// ═══════════════════════════════════════════════
+// CALCULATION ENGINE (from App2)
+// ═══════════════════════════════════════════════
+
+function _coletarServicos() {
   let totalServicos = 0;
   const itens = [];
-
-  document.querySelectorAll('.service-row').forEach(row => {
-    const sel   = row.querySelector('select');
-    if (!sel || sel.selectedIndex <= 0) return;
-    const nome  = sel.value;
-    const preco = parseMoeda(row.querySelector('.service-price').value);
-    const qtd   = parseInt(row.querySelector('.qty-val').textContent) || 1;
-    if (nome && preco > 0) {
+  const container = document.getElementById('srv-container');
+  if (!container) return { totalServicos, itens };
+  const rows = container.querySelectorAll ? container.querySelectorAll('.srv-row') :
+               document.querySelectorAll('#srv-container .srv-row');
+  rows.forEach(row => {
+    const nmEl = row.querySelector('.srv-name');
+    const nome = nmEl ? nmEl.textContent.trim() : '';
+    if (!nome) return;
+    const preco = parseMoeda(row.querySelector('.rpi')?.value || '0');
+    const qtd = parseInt(row.querySelector('.qv')?.value || 1);
+    if (preco > 0) {
       totalServicos += preco * qtd;
-      itens.push({ nome, qtd, total: preco * qtd, unitario: preco });
+      itens.push({ nome, qtd, total: preco * qtd });
     }
   });
+  return { totalServicos, itens };
+}
+
+function _coletarMateriais() {
+  let mat = 0;
+  const itensMat = [];
+  (document.getElementById('mat-container') || {querySelectorAll:()=>[]}).querySelectorAll('.mat-row').forEach(row => {
+    const nmEl = row.querySelector('.mat-name');
+    let nome = nmEl ? nmEl.textContent.trim() : '';
+    if (!nome) return;
+    const preco = parseMoeda(row.querySelector('.rpi')?.value || '0');
+    const qtd = parseInt(row.querySelector('.qv')?.value || 1);
+    // Append contextual select values to name
+    const selects = row.querySelectorAll('.ctxs');
+    const isoActive = row.querySelector('.iso-b.pvc, .iso-b.xlpe');
+    const details = [...selects].map(s => s.value).filter(Boolean);
+    if (isoActive) details.push(isoActive.textContent);
+    if (details.length) nome = nome + ' (' + details.join(' | ') + ')';
+    if (preco > 0) {
+      mat += preco * qtd;
+      itensMat.push({ nome, qtd, total: preco * qtd, unitario: preco });
+    }
+  });
+  return { mat, itensMat };
+}
+
+function _calcularTotais(totalServicos, mat) {
+  const km = parseFloat(document.getElementById('distanciaKm')?.value) || 0;
+  const horas = parseFloat(document.getElementById('tempoHoras')?.value) || 0;
+  const custoLog = km * CUSTO_KM;
+  const custoHoras = horas * (state.custoHora || 0);
+  const totalFinal = totalServicos + mat + custoLog + custoHoras;
+  const percSinal = state.sinalPercent || 30;
+  const valorSinal = totalFinal * (percSinal / 100);
+  return { km, horas, custoLog, custoHoras, totalFinal, percSinal, valorSinal };
+}
+
+function _exibirResultados(totais, totalServicos, mat) {
+  const el = id => document.getElementById(id);
+  if(el('displayLogistica'))    el('displayLogistica').textContent    = fBRL(totais.custoLog);
+  if(el('displayMaoObra'))      el('displayMaoObra').textContent      = fBRL(totalServicos);
+  if(el('displayMateriais'))    el('displayMateriais').textContent    = fBRL(mat);
+  if(el('displayPrecoFinal'))   el('displayPrecoFinal').textContent   = fBRL(totais.totalFinal);
+  if(el('displayLucroLiquido')) el('displayLucroLiquido').textContent = fBRL(totalServicos - mat - totais.custoLog - totais.custoHoras);
+  if(el('displayDespesas'))     el('displayDespesas').textContent     = fBRL(mat + totais.custoLog + totais.custoHoras);
+  showScreen('screen-results');
+  updFAB();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcularPrecos() {
+  const { totalServicos, itens } = _coletarServicos();
 
   if (totalServicos === 0) {
     showToast('⚠️ Adicione ao menos um serviço com valor.');
     return;
   }
 
-  const mat      = parseMoeda(document.getElementById('custoPecas').value);
-  const km       = parseFloat(document.getElementById('distanciaKm').value)  || 0;
-  const garantia = parseInt(document.getElementById('inputGarantia').value)   || 90;
-  const custoLog = km * ((PRECO_GASOLINA / EFICIENCIA) + CUSTO_KM);
-  const despesas = mat + custoLog;
-  const totalFinal = totalServicos + despesas;
-  const lucroLiq   = totalServicos - custoLog; // mão de obra menos deslocamento
-  const percSinal  = state.sinalPercent || 30;
-  const valorSinal = totalFinal * (percSinal / 100);
+  const { mat, itensMat } = _coletarMateriais();
+  const totais = _calcularTotais(totalServicos, mat);
 
-  // Update displays
-  document.getElementById('displayPrecoFinal').textContent  = fBRL(totalFinal);
-  document.getElementById('displayLucroLiquido').textContent= fBRL(lucroLiq);
-  document.getElementById('displayDespesas').textContent    = fBRL(despesas);
-  document.getElementById('displayLogistica').textContent   = fBRL(custoLog);
-  document.getElementById('displayMaoObra').textContent     = fBRL(totalServicos);
-  document.getElementById('displayMateriais').textContent   = fBRL(mat);
-
-  const cliente   = document.getElementById('nomeCliente').value    || 'Cliente';
-  const prestador = document.getElementById('nomePrestador').value  || 'Técnico';
-  const endereco  = document.getElementById('enderecoCliente').value|| '';
-  const telefone  = document.getElementById('telefoneCliente').value|| '';
-  const detalhes  = document.getElementById('detalhesServico').value|| '';
-  const dataRaw   = document.getElementById('dataServico').value;
-  const hora      = document.getElementById('horaServico').value;
+  const tipo      = document.getElementById('tipoServico')?.value || '';
+  const cliente   = document.getElementById('nomeCliente')?.value    || 'Cliente';
+  const prestador = document.getElementById('nomePrestador')?.value  || 'Técnico';
+  const endereco  = document.getElementById('enderecoCliente')?.value || '';
+  const telefone  = document.getElementById('telefoneCliente')?.value || '';
+  const detalhes  = document.getElementById('detalhesServico')?.value || '';
+  const detGeral  = document.getElementById('detalhesGeral')?.value   || '';
+  const detMat    = document.getElementById('detalhesMateriais')?.value || '';
+  const dataRaw   = document.getElementById('dataServico')?.value     || '';
+  const hora      = document.getElementById('horaServico')?.value     || '';
+  const garantia  = parseInt(document.getElementById('inputGarantia')?.value) || 90;
   const dataFmt   = dataRaw ? dataRaw.split('-').reverse().join('/') : '--/--/--';
 
   dadosOrcamento = {
-    id:          Date.now(),
-    seq:         state.orcamentoSeq++,
-    prestador, cliente, endereco, telefone, detalhes,
+    id:           Date.now(),
+    seq:          state.orcamentoSeq++,
+    tipo, prestador, cliente, endereco, telefone,
+    detalhes: [detGeral, detalhes, detMat].filter(Boolean).join(' | '),
     data: dataFmt, dataRaw, hora,
-    itens, total: totalFinal, sinal: valorSinal, sinalPercent: percSinal,
-    saldo: totalFinal - valorSinal,
-    mat, garantia,
-    garantiaStr: `${garantia} dias`
+    itens, itensMat,
+    total:        totais.totalFinal,
+    sinal:        totais.valorSinal,
+    sinalPercent: totais.percSinal,
+    saldo:        totais.totalFinal - totais.valorSinal,
+    mat,
+    garantia,
+    garantiaStr: garantia + ' dias',
   };
 
-  // Save client
   salvarCliente(cliente, telefone, endereco);
-  // Save to history
   salvarNoHistorico(dadosOrcamento);
   saveState();
 
   gerarMensagensProntas(dadosOrcamento);
+  _exibirResultados(totais, totalServicos, mat);
   checkExpiredWarranties();
-
-  showScreen('screen-results');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ─── MESSAGES ─── */
+
 function gerarMensagensProntas(d) {
   const lista = d.itens.map(i => `• ${i.qtd}x ${i.nome} — ${fBRL(i.total)}`).join('\n');
   const endTxt = d.endereco ? `\n📍 *Local:* ${d.endereco}` : '';
@@ -1632,6 +2650,10 @@ function gerarMensagensProntas(d) {
 }
 
 /* ─── PDF ─── */
+
+// ═══════════════════════════════════════════════
+// PDF & SHARE
+// ═══════════════════════════════════════════════
 async function compartilharPDF() {
   const d = dadosOrcamento;
   if (!d) return;
@@ -1708,380 +2730,356 @@ function copiarTexto(id, btn) {
 }
 
 /* ─── EXPIRED WARRANTIES ─── */
-function calcWarrantyStatus(item) {
-  if (!item.dataRaw && !item.data) return null;
-  // parse date: try dataRaw (yyyy-mm-dd) first, then data (dd/mm/yyyy)
-  let d;
-  if (item.dataRaw) {
-    d = new Date(item.dataRaw + 'T00:00:00');
-  } else {
-    const parts = item.data.split('/');
-    if (parts.length !== 3) return null;
-    d = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`);
-  }
-  if (isNaN(d.getTime())) return null;
-  const garantia = item.garantia || 90;
-  const expiry = new Date(d.getTime() + garantia * 24 * 3600 * 1000);
-  const today  = new Date(); today.setHours(0,0,0,0);
-  const diff   = Math.ceil((expiry - today) / (24 * 3600 * 1000));
-  return { expiry, daysLeft: diff };
-}
 
-function checkExpiredWarranties() {
-  const expired = [];
-  const nearExpiry = [];
-  state.historico.forEach(item => {
-    const w = calcWarrantyStatus(item);
-    if (!w) return;
-    if (w.daysLeft <= 0)  expired.push({ item, w });
-    else if (w.daysLeft <= 15) nearExpiry.push({ item, w });
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  ['screen-input','screen-results'].forEach(sid => {
+    const el = document.getElementById(sid);
+    if (el) el.classList.remove('active');
   });
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  const dot = document.getElementById('alertDot');
-  dot.classList.toggle('show', expired.length > 0 || nearExpiry.length > 0);
-
-  const banner = document.getElementById('expiredBanner');
-  const list   = document.getElementById('expiredList');
-  const title  = document.getElementById('expiredTitle');
-
-  if (expired.length === 0 && nearExpiry.length === 0) {
-    banner.style.display = 'none';
-    return;
-  }
-
-  banner.style.display = 'block';
-  title.textContent = `⚠ ${expired.length + nearExpiry.length} alerta(s) de garantia`;
-  list.innerHTML = '';
-
-  [...expired, ...nearExpiry].forEach(({ item, w }) => {
-    const div = document.createElement('div');
-    div.className = 'expired-item';
-    const icon = document.createElement('div');
-    icon.className = 'expired-icon';
-    icon.textContent = w.daysLeft <= 0 ? '🔴' : '🟠';
-    const info = document.createElement('div');
-    const name = document.createElement('div');
-    name.className = 'expired-name';
-    name.textContent = item.cliente;
-    const date = document.createElement('div');
-    date.className = 'expired-date';
-    const exp = w.expiry.toLocaleDateString('pt-BR');
-    date.textContent = w.daysLeft <= 0
-      ? `Venceu em ${exp} (+${Math.abs(w.daysLeft)}d)`
-      : `Vence em ${exp} (${w.daysLeft}d)`;
-    info.appendChild(name); info.appendChild(date);
-    const days = document.createElement('div');
-    days.className = 'expired-days';
-    days.style.color = w.daysLeft <= 0 ? '#f87171' : '#fb923c';
-    days.textContent = w.daysLeft <= 0 ? `+${Math.abs(w.daysLeft)}d` : `${w.daysLeft}d`;
-    div.appendChild(icon); div.appendChild(info); div.appendChild(days);
-    list.appendChild(div);
+function reiniciar() {
+  // Clear service rows
+  const sc = document.getElementById('srv-container');
+  if(sc) { while(sc.firstChild) sc.removeChild(sc.firstChild); sc.innerHTML = ''; }
+  const mc = document.getElementById('mat-container');
+  if(mc) { while(mc.firstChild) mc.removeChild(mc.firstChild); mc.innerHTML = ''; }
+  // Show empties
+  const se = document.getElementById('srv-empty');
+  if(se) se.style.display = 'flex';
+  const me = document.getElementById('mat-empty');
+  if(me) me.style.display = 'flex';
+  // Clear badges
+  updSrvBadge();
+  updMatBadge();
+  // Clear fields
+  ['nomeCliente','enderecoCliente','telefoneCliente','detalhesServico',
+   'detalhesGeral','detalhesMateriais','distanciaKm','tempoHoras'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
   });
-}
-
-/* ─── HISTORY ─── */
-function salvarNoHistorico(dados) {
-  // FIX: avoid duplicates within same second
-  state.historico = state.historico.filter(h => h.id !== dados.id);
-  state.historico.unshift(dados);
-  if (state.historico.length > 20) state.historico.pop();
-  saveState();
-}
-
-function openHistory() {
-  renderHistorico();
-  checkExpiredWarranties();
-  document.getElementById('historyOverlay').classList.add('open');
-}
-
-function closeHistory() {
-  document.getElementById('historyOverlay').classList.remove('open');
-}
-
-function renderHistorico() {
-  const list = document.getElementById('historyList');
-  list.innerHTML = '';
-  if (!state.historico.length) {
-    const empty = document.createElement('div');
-    empty.style.cssText = 'text-align:center;color:var(--txt3);padding:40px 20px;font-size:13px';
-    empty.textContent = 'Nenhum orçamento salvo ainda.';
-    list.appendChild(empty);
-    return;
-  }
-  state.historico.forEach(item => {
-    const w = calcWarrantyStatus(item);
-    let badgeClass = '', badgeText = '';
-    if (w) {
-      if      (w.daysLeft <= 0)  { badgeClass = 'wb-exp';  badgeText = '✕ Vencido'; }
-      else if (w.daysLeft <= 15) { badgeClass = 'wb-warn'; badgeText = `⚠ ${w.daysLeft}d`; }
-      else                       { badgeClass = 'wb-ok';   badgeText = '✓ OK'; }
-    }
-
-    const card = document.createElement('div');
-    card.className = 'history-item';
-    card.onclick = () => carregarDoHistorico(item);
-
-    const top = document.createElement('div');
-    top.className = 'history-item-top';
-    const nm = document.createElement('div'); nm.className = 'history-item-name';
-    nm.textContent = item.cliente;
-    const vl = document.createElement('div'); vl.className = 'history-item-val';
-    vl.textContent = fBRL(item.total);
-    top.appendChild(nm); top.appendChild(vl);
-
-    const meta = document.createElement('div');
-    meta.className = 'history-item-meta';
-    const dt = document.createElement('span'); dt.textContent = item.data;
-    const badge = document.createElement('span');
-    badge.className = `w-badge ${badgeClass}`;
-    badge.textContent = badgeText;
-    meta.appendChild(dt); meta.appendChild(badge);
-
-    card.appendChild(top); card.appendChild(meta);
-    list.appendChild(card);
-  });
-}
-
-function carregarDoHistorico(item) {
-  if (!confirm(`Carregar orçamento de ${item.cliente}?`)) return;
-
-  document.getElementById('nomeCliente').value     = item.cliente;
-  document.getElementById('enderecoCliente').value = item.endereco || '';
-  document.getElementById('telefoneCliente').value = item.telefone || '';
-  document.getElementById('nomePrestador').value   = item.prestador || '';
-  document.getElementById('detalhesServico').value = item.detalhes  || '';
-  document.getElementById('custoPecas').value      = '';
-  if (item.mat) {
-    document.getElementById('custoPecas').value = item.mat.toFixed(2).replace('.', ',');
-    formatarMoeda(document.getElementById('custoPecas'));
-  }
-  // FIX: restore date correctly
-  if (item.dataRaw) {
-    document.getElementById('dataServico').value = item.dataRaw;
-  }
-  if (item.hora) {
-    document.getElementById('horaServico').value = item.hora;
-  }
-
-  const container = document.getElementById('services-container');
-  container.innerHTML = '';
-
-  (item.itens || []).forEach(servico => {
-    const row = document.createElement('div');
-    row.className = 'service-row';
-
-    const select = document.createElement('select');
-    select.className = 'service-select';
-    select.addEventListener('change', function() { atualizarPrecoInput(this); });
-
-    const defOpt = document.createElement('option');
-    defOpt.value = ''; defOpt.textContent = 'Selecione...';
-    select.appendChild(defOpt);
-
-    let found = false;
-    state.meusServicos.forEach(sv => {
-      const o = document.createElement('option');
-      o.value = sv.nome; o.textContent = sv.nome; o.dataset.min = sv.min;
-      if (sv.nome === servico.nome) { o.selected = true; found = true; }
-      select.appendChild(o);
-    });
-    // if service not in list anymore, add it temporarily
-    if (!found && servico.nome) {
-      const o = document.createElement('option');
-      o.value = servico.nome; o.textContent = servico.nome;
-      o.dataset.min = servico.unitario || 0;
-      o.selected = true;
-      select.appendChild(o);
-    }
-
-    row.innerHTML = `
-      <div class="row-select-wrapper"></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <div class="input-prefix" style="flex:1">
-          <span class="prefix" style="font-weight:700">R$</span>
-          <input type="text" class="service-price input-f" placeholder="0,00"
-            oninput="formatarMoeda(this)" inputmode="numeric">
-        </div>
-        <div class="qty-control">
-          <button class="qty-btn" onclick="alterarQtd(this,-1)">−</button>
-          <span class="qty-val">${s(servico.qtd || 1)}</span>
-          <button class="qty-btn" onclick="alterarQtd(this,1)">+</button>
-        </div>
-      </div>
-      <button class="del-btn" onclick="this.closest('.service-row').remove()">
-        <svg class="ico" style="font-size:13px"><use href="#i-trash"/></svg>
-      </button>
-    `;
-    row.querySelector('.row-select-wrapper').appendChild(select);
-    const priceInput = row.querySelector('.service-price');
-    if (servico.unitario) {
-      priceInput.value = servico.unitario.toFixed(2).replace('.', ',');
-      formatarMoeda(priceInput);
-    }
-    container.appendChild(row);
-  });
-
-  closeHistory();
-  // FIX: show input screen (not hide it)
+  const tipo = document.getElementById('tipoServico');
+  if(tipo) { tipo.selectedIndex = 0; tipo.style.color = ''; }
+  dadosOrcamento = null;
+  updFAB();
   showScreen('screen-input');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function limparHistorico() {
-  if (!confirm('Apagar todo o histórico?')) return;
-  state.historico = [];
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = { ...state, ...JSON.parse(raw) };
+  } catch(e) { console.warn('loadState error', e); }
+  // ensure arrays exist
+  if (!Array.isArray(state.historico))   state.historico   = [];
+  if (!Array.isArray(state.meusServicos)) state.meusServicos = [];
+  if (!Array.isArray(state.clientes))    state.clientes    = [];
+  if (!state.sinalPercent) state.sinalPercent = 30;
+  if (!state.orcamentoSeq) state.orcamentoSeq = 1;
+  applyUIFromState();
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e) { console.warn('saveState error', e); }
+}
+
+function applyUIFromState() {
+  // logo
+  const logoArea = document.getElementById('headerLogoArea');
+  const logoImg  = document.getElementById('headerLogoImg');
+  const printLogo= document.getElementById('printLogo');
+  if (state.logoBase64) {
+    logoArea.classList.add('show');
+    logoImg.src = state.logoBase64;
+    printLogo.src = state.logoBase64;
+    printLogo.style.display = 'block';
+  } else {
+    logoArea.classList.remove('show');
+    printLogo.style.display = 'none';
+  }
+  // prestador
+  // sync prestador in form AND config field
+  const npEl = document.getElementById('nomePrestador');
+  if (npEl) npEl.value = state.prestadorPadrao || '';
+  const cpEl = document.getElementById('configNomePrestador');
+  if (cpEl) cpEl.value = state.prestadorPadrao || '';
+  // sinal
+  const csEl = document.getElementById('configSinal');
+  if (csEl) csEl.value = state.sinalPercent || 30;
+  // dark toggle
+  const dt = document.getElementById('darkToggle');
+  if (dt) dt.classList.toggle('on', !!state.darkMode);
+}
+
+/* ─── DARK MODE ─── */
+
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : 'light');
+  const dt = document.getElementById('darkToggle');
+  if (dt) dt.classList.toggle('on', state.darkMode);
+}
+
+function toggleDarkMode() {
+  state.darkMode = !state.darkMode;
   saveState();
-  renderHistorico();
-  checkExpiredWarranties();
-  showToast('🗑 Histórico apagado');
+  applyTheme();
+  showToast(state.darkMode ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado');
 }
 
-/* ─── SCREEN NAVIGATION ─── */
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(sc => sc.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+/* ─── TOAST ─── */
+
+function fmtPi(inp){let v=inp.value.replace(/\D/g,'');if(!v){inp.value='';return;}v=(parseInt(v)/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d{3})+(?!\d))/g,'$1.');inp.value=v;}
+
+function cQ(btn,d){const i=btn.parentElement.querySelector('.qv');let v=parseInt(i.value||1)+d;if(v<1)v=1;i.value=v;}
+
+function flash(btn){
+  if(!btn) return;
+  const orig=btn.textContent;
+  btn.textContent='v';
+  btn.style.background='rgba(34,197,94,.2)';
+  btn.style.color='var(--green)';
+  setTimeout(()=>{
+    if(btn){btn.textContent=orig;btn.style.background='';btn.style.color='';}
+  },700);
 }
 
-function reiniciar() {
-  showScreen('screen-input');
-  window.scrollTo({ top:0, behavior:'smooth' });
+function toast(msg){
+  const t=document.getElementById('toast-el');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{t.style.transform='translateX(-50%) translateY(80px)';},1800);
 }
 
-/* ─── ACCORDION ─── */
-function toggleAcc(id) {
-  document.getElementById(id).classList.toggle('open');
+buildChips('srv-chips-row',SRV_CHIPS,'srv');
+buildChips('mat-chips-row',MAT_CHIPS,'mat');
+buildChips('mat-chips-row',MAT_CHIPS,'mat');
+
+
+function alterarQtd(btn, delta) {
+  const row = btn.closest('.srv-row') || btn.closest('.mat-row') || btn.parentElement;
+  if (!row) return;
+  const inp = row.querySelector('.qv');
+  if (!inp) return;
+  let v = parseInt(inp.value || 1) + delta;
+  if (v < 1) v = 1;
+  inp.value = v;
+  // Trigger badge/FAB update
+  const isSrv = !!btn.closest('.srv-row') || !!row.closest('#srv-container');
+  if (isSrv) { updSrvBadge(); updFAB(); } else { updMatBadge(); }
 }
 
-/* ─── SETTINGS ─── */
+function addItem(e, type, d) {
+  e.stopPropagation();
+  if (type === 'srv') addSrv(e, d);
+  else addMat(e, d);
+}
+
+function alerta(msg) { showToast(msg); }
+
+function toggleAcc(el) {
+  const content = el.nextElementSibling;
+  if (!content) return;
+  const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+  content.style.maxHeight = isOpen ? '0px' : content.scrollHeight + 'px';
+  el.classList.toggle('open', !isOpen);
+}
+
+// openSettings replaced
+
+// closeSettings replaced
+
+// salvarConfiguracoes replaced
+
+// exportarDados replaced
+
+// removerLogo replaced
+
+// adicionarServicoBase replaced
+
+// ─────────────────────────────────────────────────────
+// SETTINGS FUNCTIONS
+// ─────────────────────────────────────────────────────
 function openSettings() {
-  renderListaServicosBase();
-  document.getElementById('configSinal').value = state.sinalPercent || 30;
-  document.getElementById('settingsModal').classList.add('open');
+  const m = document.getElementById('settingsModal');
+  if (!m) return;
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  _fillSettingsFields();
 }
 
 function closeSettings() {
-  document.getElementById('settingsModal').classList.remove('open');
+  const m = document.getElementById('settingsModal');
+  if (!m) return;
+  m.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function _fillSettingsFields() {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+  set('configNomePrestador', state.prestadorPadrao);
+  set('configPix',           state.chavePix);
+  set('configTelPrestador',  state.telefonePrestador);
+  set('configInstagram',     state.instagram);
+  set('configDocumento',     state.documento);
+  set('configSinal',         state.sinalPercent || 30);
+  set('configDesconto',      state.desconto || 0);
+  set('configValidade',      state.validadeDias || 15);
+  set('configCartoes',       state.cartoes || '');
+  set('configCustoHora',     state.custoHora || 0);
+  const pa = document.getElementById('logoPreviewArea');
+  const pi = document.getElementById('logoPreviewImg');
+  if (pa && pi) {
+    if (state.logoBase64) { pi.src = state.logoBase64; pa.style.display = 'block'; }
+    else pa.style.display = 'none';
+  }
+  renderServicosBase();
 }
 
 function salvarConfiguracoes() {
-  state.prestadorPadrao = document.getElementById('nomePrestador').value;
-  state.sinalPercent    = parseFloat(document.getElementById('configSinal').value) || 30;
+  const get = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  state.prestadorPadrao   = get('configNomePrestador');
+  state.chavePix          = get('configPix');
+  state.telefonePrestador = get('configTelPrestador');
+  state.instagram         = get('configInstagram');
+  state.documento         = get('configDocumento');
+  state.sinalPercent      = parseInt(get('configSinal'))     || 30;
+  state.desconto          = parseFloat(get('configDesconto')) || 0;
+  state.validadeDias      = parseInt(get('configValidade'))   || 15;
+  state.cartoes           = get('configCartoes');
+  state.custoHora         = parseFloat(get('configCustoHora'))|| 0;
+  const np = document.getElementById('nomePrestador');
+  if (np) np.value = state.prestadorPadrao;
   saveState();
-  applyUIFromState();
   closeSettings();
-  showToast('✅ Configurações salvas!');
+  showToast('Configuracoes salvas!');
 }
 
 function handleLogoUpload(input) {
-  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 500000) { showToast('Logo muito grande. Max 500KB.'); return; }
   const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.src = e.target.result;
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      const maxW = 300;
-      canvas.width  = maxW;
-      canvas.height = this.height * (maxW / this.width);
-      canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
-      state.logoBase64 = canvas.toDataURL('image/jpeg', .75);
-      applyUIFromState();
-      showToast('✅ Logo carregada!');
-    };
+  reader.onload = (e) => {
+    state.logoBase64 = e.target.result;
+    saveState();
+    applyUIFromState();
+    const pa = document.getElementById('logoPreviewArea');
+    const pi = document.getElementById('logoPreviewImg');
+    if (pa && pi) { pi.src = state.logoBase64; pa.style.display = 'block'; }
+    showToast('Logo carregada!');
   };
-  reader.readAsDataURL(input.files[0]);
+  reader.readAsDataURL(file);
 }
 
 function removerLogo() {
   state.logoBase64 = null;
-  document.getElementById('logoInput').value = '';
+  saveState();
   applyUIFromState();
+  const pa = document.getElementById('logoPreviewArea');
+  if (pa) pa.style.display = 'none';
   showToast('Logo removida');
 }
 
-function renderListaServicosBase() {
+function adicionarServicoBase() {
+  const nEl = document.getElementById('novoServicoNome');
+  const vEl = document.getElementById('novoServicoValor');
+  const nome = nEl ? nEl.value.trim() : '';
+  const valor = vEl ? parseFloat(vEl.value) : 0;
+  if (!nome) { showToast('Digite o nome do servico'); return; }
+  if (!valor || valor <= 0) { showToast('Digite um valor valido'); return; }
+  if (!Array.isArray(state.meusServicos)) state.meusServicos = [];
+  state.meusServicos.push({ id: Date.now(), nome, valor });
+  saveState();
+  if (nEl) nEl.value = '';
+  if (vEl) vEl.value = '';
+  renderServicosBase();
+  showToast('Servico "' + nome + '" adicionado!');
+}
+
+function removerServicoBase(id) {
+  state.meusServicos = (state.meusServicos || []).filter(s => s.id !== id);
+  saveState();
+  renderServicosBase();
+}
+
+function renderServicosBase() {
   const container = document.getElementById('listaServicosBase');
+  if (!container) return;
   container.innerHTML = '';
-  state.meusServicos.forEach((sv, idx) => {
+  const servicos = state.meusServicos || [];
+  if (!servicos.length) {
+    container.innerHTML = '<div style="padding:12px;text-align:center;font-size:12px;color:var(--txt3)">Nenhum servico personalizado ainda.</div>';
+    return;
+  }
+  servicos.forEach(s => {
     const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 4px;border-bottom:1px solid var(--border);font-size:12px';
-
-    const nm = document.createElement('span');
-    nm.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;color:var(--txt)';
-    nm.textContent = sv.nome;
-
-    const right = document.createElement('div');
-    right.style.cssText = 'display:flex;align-items:center;gap:10px;flex-shrink:0';
-
-    const val = document.createElement('span');
-    val.style.cssText = 'color:var(--txt3);font-weight:600';
-    val.textContent = `R$ ${sv.min}`;
-
-    const btn = document.createElement('button');
-    btn.style.cssText = 'background:none;border:none;cursor:pointer;color:#ef4444;padding:2px';
-    btn.innerHTML = '<svg class="ico" style="font-size:12px"><use href="#i-trash"/></svg>';
-    btn.onclick = () => removeServicoBase(idx);
-
-    right.appendChild(val); right.appendChild(btn);
-    row.appendChild(nm); row.appendChild(right);
+    row.className = 'srv-base-row';
+    const nm = document.createElement('span'); nm.className = 'srv-base-name'; nm.textContent = s.nome;
+    const vl = document.createElement('span'); vl.className = 'srv-base-val'; vl.textContent = fBRL(s.valor);
+    const del = document.createElement('button'); del.className = 'srv-base-del'; del.textContent = 'x';
+    del.onclick = () => removerServicoBase(s.id);
+    row.appendChild(nm); row.appendChild(vl); row.appendChild(del);
     container.appendChild(row);
   });
 }
 
-function adicionarServicoBase() {
-  const nome = document.getElementById('novoServicoNome').value.trim();
-  const min  = parseFloat(document.getElementById('novoServicoValor').value);
-  if (!nome || isNaN(min) || min < 0) {
-    showToast('⚠️ Preencha nome e valor válido'); return;
-  }
-  state.meusServicos.push({ nome, min });
-  document.getElementById('novoServicoNome').value  = '';
-  document.getElementById('novoServicoValor').value = '';
-  renderListaServicosBase();
-  saveState();
-  showToast(`✅ "${nome}" adicionado!`);
-}
-
-function removeServicoBase(idx) {
-  state.meusServicos.splice(idx, 1);
-  renderListaServicosBase();
-  saveState();
-}
-
-/* ─── BACKUP ─── */
 function exportarDados() {
-  const data = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state));
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
   const a = document.createElement('a');
-  a.href = data;
-  a.download = `backup_eletricista_power_${new Date().toISOString().slice(0,10)}.json`;
+  a.href = URL.createObjectURL(blob);
+  a.download = 'eletricista_power_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
   a.click();
-  showToast('✅ Backup baixado!');
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  showToast('Backup exportado!');
 }
 
 function importarDados(input) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
+  reader.onload = (e) => {
     try {
-      const loaded = JSON.parse(e.target.result);
-      if (loaded && (loaded.meusServicos || loaded.historico)) {
-        state = { ...state, ...loaded };
-        saveState();
-        showToast('✅ Dados restaurados!');
-        setTimeout(() => location.reload(), 1200);
-      } else { showToast('⚠️ Arquivo inválido'); }
-    } catch { showToast('❌ Erro ao ler backup'); }
+      const data = JSON.parse(e.target.result);
+      if (!data || typeof data !== 'object') throw new Error('invalido');
+      state = { ...state, ...data };
+      saveState();
+      applyUIFromState();
+      _fillSettingsFields();
+      showToast('Dados restaurados!');
+    } catch(err) {
+      showToast('Erro ao restaurar: arquivo invalido');
+    }
   };
   reader.readAsText(file);
 }
 
-/* ─── SERVICE WORKER ─── */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
-  });
-}
+// INIT
+document.addEventListener('DOMContentLoaded', function() {
+  loadState();
+  applyUIFromState();
+  checkExpiredWarranties();
+  buildChips('srv-chips-row', SRV_CHIPS, 'srv');
+  buildChips('mat-chips-row', MAT_CHIPS, 'mat');
+  const dsEl = document.getElementById('dataServico');
+  if(dsEl) dsEl.valueAsDate = new Date();
+  const telInput = document.getElementById('telefoneCliente');
+  if(telInput) telInput.addEventListener('input', function(){ mascaraTelefone(this); });
+});
 </script>
 </body>
 </html>
