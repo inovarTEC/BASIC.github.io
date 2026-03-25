@@ -365,22 +365,21 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.7); backdrop-filter: blur(6px); display: none; }
 .modal-overlay.open { display: flex; align-items: flex-end; justify-content: center; }
 .modal-sheet {
-  position: absolute;
-  inset-x: 0; bottom: 0;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
   background: var(--surface);
   border-radius: 24px 24px 0 0;
-  padding: 0 0 env(safe-area-inset-bottom);
   max-height: 92dvh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   transform: translateY(100%);
   transition: transform .35s cubic-bezier(.16,1,.3,1);
 }
 .modal-overlay.open .modal-sheet { transform: translateY(0); }
 @media (min-width: 600px) {
   .modal-sheet {
-    position: fixed;
-    inset: auto;
-    top: 50%; left: 50%;
+    left: 50%; top: 50%;
+    right: auto; bottom: auto;
     transform: translate(-50%, -50%) scale(.96);
     border-radius: 24px;
     width: 100%;
@@ -393,20 +392,20 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
   .modal-overlay.open { align-items: center; }
   .modal-handle { display: none; }
 }
-.modal-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 99px; margin: 12px auto 0; }
+.modal-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 99px; margin: 10px auto 6px; flex-shrink: 0; }
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 18px;
+  padding: 14px 18px;
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
   background: var(--surface);
-  z-index: 5;
+  flex-shrink: 0;
 }
+.modal-scroll-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: env(safe-area-inset-bottom); }
 .modal-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--txt); display: flex; align-items: center; gap: 8px; }
-.modal-close { width: 30px; height: 30px; background: var(--surface2); border: none; border-radius: 99px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--txt2); font-size: 14px; }
+.modal-close { width: 32px; height: 32px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 99px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--txt2); font-size: 14px; transition: background .15s; }
+.modal-close:hover { background: var(--border); }
 .modal-body { padding: 16px 18px 20px; }
 .history-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.7); backdrop-filter: blur(6px); display: none; }
 .history-overlay.open { display: block; }
@@ -667,13 +666,13 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .settings-section { padding: 14px 0; border-bottom: 1px solid var(--border); }
 .settings-section:last-of-type { border: none; }
 .settings-section-title { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--txt2); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-.settings-tabs-nav { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--surface2); border-bottom: 1px solid var(--border); position: sticky; top: 57px; z-index: 4; }
+.settings-tabs-nav { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--surface2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 4; }
 .settings-tab-btn { padding: 10px 4px; font-family: var(--font-display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--txt3); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; display: flex; flex-direction: column; align-items: center; gap: 3px; line-height: 1; }
 .settings-tab-btn .tab-icon { font-size: 15px; }
 .settings-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .settings-tab-content { display: none; padding: 16px 18px; }
 .settings-tab-content.active { display: block; }
-.settings-footer { position: sticky; bottom: 0; padding: 12px 18px calc(env(safe-area-inset-bottom) + 8px); background: var(--surface); border-top: 1px solid var(--border); }
+.settings-footer { flex-shrink: 0; padding: 10px 18px calc(env(safe-area-inset-bottom) + 6px); background: var(--surface); border-top: 1px solid var(--border); display: flex; justify-content: flex-end; }
 .toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .toggle-label { font-size: 14px; font-weight: 700; color: var(--txt); }
 .toggle-sub { font-size: 11px; color: var(--txt3); margin-top: 2px; }
@@ -707,6 +706,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .acc-item-val { font-size: 12px; font-weight: 700; color: var(--txt2); flex-shrink: 0; min-width: 48px; text-align: right; cursor: pointer; padding: 2px 6px; border-radius: 6px; transition: background .15s; }
 .acc-item-val:hover { background: rgba(59,130,246,.1); color: #60a5fa; }
 .acc-item-val-input { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--bg); border: 1.5px solid rgba(59,130,246,.4); border-radius: 6px; padding: 2px 6px; width: 64px; outline: none; text-align: right; font-family: var(--font-body); }
+.acc-item-name-input { flex: 1; font-size: 12px; font-weight: 600; color: var(--txt); background: var(--bg); border: 1.5px solid rgba(59,130,246,.4); border-radius: 6px; padding: 2px 8px; outline: none; font-family: var(--font-body); min-width: 0; }
 .acc-item-del { font-size: 16px; color: var(--txt3); cursor: pointer; background: none; border: none; padding: 0 2px; line-height: 1; transition: color .15s; flex-shrink: 0; }
 .acc-item-del:hover { color: #ef4444; }
 .acc-custom-badge { font-size: 8px; font-weight: 700; letter-spacing: .06em; color: #4ade80; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.2); padding: 1px 5px; border-radius: 4px; flex-shrink: 0; font-family: var(--font-display); }
@@ -724,6 +724,26 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .stat-pill { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; text-align: center; }
 .stat-num { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--txt); }
 .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--txt3); margin-top: 2px; }
+/* ── Catalog sub-tabs ── */
+.cat-subtabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 2px solid var(--border); margin-top: 10px; position: sticky; top: 0; z-index: 5; }
+.cat-subtab-btn { padding: 11px 8px; font-family: var(--font-display); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--txt3); background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .2s, border-color .2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.cat-subtab-btn.active-srv { color: #f97316; border-bottom-color: #f97316; }
+.cat-subtab-btn.active-mat { color: #22c55e; border-bottom-color: #22c55e; }
+.cat-panel { display: none; }
+.cat-panel.active { display: block; }
+/* ── Quick-add bar ── */
+.cat-quick-add { display: flex; align-items: center; gap: 5px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 6px 8px; }
+.cat-quick-add.mat { border-color: rgba(34,197,94,.25); background: rgba(34,197,94,.04); }
+.cat-quick-select { background: var(--bg); border: 1.5px solid var(--border); border-radius: 7px; font-size: 11px; font-weight: 700; color: var(--txt2); padding: 5px 3px; outline: none; cursor: pointer; font-family: var(--font-body); max-width: 88px; flex-shrink: 0; }
+.cat-quick-input { flex: 1; background: transparent; border: none; outline: none; font-size: 12px; font-weight: 600; color: var(--txt); font-family: var(--font-body); min-width: 0; padding: 2px 4px; }
+.cat-quick-input::placeholder { color: var(--txt3); font-weight: 400; }
+.cat-quick-val { width: 52px; background: transparent; border: none; border-left: 1.5px solid var(--border); outline: none; font-size: 12px; font-weight: 700; color: var(--txt); text-align: center; font-family: var(--font-body); padding: 0 5px; flex-shrink: 0; }
+.cat-quick-val::placeholder { color: var(--txt3); font-weight: 400; }
+.cat-quick-btn { width: 30px; height: 30px; border-radius: 8px; background: rgba(249,115,22,.18); color: #f97316; border: 1.5px solid rgba(249,115,22,.3); font-size: 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; line-height: 1; }
+.cat-quick-btn.mat { background: rgba(34,197,94,.15); color: #22c55e; border-color: rgba(34,197,94,.3); }
+.cat-quick-btn:active { transform: scale(.88); }
+.cat-autosave { font-size: 10px; color: var(--green,#22c55e); font-weight: 700; padding: 4px 14px 2px; display: none; }
+@keyframes catFade { 0%{opacity:0} 10%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
 .divider { height: 6px; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .bloco-tipo .input-field:focus { border-color: var(--c-tipo) !important; box-shadow: 0 0 0 3px rgba(37,99,235,.13) !important; }
 .bloco-tipo .input-label { color: var(--c-tipo) !important; }
@@ -742,6 +762,54 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .bloco-cost .input-field:focus { border-color: var(--c-cost) !important; box-shadow: 0 0 0 3px rgba(168,85,247,.13) !important; }
 .bloco-cost .input-label { color: var(--c-cost) !important; }
 .bloco-cost .prefix { color: var(--c-cost) !important; }
+/* ── Bottom nav ── */
+.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 440px; background: var(--surface); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr 1fr; z-index: 40; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -4px 20px rgba(0,0,0,.08); }
+.bottom-nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 8px 12px; font-family: var(--font-display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--txt3); background: none; border: none; cursor: pointer; transition: color .2s; }
+.bottom-nav-btn.active { color: var(--accent); }
+.bottom-nav-btn.active-agenda { color: #f97316; }
+.bottom-nav-btn.active-historico { color: #a855f7; }
+/* ── Agenda ── */
+.ag-tabs { display: grid; grid-template-columns: repeat(4,1fr); background: var(--surface2); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 5; }
+.ag-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--txt3); background: none; border: none; border-bottom: 2.5px solid transparent; margin-bottom: -2px; cursor: pointer; transition: color .2s, border-color .2s; }
+.ag-tab-icon { font-size: 15px; }
+.ag-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.ag-panel { display: none; padding: 14px 16px; }
+.ag-panel.active { display: block; }
+.ag-panel-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.ag-panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--txt3); }
+.ag-form { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+.ag-form-title { font-family: var(--font-display); font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.ag-label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--txt3); margin-bottom: 4px; letter-spacing: .06em; }
+.ag-input { width: 100%; background: var(--input-bg); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; color: var(--txt); font-size: 14px !important; font-family: var(--font-body); outline: none; transition: border-color .2s; }
+.ag-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,.1); }
+.ag-input::placeholder { color: var(--txt3); }
+.ag-btn-blue { padding: 10px 14px; background: var(--accent-g); color: #fff; border: none; border-radius: 9px; font-family: var(--font-display); font-size: 11px; font-weight: 700; cursor: pointer; transition: opacity .15s; }
+.ag-btn-blue:active { opacity: .8; }
+.ag-btn-slate { padding: 10px 14px; background: var(--surface2); border: 1.5px solid var(--border); color: var(--txt2); border-radius: 9px; font-family: var(--font-display); font-size: 11px; font-weight: 700; cursor: pointer; }
+.ag-card { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; margin-bottom: 8px; box-shadow: var(--shadow); transition: background .3s; }
+.ag-card-today { border-color: rgba(59,130,246,.4); background: rgba(59,130,246,.04); }
+.ag-card-late { border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.04); }
+.ag-card-warn { border-color: rgba(249,115,22,.3); background: rgba(249,115,22,.04); }
+.ag-card-ok { border-color: rgba(34,197,94,.3); background: rgba(34,197,94,.04); }
+.ag-card-name { font-size: 13px; font-weight: 700; color: var(--txt); margin-bottom: 2px; }
+.ag-card-sub { font-size: 11px; color: var(--txt2); margin-bottom: 2px; }
+.ag-card-hint { font-size: 10px; color: var(--txt3); }
+.ag-badge { font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 99px; flex-shrink: 0; }
+.ag-badge-ok { background: rgba(34,197,94,.15); color: #4ade80; }
+.ag-badge-warn { background: rgba(249,115,22,.15); color: #fb923c; }
+.ag-badge-exp { background: rgba(239,68,68,.15); color: #f87171; }
+.ag-check-btn { font-size: 10px; padding: 3px 8px; border-radius: 7px; border: 1.5px solid var(--border); background: var(--surface2); color: var(--txt2); cursor: pointer; font-weight: 700; transition: all .15s; font-family: var(--font-display); }
+.ag-check-btn.done { background: rgba(34,197,94,.15); color: #4ade80; border-color: rgba(34,197,94,.25); }
+.ag-del-btn { background: none; border: none; cursor: pointer; color: var(--txt3); font-size: 16px; padding: 2px 4px; transition: color .15s; line-height: 1; }
+.ag-del-btn:hover { color: #ef4444; }
+.ag-empty { text-align: center; color: var(--txt3); font-size: 12px; padding: 28px 0; }
+.ag-rel-hero { background: var(--header-bg); border-radius: 14px; padding: 18px; margin-bottom: 12px; border: 1px solid var(--border); }
+.ag-rel-titulo { font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+.ag-rel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ag-rel-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 10px 12px; }
+.ag-rel-label { font-size: 8px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 3px; }
+.ag-rel-val { font-family: var(--font-display); font-size: 14px; font-weight: 800; color: #f1f5f9; }
+.ag-wa-btn { display:inline-flex;align-items:center;padding:4px 8px;background:rgba(34,197,94,.15);border-radius:8px;text-decoration:none;font-size:11px;color:#4ade80;font-weight:700;border:1px solid rgba(34,197,94,.25); }
 #printable-area { display: none; }
 @media print {
   body * { visibility: hidden; }
@@ -764,10 +832,6 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     </div>
   </div>
   <div class="header-actions">
-    <div style="position:relative">
-      <button class="header-btn" onclick="openHistory()" title="Histórico">🕐</button>
-      <span id="alertDot" class="alert-dot"></span>
-    </div>
     <button class="header-btn" onclick="openSettings()" title="Configurações">⚙️</button>
   </div>
 </header>
@@ -969,31 +1033,145 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
   </div>
 </div>
 
-</main>
+<!-- ══════════════ TELA AGENDA ══════════════ -->
+<div id="screen-agenda" class="screen">
 
-<div id="historyOverlay" class="history-overlay">
-  <div class="history-panel">
-    <div class="history-header">
-      <div>
-        <div style="font-family:var(--font-display);font-size:15px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:8px">🕐 Histórico</div>
-        <div style="font-size:10px;color:var(--txt3);margin-top:2px">Últimos orçamentos</div>
-      </div>
-      <button class="header-btn" onclick="closeHistory()">✕</button>
+  <!-- Sub-tabs da agenda -->
+  <div class="ag-tabs">
+    <button class="ag-tab active" id="agtab-visitas" onclick="agMudarAba('visitas')">
+      <span class="ag-tab-icon">📅</span>Agenda
+    </button>
+    <button class="ag-tab" id="agtab-clientes" onclick="agMudarAba('clientes')">
+      <span class="ag-tab-icon">👥</span>Clientes
+    </button>
+    <button class="ag-tab" id="agtab-garantias" onclick="agMudarAba('garantias')">
+      <span class="ag-tab-icon">🛡️</span>Garantias
+    </button>
+    <button class="ag-tab" id="agtab-relatorio" onclick="agMudarAba('relatorio')">
+      <span class="ag-tab-icon">📊</span>Relatório
+    </button>
+  </div>
+
+  <!-- Painel: Visitas -->
+  <div id="agpanel-visitas" class="ag-panel active">
+    <div class="ag-panel-top">
+      <span class="ag-panel-label">Agendamentos</span>
+      <button class="ag-btn-blue" onclick="agToggleForm('agform-visita')">+ Nova visita</button>
     </div>
-    <div id="expiredBanner" style="display:none;background:rgba(239,68,68,.08);border-bottom:1px solid rgba(239,68,68,.15);padding:12px">
-      <div style="font-family:var(--font-display);font-size:11px;font-weight:800;color:#f87171;margin-bottom:8px;display:flex;align-items:center;gap:6px">
-        ⚠ <span id="expiredTitle">Garantias Vencidas</span>
+    <div id="agform-visita" class="ag-form" style="display:none">
+      <div class="ag-form-title">📅 Nova Visita</div>
+      <input type="text" id="agvisita-cliente" class="ag-input" placeholder="Nome do cliente" autocomplete="off">
+      <input type="text" id="agvisita-endereco" class="ag-input" placeholder="Endereço">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><div class="ag-label">Data</div><input type="date" id="agvisita-data" class="ag-input"></div>
+        <div><div class="ag-label">Hora</div><input type="time" id="agvisita-hora" value="08:00" class="ag-input"></div>
       </div>
-      <div id="expiredList"></div>
+      <select id="agvisita-tipo" class="ag-input">
+        <option>Visita técnica</option><option>Instalação</option>
+        <option>Manutenção</option><option>Orçamento</option><option>Retorno</option>
+      </select>
+      <textarea id="agvisita-obs" rows="2" class="ag-input" placeholder="Observações..." style="resize:none"></textarea>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+        <button class="ag-btn-blue" onclick="agRegistrarVisita()">SALVAR</button>
+        <button class="ag-btn-slate" onclick="agToggleForm('agform-visita')">CANCELAR</button>
+      </div>
     </div>
-    <div class="history-list" id="historyList"></div>
-    <div class="history-footer">
-      <button onclick="clearHistory()" style="width:100%;padding:11px;font-family:var(--font-display);font-size:11px;font-weight:700;text-transform:uppercase;color:#ef4444;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:10px;cursor:pointer">
-        🗑 LIMPAR TUDO
-      </button>
+    <div id="ag-lista-visitas"></div>
+  </div>
+
+  <!-- Painel: Clientes -->
+  <div id="agpanel-clientes" class="ag-panel">
+    <div class="ag-panel-top">
+      <span class="ag-panel-label">Base de clientes</span>
+      <button class="ag-btn-blue" onclick="agToggleForm('agform-cliente')">+ Novo cliente</button>
+    </div>
+    <div id="agform-cliente" class="ag-form" style="display:none">
+      <div class="ag-form-title">👤 Novo Cliente</div>
+      <input type="text" id="agcli-nome" class="ag-input" placeholder="Nome completo">
+      <input type="tel" id="agcli-tel" class="ag-input" placeholder="(DD) 9XXXX-XXXX" maxlength="15" oninput="maskPhone(this)">
+      <input type="text" id="agcli-endereco" class="ag-input" placeholder="Endereço completo">
+      <input type="text" id="agcli-bairro" class="ag-input" placeholder="Bairro / Cidade">
+      <textarea id="agcli-obs" rows="2" class="ag-input" placeholder="Observações..." style="resize:none"></textarea>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+        <button class="ag-btn-blue" onclick="agRegistrarCliente()">SALVAR</button>
+        <button class="ag-btn-slate" onclick="agToggleForm('agform-cliente')">CANCELAR</button>
+      </div>
+    </div>
+    <input type="text" id="ag-busca-cliente" class="ag-input" placeholder="🔍 Buscar cliente..." oninput="agListarClientes()" style="margin-bottom:10px">
+    <div id="ag-lista-clientes"></div>
+  </div>
+
+  <!-- Painel: Garantias -->
+  <div id="agpanel-garantias" class="ag-panel">
+    <div class="ag-panel-label" style="padding:0 0 10px">Garantias dos serviços</div>
+    <div id="ag-lista-garantias"></div>
+  </div>
+
+  <!-- Painel: Relatório -->
+  <div id="agpanel-relatorio" class="ag-panel">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+      <select id="ag-rel-mes" class="ag-input" style="flex:1">
+        <option value="0">Janeiro</option><option value="1">Fevereiro</option>
+        <option value="2">Março</option><option value="3">Abril</option>
+        <option value="4">Maio</option><option value="5">Junho</option>
+        <option value="6">Julho</option><option value="7">Agosto</option>
+        <option value="8">Setembro</option><option value="9">Outubro</option>
+        <option value="10">Novembro</option><option value="11">Dezembro</option>
+      </select>
+      <input type="number" id="ag-rel-ano" class="ag-input" style="width:88px" placeholder="Ano">
+      <button class="ag-btn-blue" onclick="agCalcularRelatorio()" style="padding:10px 14px;flex-shrink:0">📊</button>
+    </div>
+    <div id="ag-resultado-relatorio" style="display:none">
+      <div class="ag-rel-hero">
+        <div id="ag-rel-titulo" class="ag-rel-titulo">Relatório</div>
+        <div class="ag-rel-grid">
+          <div class="ag-rel-card"><div class="ag-rel-label">Faturamento</div><div class="ag-rel-val" style="color:#4ade80" id="ag-rel-total">R$ 0</div></div>
+          <div class="ag-rel-card"><div class="ag-rel-label">Orçamentos</div><div class="ag-rel-val" id="ag-rel-qtd">0</div></div>
+          <div class="ag-rel-card"><div class="ag-rel-label">Ticket Médio</div><div class="ag-rel-val" style="color:#fde68a" id="ag-rel-ticket">R$ 0</div></div>
+          <div class="ag-rel-card"><div class="ag-rel-label">Materiais</div><div class="ag-rel-val" style="color:#fca5a5" id="ag-rel-mat">R$ 0</div></div>
+        </div>
+      </div>
+      <div id="ag-rel-lista"></div>
     </div>
   </div>
+
 </div>
+<!-- ══════════════ / AGENDA ══════════════ -->
+
+<!-- ══ TELA HISTÓRICO ══ -->
+<div id="screen-historico" class="screen">
+  <div id="expiredBanner" style="display:none;background:rgba(239,68,68,.08);border-bottom:1px solid rgba(239,68,68,.15);padding:12px 16px">
+    <div style="font-family:var(--font-display);font-size:11px;font-weight:800;color:#f87171;margin-bottom:8px;display:flex;align-items:center;gap:6px">
+      ⚠ <span id="expiredTitle">Garantias Vencidas</span>
+    </div>
+    <div id="expiredList"></div>
+  </div>
+  <div style="padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="font-family:var(--font-display);font-size:13px;font-weight:800;color:var(--txt)">Últimos orçamentos</div>
+      <button onclick="clearHistory()" style="font-family:var(--font-display);font-size:10px;font-weight:700;text-transform:uppercase;color:#ef4444;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px;cursor:pointer;padding:6px 12px">🗑 Limpar</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+</div>
+
+</main>
+
+<!-- Bottom nav bar -->
+<nav class="bottom-nav">
+  <button class="bottom-nav-btn active" id="bnav-orcamento" onclick="switchMainTab('orcamento')">
+    <span style="font-size:18px">⚡</span>
+    <span>Orçamento</span>
+  </button>
+  <button class="bottom-nav-btn" id="bnav-agenda" onclick="switchMainTab('agenda')">
+    <span style="font-size:18px">📅</span>
+    <span>Agenda</span>
+  </button>
+  <button class="bottom-nav-btn" id="bnav-historico" onclick="switchMainTab('historico')">
+    <span style="font-size:18px;position:relative">🕐<span id="alertDot" class="alert-dot" style="top:-2px;right:-2px"></span></span>
+    <span>Histórico</span>
+  </button>
+</nav>
 
 <div id="settingsModal" class="modal-overlay">
   <div class="modal-sheet">
@@ -1003,6 +1181,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       <button class="modal-close" onclick="closeSettings()">✕</button>
     </div>
 
+    <div class="modal-scroll-body">
     <nav class="settings-tabs-nav">
       <button class="settings-tab-btn active" onclick="switchSettingsTab('perfil',this)">
         <span class="tab-icon">👤</span>Perfil
@@ -1021,16 +1200,20 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     <div id="tab-perfil" class="settings-tab-content active">
       <div class="settings-section">
         <div class="settings-section-title">🖼️ Logotipo</div>
-        <div id="logoPreviewArea" style="display:none;margin-bottom:10px;text-align:center">
-          <img id="logoPreviewImg" style="max-height:60px;max-width:180px;border-radius:8px;border:1px solid var(--border)">
+        <!-- Preview atual -->
+        <div id="logoPreviewArea" style="display:none;margin-bottom:12px;text-align:center">
+          <div id="logoPreviewWrap" style="display:inline-block;position:relative">
+            <img id="logoPreviewImg" style="width:90px;height:90px;object-fit:cover;border:2px solid var(--border)">
+          </div>
+          <div style="font-size:10px;color:var(--txt3);margin-top:6px">Toque na logo para editar</div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <label class="btn btn-secondary" style="cursor:pointer;justify-content:center;flex-direction:column;gap:4px;padding:12px;height:auto">
+          <label class="btn btn-secondary" style="cursor:pointer;justify-content:center;flex-direction:column;gap:4px;padding:12px;height:auto" onclick="document.getElementById('logoInput').click()">
             <span style="font-size:18px">🖼️</span>
             <span style="font-size:10px;font-weight:700;text-transform:uppercase">Escolher Logo</span>
-            <input type="file" id="logoInput" accept="image/*" onchange="handleLogo(this)" style="display:none">
           </label>
-          <button id="removeLogoBtn" onclick="removeLogo()" style="font-size:10px;font-weight:700;color:#ef4444;background:none;border:1.5px solid rgba(239,68,68,.25);border-radius:var(--radius-sm);cursor:pointer;padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;display:none">
+          <input type="file" id="logoInput" accept="image/*" onchange="handleLogo(this)" style="display:none">
+          <button id="removeLogoBtn" onclick="removeLogo()" style="font-size:10px;font-weight:700;color:#ef4444;background:none;border:1.5px solid rgba(239,68,68,.25);border-radius:var(--radius-sm);cursor:pointer;padding:12px;display:none;flex-direction:column;align-items:center;gap:4px">
             <span style="font-size:18px">🗑️</span>
             <span style="text-transform:uppercase;letter-spacing:.04em">Remover</span>
           </button>
@@ -1038,14 +1221,14 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       </div>
       <div class="settings-section">
         <div class="settings-section-title">👤 Seus Dados</div>
-        <div class="settings-field"><label class="settings-field-label">Nome / Empresa</label><input type="text" id="configNomePrestador" class="input-field" placeholder="Ex: João Elétrica ME" style="font-weight:700"></div>
-        <div class="settings-field"><label class="settings-field-label">Chave PIX</label><input type="text" id="configPix" class="input-field" placeholder="CPF, CNPJ, e-mail ou telefone"></div>
-        <div class="settings-field"><label class="settings-field-label">Telefone / WhatsApp</label><input type="tel" id="configTelPrestador" class="input-field" placeholder="(81) 9 9999-9999" oninput="maskPhone(this)"></div>
+        <div class="settings-field"><label class="settings-field-label">Nome / Empresa</label><input type="text" id="configNomePrestador" class="input-field" placeholder="Ex: João Elétrica ME" style="font-weight:700" oninput="markSettingsDirty()"></div>
+        <div class="settings-field"><label class="settings-field-label">Chave PIX</label><input type="text" id="configPix" class="input-field" placeholder="CPF, CNPJ, e-mail ou telefone" oninput="markSettingsDirty()"></div>
+        <div class="settings-field"><label class="settings-field-label">Telefone / WhatsApp</label><input type="tel" id="configTelPrestador" class="input-field" placeholder="(81) 9 9999-9999" oninput="maskPhone(this);markSettingsDirty()"></div>
         <div class="settings-field">
           <label class="settings-field-label">Instagram</label>
-          <div class="input-wrap"><span class="prefix" style="font-size:13px;font-weight:700">@</span><input type="text" id="configInstagram" class="input-field" placeholder="seueletricista"></div>
+          <div class="input-wrap"><span class="prefix" style="font-size:13px;font-weight:700">@</span><input type="text" id="configInstagram" class="input-field" placeholder="seueletricista" oninput="markSettingsDirty()"></div>
         </div>
-        <div class="settings-field"><label class="settings-field-label">CPF / CNPJ</label><input type="text" id="configDocumento" class="input-field" placeholder="000.000.000-00"></div>
+        <div class="settings-field"><label class="settings-field-label">CPF / CNPJ</label><input type="text" id="configDocumento" class="input-field" placeholder="000.000.000-00" oninput="markSettingsDirty()"></div>
       </div>
     </div>
 
@@ -1066,26 +1249,26 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
           <div class="settings-field" style="margin:0">
             <label class="settings-field-label">Sinal (%)</label>
             <div class="input-wrap">
-              <input type="number" id="configSinal" class="input-field has-suffix" min="0" max="100" style="text-align:center;font-weight:700">
+              <input type="number" id="configSinal" class="input-field has-suffix" min="0" max="100" style="text-align:center;font-weight:700" oninput="markSettingsDirty()">
               <span class="suffix">%</span>
             </div>
           </div>
           <div class="settings-field" style="margin:0">
             <label class="settings-field-label">Desconto (%)</label>
             <div class="input-wrap">
-              <input type="number" id="configDesconto" class="input-field has-suffix" min="0" max="100" placeholder="0">
+              <input type="number" id="configDesconto" class="input-field has-suffix" min="0" max="100" placeholder="0" oninput="markSettingsDirty()">
               <span class="suffix">%</span>
             </div>
           </div>
           <div class="settings-field" style="margin:0">
             <label class="settings-field-label">Validade (d)</label>
             <div class="input-wrap">
-              <input type="number" id="configValidade" class="input-field has-suffix" min="1" placeholder="15">
+              <input type="number" id="configValidade" class="input-field has-suffix" min="1" placeholder="15" oninput="markSettingsDirty()">
               <span class="suffix">d</span>
             </div>
           </div>
         </div>
-        <div class="settings-field"><label class="settings-field-label">Formas de Pagamento</label><input type="text" id="configCartoes" class="input-field" placeholder="Ex: Pix, cartão, dinheiro"></div>
+        <div class="settings-field"><label class="settings-field-label">Formas de Pagamento</label><input type="text" id="configCartoes" class="input-field" placeholder="Ex: Pix, cartão, dinheiro" oninput="markSettingsDirty()"></div>
       </div>
       <div class="settings-section" style="border:none">
         <div class="settings-section-title">🗺️ Operacional</div>
@@ -1093,38 +1276,59 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
           <label class="settings-field-label">Custo por hora (R$)</label>
           <div class="input-wrap" style="max-width:160px">
             <span class="prefix">R$</span>
-            <input type="number" id="configCustoHora" class="input-field" min="0" placeholder="0,00">
+            <input type="number" id="configCustoHora" class="input-field" min="0" placeholder="0,00" oninput="markSettingsDirty()">
           </div>
         </div>
       </div>
     </div>
 
     <div id="tab-catalogo" class="settings-tab-content" style="padding:0">
-      <div style="padding:14px 18px 10px">
-        <div class="stats-bar" style="padding:0;margin-bottom:12px">
-          <div class="stat-pill"><div id="stat-srv" class="stat-num" style="color:var(--accent)">—</div><div class="stat-lbl">Serviços</div></div>
-          <div class="stat-pill"><div id="stat-mat" class="stat-num" style="color:var(--accent2)">—</div><div class="stat-lbl">Materiais</div></div>
+      <!-- Stats -->
+      <div style="padding:12px 14px 0">
+        <div class="stats-bar" style="padding:0;margin-bottom:0">
+          <div class="stat-pill"><div id="stat-srv" class="stat-num" style="color:var(--c-srv,var(--accent2))">—</div><div class="stat-lbl">Serviços</div></div>
+          <div class="stat-pill"><div id="stat-mat" class="stat-num" style="color:var(--c-mat,#22c55e)">—</div><div class="stat-lbl">Materiais</div></div>
           <div class="stat-pill"><div id="stat-custom" class="stat-num" style="color:var(--green)">0</div><div class="stat-lbl">Personalizados</div></div>
         </div>
-        <div class="settings-section-title">🔧 Serviços</div>
-        <div class="input-wrap" style="margin-bottom:6px">
-          <span class="prefix">🔍</span>
-          <input id="srv-cat-search" class="input-field" placeholder="Buscar serviço..." oninput="searchCatalog('srv',this.value)" autocomplete="off">
-        </div>
       </div>
-      <div id="srv-accordion" style="border-top:1px solid var(--border)"></div>
-      <div style="padding:14px 18px 10px;margin-top:4px">
-        <div class="settings-section-title" style="color:var(--accent2)">📦 Materiais</div>
-        <div class="input-wrap" style="margin-bottom:6px">
-          <span class="prefix">🔍</span>
-          <input id="mat-cat-search" class="input-field" placeholder="Buscar material..." oninput="searchCatalog('mat',this.value)" autocomplete="off">
-        </div>
+      <!-- Sub-tabs -->
+      <div class="cat-subtabs">
+        <button id="cat-btn-srv" class="cat-subtab-btn active-srv" onclick="switchCatTab('srv')">🔧 Serviços</button>
+        <button id="cat-btn-mat" class="cat-subtab-btn" onclick="switchCatTab('mat')">📦 Materiais</button>
       </div>
-      <div id="mat-accordion" style="border-top:1px solid var(--border)"></div>
-      <div style="padding:14px 18px">
-        <button class="btn btn-primary" onclick="saveCatalog();showToast('✅ Catálogo salvo!')">
-          ✓ SALVAR CATÁLOGO
-        </button>
+      <!-- Painel Serviços -->
+      <div id="cat-panel-srv" class="cat-panel active">
+        <div style="padding:10px 14px 6px;display:flex;flex-direction:column;gap:6px">
+          <div class="input-wrap">
+            <span class="prefix">🔍</span>
+            <input id="srv-cat-search" class="input-field" placeholder="Buscar serviço..." oninput="searchCatalog('srv',this.value)" autocomplete="off">
+          </div>
+          <div class="cat-quick-add">
+            <select id="srv-quick-cat" class="cat-quick-select"></select>
+            <input id="srv-quick-name" class="cat-quick-input" placeholder="+ Nome do serviço" autocomplete="off">
+            <input id="srv-quick-val" class="cat-quick-val" type="number" placeholder="R$" min="0">
+            <button class="cat-quick-btn" onclick="quickAddItem('srv')">+</button>
+          </div>
+        </div>
+        <div id="cat-autosave-srv" class="cat-autosave">✓ Salvo automaticamente</div>
+        <div id="srv-accordion" style="border-top:1px solid var(--border)"></div>
+      </div>
+      <!-- Painel Materiais -->
+      <div id="cat-panel-mat" class="cat-panel">
+        <div style="padding:10px 14px 6px;display:flex;flex-direction:column;gap:6px">
+          <div class="input-wrap">
+            <span class="prefix">🔍</span>
+            <input id="mat-cat-search" class="input-field" placeholder="Buscar material..." oninput="searchCatalog('mat',this.value)" autocomplete="off">
+          </div>
+          <div class="cat-quick-add mat">
+            <select id="mat-quick-cat" class="cat-quick-select"></select>
+            <input id="mat-quick-name" class="cat-quick-input" placeholder="+ Nome do material" autocomplete="off">
+            <input id="mat-quick-val" class="cat-quick-val" type="number" placeholder="R$" min="0">
+            <button class="cat-quick-btn mat" onclick="quickAddItem('mat')">+</button>
+          </div>
+        </div>
+        <div id="cat-autosave-mat" class="cat-autosave">✓ Salvo automaticamente</div>
+        <div id="mat-accordion" style="border-top:1px solid var(--border)"></div>
       </div>
     </div>
 
@@ -1153,9 +1357,11 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       </div>
     </div>
 
-    <div id="settings-save-footer" class="settings-footer">
-      <button class="btn btn-primary" onclick="saveSettings()" style="padding:15px;font-size:14px">
-        ✓ SALVAR ALTERAÇÕES
+    </div><!-- /modal-scroll-body -->
+
+    <div id="settings-save-footer" class="settings-footer" style="display:none">
+      <button class="btn btn-primary" onclick="saveSettings()" style="padding:11px 28px;font-size:13px;width:auto;border-radius:12px;animation:slideUp .25s ease">
+        ✓ Salvar Alterações
       </button>
     </div>
   </div>
@@ -1651,6 +1857,7 @@ let appState = {
   logoBase64: null,
   meusServicos: [],
   historico: [],
+  visitas: [],
   sinalPercent: 30,
   prestadorPadrao: '',
   clientes: [],
@@ -1802,7 +2009,7 @@ function checkWarrantyAlerts() {
     else if (w.daysLeft <= 15) nearExpiry.push({item, w});
   });
   const dot = document.getElementById('alertDot');
-  dot.classList.toggle('show', expired.length > 0 || nearExpiry.length > 0);
+  if (dot) dot.classList.toggle('show', expired.length > 0 || nearExpiry.length > 0);
   const banner = document.getElementById('expiredBanner');
   const list = document.getElementById('expiredList');
   const title = document.getElementById('expiredTitle');
@@ -1842,13 +2049,11 @@ function saveToHistory(dados) {
 }
 
 function openHistory() {
-  renderHistory();
-  checkWarrantyAlerts();
-  document.getElementById('historyOverlay').classList.add('open');
+  switchMainTab('historico');
 }
 
 function closeHistory() {
-  document.getElementById('historyOverlay').classList.remove('open');
+  switchMainTab('orcamento');
 }
 
 function renderHistory() {
@@ -2436,7 +2641,7 @@ function copyText(id, btn) {
 }
 
 function showScreen(id) {
-  ['screen-input','screen-results'].forEach(sid => {
+  ['screen-input','screen-results','screen-agenda','screen-historico'].forEach(sid => {
     document.getElementById(sid)?.classList.remove('active');
   });
   document.getElementById(id)?.classList.add('active');
@@ -2471,6 +2676,7 @@ function loadState() {
   if (!Array.isArray(appState.historico)) appState.historico = [];
   if (!Array.isArray(appState.meusServicos)) appState.meusServicos = [];
   if (!Array.isArray(appState.clientes)) appState.clientes = [];
+  if (!Array.isArray(appState.visitas)) appState.visitas = [];
   if (!appState.sinalPercent) appState.sinalPercent = 30;
   if (!appState.orcamentoSeq) appState.orcamentoSeq = 1;
   applyUIFromState();
@@ -2481,14 +2687,7 @@ function saveState() {
 }
 
 function applyUIFromState() {
-  const logoArea = document.getElementById('headerLogoArea');
-  const logoImg = document.getElementById('headerLogoImg');
-  if (appState.logoBase64) {
-    logoArea.classList.add('show');
-    logoImg.src = appState.logoBase64;
-  } else {
-    logoArea.classList.remove('show');
-  }
+  applyLogoUI();
   const npEl = document.getElementById('nomePrestador');
   if (npEl) npEl.value = appState.prestadorPadrao || '';
   const dt = document.getElementById('darkToggle');
@@ -2530,20 +2729,37 @@ function toggleAccordion(id) {
   document.getElementById(id)?.classList.toggle('open');
 }
 
+let _settingsDirty = false;
+
+function markSettingsDirty() {
+  if (_settingsDirty) return;
+  _settingsDirty = true;
+  const footer = document.getElementById('settings-save-footer');
+  const activeTab = document.querySelector('.settings-tab-btn.active')?.dataset?.tab;
+  const hiddenTabs = ['catalogo', 'backup'];
+  const currentTab = document.querySelector('.settings-tab-content.active')?.id?.replace('tab-', '');
+  if (footer && !hiddenTabs.includes(currentTab)) footer.style.display = 'flex';
+}
+
 function switchSettingsTab(tab, btn) {
   document.querySelectorAll('.settings-tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.settings-tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   if (btn) btn.classList.add('active');
   const footer = document.getElementById('settings-save-footer');
-  if (footer) footer.style.display = (tab === 'catalogo' || tab === 'backup') ? 'none' : 'block';
+  if (footer) {
+    const hiddenTabs = ['catalogo', 'backup'];
+    footer.style.display = (_settingsDirty && !hiddenTabs.includes(tab)) ? 'flex' : 'none';
+  }
 }
 
 function openSettings() {
   const m = document.getElementById('settingsModal');
   if (!m) return;
+  _settingsDirty = false;
   m.classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.querySelector('.app-body').style.overflow = 'hidden';
   switchSettingsTab('perfil', m.querySelector('.settings-tab-btn'));
   fillSettingsForm();
   initCatalogAccordion();
@@ -2554,6 +2770,7 @@ function closeSettings() {
   if (!m) return;
   m.classList.remove('open');
   document.body.style.overflow = '';
+  document.querySelector('.app-body').style.overflow = '';
 }
 
 function fillSettingsForm() {
@@ -2568,13 +2785,7 @@ function fillSettingsForm() {
   set('configValidade', appState.validadeDias || 15);
   set('configCartoes', appState.cartoes || '');
   set('configCustoHora', appState.custoHora || 0);
-  const pa = document.getElementById('logoPreviewArea');
-  const pi = document.getElementById('logoPreviewImg');
-  const rb = document.getElementById('removeLogoBtn');
-  if (pa && pi) {
-    if (appState.logoBase64) { pi.src = appState.logoBase64; pa.style.display = 'block'; if (rb) rb.style.display = 'flex'; }
-    else { pa.style.display = 'none'; if (rb) rb.style.display = 'none'; }
-  }
+  applyLogoUI();
 }
 
 function saveSettings() {
@@ -2593,34 +2804,164 @@ function saveSettings() {
   if (np) np.value = appState.prestadorPadrao;
   saveCatalog();
   saveState();
+  _settingsDirty = false;
+  const footer = document.getElementById('settings-save-footer');
+  if (footer) footer.style.display = 'none';
   closeSettings();
   showToast('✅ Configurações salvas!');
 }
 
+// ── Logo Crop ──
+let _cropImg = null, _cropX = 0, _cropY = 0, _cropZoom = 1, _cropMoldura = 'quad';
+let _cropDrag = false, _cropStartX = 0, _cropStartY = 0, _cropStartOX = 0, _cropStartOY = 0;
+
 function handleLogo(input) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 500000) { showToast('Logo muito grande. Máx 500KB.'); return; }
+  if (file.size > 2000000) { showToast('Logo muito grande. Máx 2MB.'); return; }
   const reader = new FileReader();
   reader.onload = e => {
-    appState.logoBase64 = e.target.result;
-    saveState();
-    applyUIFromState();
-    const pa = document.getElementById('logoPreviewArea');
-    const pi = document.getElementById('logoPreviewImg');
-    const rb = document.getElementById('removeLogoBtn');
-    if (pa && pi) { pi.src = appState.logoBase64; pa.style.display = 'block'; if (rb) rb.style.display = 'flex'; }
-    showToast('Logo carregada!');
+    const img = new Image();
+    img.onload = () => {
+      _cropImg = img;
+      _cropX = 0; _cropY = 0; _cropZoom = 1;
+      openCropModal();
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function openCropModal() {
+  const modal = document.getElementById('logoCropModal');
+  modal.style.display = 'flex';
+  setTimeout(() => {
+    drawCrop();
+    updatePreview();
+    setupCropEvents();
+  }, 50);
+}
+
+function closeCropModal() {
+  document.getElementById('logoCropModal').style.display = 'none';
+}
+
+function setMoldura(m) {
+  _cropMoldura = m;
+  document.getElementById('moldura-quad').style.borderColor = m === 'quad' ? 'var(--accent)' : 'var(--border)';
+  document.getElementById('moldura-quad').style.background  = m === 'quad' ? 'rgba(59,130,246,.1)' : 'var(--surface2)';
+  document.getElementById('moldura-quad').style.color       = m === 'quad' ? 'var(--accent)' : 'var(--txt2)';
+  document.getElementById('moldura-round').style.borderColor = m === 'round' ? 'var(--accent)' : 'var(--border)';
+  document.getElementById('moldura-round').style.background  = m === 'round' ? 'rgba(59,130,246,.1)' : 'var(--surface2)';
+  document.getElementById('moldura-round').style.color       = m === 'round' ? 'var(--accent)' : 'var(--txt2)';
+  const box = document.getElementById('cropBox');
+  box.style.borderRadius = m === 'round' ? '50%' : '8px';
+  const prev = document.getElementById('cropPreview');
+  prev.style.borderRadius = m === 'round' ? '50%' : '10px';
+  updatePreview();
+}
+
+function drawCrop() {
+  const canvas = document.getElementById('cropCanvas');
+  const area = document.getElementById('cropArea');
+  const W = area.clientWidth;
+  const H = Math.min(240, W);
+  canvas.width = W; canvas.height = H;
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  if (!_cropImg) return;
+  const scale = _cropZoom;
+  const iw = _cropImg.width * scale * (W / _cropImg.width);
+  const ih = _cropImg.height * scale * (W / _cropImg.width);
+  ctx.drawImage(_cropImg, _cropX, _cropY, iw, ih);
+  // crop box
+  const size = Math.min(W, H) * 0.78;
+  const bx = (W - size) / 2, by = (H - size) / 2;
+  const box = document.getElementById('cropBox');
+  box.style.left = bx + 'px'; box.style.top = by + 'px';
+  box.style.width = size + 'px'; box.style.height = size + 'px';
+  box.style.borderRadius = _cropMoldura === 'round' ? '50%' : '8px';
+}
+
+function updatePreview() {
+  if (!_cropImg) return;
+  const canvas = document.getElementById('cropCanvas');
+  const area = document.getElementById('cropArea');
+  const W = area.clientWidth || 300;
+  const H = Math.min(240, W);
+  const size = Math.min(W, H) * 0.78;
+  const bx = (W - size) / 2, by = (H - size) / 2;
+  const prev = document.getElementById('cropPreview');
+  prev.width = 144; prev.height = 144;
+  prev.style.borderRadius = _cropMoldura === 'round' ? '50%' : '10px';
+  const ctx = prev.getContext('2d');
+  ctx.clearRect(0, 0, 144, 144);
+  if (_cropMoldura === 'round') {
+    ctx.beginPath(); ctx.arc(72, 72, 72, 0, Math.PI*2); ctx.clip();
+  }
+  const scale = _cropZoom * (W / _cropImg.width);
+  const srcX = (bx - _cropX) / scale;
+  const srcY = (by - _cropY) / scale;
+  const srcS = size / scale;
+  ctx.drawImage(_cropImg, srcX, srcY, srcS, srcS, 0, 0, 144, 144);
+}
+
+function setupCropEvents() {
+  const canvas = document.getElementById('cropCanvas');
+  const zoom = document.getElementById('cropZoom');
+  zoom.value = _cropZoom;
+  zoom.oninput = () => { _cropZoom = parseFloat(zoom.value); drawCrop(); updatePreview(); };
+
+  // touch/mouse drag
+  const onStart = (cx, cy) => { _cropDrag = true; _cropStartX = cx; _cropStartY = cy; _cropStartOX = _cropX; _cropStartOY = _cropY; };
+  const onMove  = (cx, cy) => { if (!_cropDrag) return; _cropX = _cropStartOX + (cx - _cropStartX); _cropY = _cropStartOY + (cy - _cropStartY); drawCrop(); updatePreview(); };
+  const onEnd   = () => { _cropDrag = false; };
+
+  canvas.onmousedown  = e => onStart(e.clientX, e.clientY);
+  canvas.onmousemove  = e => onMove(e.clientX, e.clientY);
+  canvas.onmouseup    = onEnd;
+  canvas.ontouchstart = e => { e.preventDefault(); onStart(e.touches[0].clientX, e.touches[0].clientY); };
+  canvas.ontouchmove  = e => { e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); };
+  canvas.ontouchend   = onEnd;
+}
+
+function confirmCrop() {
+  const prev = document.getElementById('cropPreview');
+  appState.logoBase64 = prev.toDataURL('image/png');
+  appState.logoMoldura = _cropMoldura;
+  saveState();
+  applyLogoUI();
+  closeCropModal();
+  showToast('✅ Logo salva!');
+}
+
+function applyLogoUI() {
+  const pa = document.getElementById('logoPreviewArea');
+  const pi = document.getElementById('logoPreviewImg');
+  const rb = document.getElementById('removeLogoBtn');
+  if (appState.logoBase64) {
+    if (pi) { pi.src = appState.logoBase64; pi.style.borderRadius = (appState.logoMoldura === 'round') ? '50%' : '10px'; }
+    if (pa) pa.style.display = 'block';
+    if (rb) rb.style.display = 'flex';
+  } else {
+    if (pa) pa.style.display = 'none';
+    if (rb) rb.style.display = 'none';
+  }
+  const logoArea = document.getElementById('headerLogoArea');
+  const logoImg  = document.getElementById('headerLogoImg');
+  if (appState.logoBase64) {
+    if (logoImg) { logoImg.src = appState.logoBase64; logoImg.style.borderRadius = (appState.logoMoldura === 'round') ? '50%' : '6px'; }
+    if (logoArea) logoArea.classList.add('show');
+  } else {
+    if (logoArea) logoArea.classList.remove('show');
+  }
 }
 
 function removeLogo() {
-  appState.logoBase64 = null;
-  saveState();
-  applyUIFromState();
-  const pa = document.getElementById('logoPreviewArea');
-  if (pa) pa.style.display = 'none';
+  appState.logoBase64 = null; appState.logoMoldura = null;
+  saveState(); applyLogoUI();
   showToast('Logo removida');
 }
 
@@ -2689,7 +3030,6 @@ function renderAccordion(containerId, catalog, cats, type) {
     } else {
       items.forEach(item => body.appendChild(buildCatalogItemRow(item, type, containerId, catalog, cats)));
     }
-    body.appendChild(buildCatalogAddRow(cat, type, containerId, catalog, cats));
     catDiv.appendChild(hdr);
     catDiv.appendChild(body);
     container.appendChild(catDiv);
@@ -2708,6 +3048,9 @@ function buildCatalogItemRow(item, type, containerId, catalog, cats) {
   const nm = document.createElement('span');
   nm.className = 'acc-item-name';
   nm.textContent = item.icon + ' ' + item.n;
+  nm.title = 'Clique para editar o nome';
+  nm.style.cursor = 'pointer';
+  nm.addEventListener('click', () => editCatalogName(nm, item, type, containerId, catalog, cats));
   const vl = document.createElement('span');
   vl.className = 'acc-item-val';
   vl.textContent = priceStr;
@@ -2718,12 +3061,15 @@ function buildCatalogItemRow(item, type, containerId, catalog, cats) {
   del.innerHTML = '&times;';
   del.title = 'Remover do catálogo';
   del.addEventListener('click', () => {
-    if (!confirm('Remover "' + item.n + '" do catálogo?')) return;
-    const idx = catalog.indexOf(item);
-    if (idx > -1) catalog.splice(idx, 1);
-    customItems.delete(item._id);
-    renderAccordion(containerId, catalog, cats, type);
-    showToast('Removido: ' + item.n);
+    miniConfirm(item.n).then(ok => {
+      if (!ok) return;
+      const idx = catalog.indexOf(item);
+      if (idx > -1) catalog.splice(idx, 1);
+      customItems.delete(item._id);
+      renderAccordion(containerId, catalog, cats, type);
+      showCatAutosave(type);
+      showToast('Removido: ' + item.n);
+    });
   });
   row.appendChild(nm);
   if (isCustom) {
@@ -2735,6 +3081,26 @@ function buildCatalogItemRow(item, type, containerId, catalog, cats) {
   row.appendChild(vl);
   row.appendChild(del);
   return row;
+}
+
+function editCatalogName(el, item, type, containerId, catalog, cats) {
+  const inp = document.createElement('input');
+  inp.className = 'acc-item-name-input';
+  inp.value = item.n;
+  inp.placeholder = 'Nome do item';
+  el.replaceWith(inp);
+  inp.focus();
+  inp.select();
+  const save = () => {
+    const newName = inp.value.trim();
+    if (newName && newName !== item.n) { item.n = newName; showCatAutosave(type); }
+    renderAccordion(containerId, catalog, cats, type);
+  };
+  inp.addEventListener('blur', save);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+    if (e.key === 'Escape') { inp.value = item.n; inp.blur(); }
+  });
 }
 
 function buildCatalogAddRow(cat, type, containerId, catalog, cats) {
@@ -2787,7 +3153,7 @@ function editCatalogValue(el, item, priceKey, type, containerId, catalog, cats) 
   inp.select();
   const save = () => {
     const newVal = parseFloat(inp.value);
-    if (!isNaN(newVal) && newVal >= 0) { item[priceKey] = newVal; showToast('💾 Valor atualizado'); }
+    if (!isNaN(newVal) && newVal >= 0) { item[priceKey] = newVal; showCatAutosave(type); }
     renderAccordion(containerId, catalog, cats, type);
   };
   inp.addEventListener('blur', save);
@@ -2859,6 +3225,299 @@ function initCatalogAccordion() {
   openCats.add('srv-res');
   renderAccordion('srv-accordion', srvCatalog, SRV_CATS, 'srv');
   renderAccordion('mat-accordion', matCatalog, MAT_CATS, 'mat');
+  populateCatSelects();
+}
+
+function populateCatSelects() {
+  const srvSel = document.getElementById('srv-quick-cat');
+  const matSel = document.getElementById('mat-quick-cat');
+  if (srvSel) srvSel.innerHTML = SRV_CATS.map(c => `<option value="${c.k}">${c.icon} ${c.name}</option>`).join('');
+  if (matSel) matSel.innerHTML = MAT_CATS.map(c => `<option value="${c.k}">${c.icon} ${c.name}</option>`).join('');
+  ['srv','mat'].forEach(type => {
+    const ni = document.getElementById(type+'-quick-name');
+    const vi = document.getElementById(type+'-quick-val');
+    if (ni) ni.addEventListener('keydown', e => { if(e.key==='Enter') quickAddItem(type); });
+    if (vi) vi.addEventListener('keydown', e => { if(e.key==='Enter') quickAddItem(type); });
+  });
+}
+
+function quickAddItem(type) {
+  const n = document.getElementById(type+'-quick-name').value.trim();
+  const v = parseFloat(document.getElementById(type+'-quick-val').value);
+  const catK = document.getElementById(type+'-quick-cat').value;
+  if (!n) { showToast('⚠️ Digite o nome'); document.getElementById(type+'-quick-name').focus(); return; }
+  if (!v || v <= 0) { showToast('⚠️ Digite um valor'); document.getElementById(type+'-quick-val').focus(); return; }
+  const catalog = type === 'srv' ? srvCatalog : matCatalog;
+  const cats = type === 'srv' ? SRV_CATS : MAT_CATS;
+  const containerId = type === 'srv' ? 'srv-accordion' : 'mat-accordion';
+  const newItem = type === 'srv'
+    ? {n, v, cat:catK, icon:'⚡', _id:'custom_'+Date.now()}
+    : {n, p:v, t:'', cat:catK, icon:'⚡', _id:'custom_'+Date.now()};
+  catalog.push(newItem);
+  customItems.add(newItem._id);
+  document.getElementById(type+'-quick-name').value = '';
+  document.getElementById(type+'-quick-val').value = '';
+  openCats.add(type+'-'+catK);
+  renderAccordion(containerId, catalog, cats, type);
+  showCatAutosave(type);
+  showToast('✅ Adicionado: ' + n);
+}
+
+function switchCatTab(tab) {
+  document.getElementById('cat-panel-srv').classList.toggle('active', tab === 'srv');
+  document.getElementById('cat-panel-mat').classList.toggle('active', tab === 'mat');
+  document.getElementById('cat-btn-srv').className = 'cat-subtab-btn' + (tab === 'srv' ? ' active-srv' : '');
+  document.getElementById('cat-btn-mat').className = 'cat-subtab-btn' + (tab === 'mat' ? ' active-mat' : '');
+}
+
+function showCatAutosave(type) {
+  saveCatalog();
+  const el = document.getElementById('cat-autosave-'+type);
+  if (!el) return;
+  el.style.display = 'block';
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = 'catFade 2s forwards';
+  setTimeout(() => { el.style.display = 'none'; }, 2100);
+}
+
+// ══════════ AGENDA ══════════
+function switchMainTab(tab) {
+  const screens = { orcamento: 'screen-input', agenda: 'screen-agenda', historico: 'screen-historico' };
+  showScreen(screens[tab] || 'screen-input');
+  document.getElementById('bnav-orcamento').className = 'bottom-nav-btn' + (tab === 'orcamento' ? ' active' : '');
+  document.getElementById('bnav-agenda').className    = 'bottom-nav-btn' + (tab === 'agenda'    ? ' active-agenda' : '');
+  document.getElementById('bnav-historico').className = 'bottom-nav-btn' + (tab === 'historico' ? ' active-historico' : '');
+  if (tab === 'agenda') { agListarVisitas(); agListarClientes(); }
+  if (tab === 'historico') { renderHistory(); checkWarrantyAlerts(); }
+}
+
+function agMudarAba(aba) {
+  document.querySelectorAll('.ag-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.ag-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('agtab-' + aba).classList.add('active');
+  document.getElementById('agpanel-' + aba).classList.add('active');
+  if (aba === 'garantias') agListarGarantias();
+  if (aba === 'relatorio') {
+    const now = new Date();
+    document.getElementById('ag-rel-mes').value = now.getMonth();
+    document.getElementById('ag-rel-ano').value = now.getFullYear();
+  }
+}
+
+function agToggleForm(id) {
+  const el = document.getElementById(id);
+  const open = el.style.display === 'none' || !el.style.display;
+  el.style.display = open ? 'flex' : 'none';
+  if (open && id === 'agform-visita') {
+    document.getElementById('agvisita-data').valueAsDate = new Date();
+  }
+}
+
+function agRegistrarVisita() {
+  const cliente = document.getElementById('agvisita-cliente').value.trim();
+  const data    = document.getElementById('agvisita-data').value;
+  if (!cliente || !data) { showToast('⚠️ Informe o cliente e a data.'); return; }
+  if (!appState.visitas) appState.visitas = [];
+  appState.visitas.unshift({
+    id: Date.now(),
+    cliente,
+    endereco: document.getElementById('agvisita-endereco').value.trim(),
+    data,
+    hora: document.getElementById('agvisita-hora').value,
+    tipo: document.getElementById('agvisita-tipo').value,
+    obs:  document.getElementById('agvisita-obs').value.trim(),
+    status: 'pendente'
+  });
+  appState.visitas.sort((a,b) => ((a.data||'')+(a.hora||'')).localeCompare((b.data||'')+(b.hora||'')));
+  saveState();
+  agToggleForm('agform-visita');
+  ['agvisita-cliente','agvisita-endereco','agvisita-obs'].forEach(id => document.getElementById(id).value = '');
+  agListarVisitas();
+  showToast('✅ Visita agendada!');
+}
+
+function agListarVisitas() {
+  const lista = document.getElementById('ag-lista-visitas');
+  if (!lista) return;
+  const visitas = appState.visitas || [];
+  lista.innerHTML = '';
+  if (!visitas.length) { lista.innerHTML = '<div class="ag-empty">Nenhuma visita agendada.</div>'; return; }
+  const hoje = new Date().toISOString().split('T')[0];
+  visitas.forEach((v, i) => {
+    const atrasado = v.data < hoje && v.status === 'pendente';
+    const isHoje   = v.data === hoje;
+    const cls = atrasado ? 'ag-card ag-card-late' : isHoje ? 'ag-card ag-card-today' : 'ag-card';
+    const div = document.createElement('div');
+    div.className = cls;
+    const dataFmt = v.data ? v.data.split('-').reverse().join('/') : '—';
+    div.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+        <div style="flex:1;min-width:0">
+          <div class="ag-card-name">${v.cliente}</div>
+          <div class="ag-card-sub">${v.tipo||'—'} · ${dataFmt} às ${v.hora||'—'}</div>
+          ${v.endereco ? `<div class="ag-card-hint">📍 ${v.endereco}</div>` : ''}
+          ${v.obs ? `<div class="ag-card-hint" style="font-style:italic">${v.obs}</div>` : ''}
+          ${atrasado ? `<div style="font-size:10px;font-weight:800;color:#f87171;margin-top:2px">⚠️ Atrasado</div>` : ''}
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+          <button class="ag-check-btn ${v.status==='concluido'?'done':''}" onclick="agAlternarStatus(${i})">${v.status==='concluido'?'✅':'✓'}</button>
+          <button class="ag-del-btn" onclick="agRemoverVisita(${i})">×</button>
+        </div>
+      </div>`;
+    lista.appendChild(div);
+  });
+}
+
+function agAlternarStatus(i) {
+  if (!appState.visitas) return;
+  appState.visitas[i].status = appState.visitas[i].status === 'concluido' ? 'pendente' : 'concluido';
+  saveState(); agListarVisitas();
+}
+
+function agRemoverVisita(i) {
+  if (!appState.visitas) return;
+  appState.visitas.splice(i, 1); saveState(); agListarVisitas();
+}
+
+function agRegistrarCliente() {
+  const nome = document.getElementById('agcli-nome').value.trim();
+  if (!nome) { showToast('⚠️ Informe o nome.'); return; }
+  const obj = {
+    id: Date.now(), nome,
+    tel:      document.getElementById('agcli-tel').value.trim(),
+    endereco: document.getElementById('agcli-endereco').value.trim(),
+    bairro:   document.getElementById('agcli-bairro').value.trim(),
+    obs:      document.getElementById('agcli-obs').value.trim()
+  };
+  if (!Array.isArray(appState.clientes)) appState.clientes = [];
+  const idx = appState.clientes.findIndex(c => c.nome.toLowerCase() === nome.toLowerCase());
+  if (idx >= 0) appState.clientes[idx] = {...appState.clientes[idx], ...obj};
+  else appState.clientes.unshift(obj);
+  saveState();
+  agToggleForm('agform-cliente');
+  ['agcli-nome','agcli-tel','agcli-endereco','agcli-bairro','agcli-obs'].forEach(id => document.getElementById(id).value = '');
+  agListarClientes();
+  showToast('✅ Cliente salvo!');
+}
+
+function agListarClientes() {
+  const lista = document.getElementById('ag-lista-clientes');
+  if (!lista) return;
+  const busca = (document.getElementById('ag-busca-cliente')?.value || '').toLowerCase();
+  const clientes = appState.clientes || [];
+  lista.innerHTML = '';
+  if (!clientes.length) { lista.innerHTML = '<div class="ag-empty">Nenhum cliente cadastrado.</div>'; return; }
+  const filtrados = clientes.filter(c => c.nome.toLowerCase().includes(busca) || (c.tel||'').includes(busca));
+  if (!filtrados.length) { lista.innerHTML = '<div class="ag-empty">Nenhum resultado.</div>'; return; }
+  filtrados.forEach(c => {
+    const realIdx = clientes.indexOf(c);
+    const div = document.createElement('div');
+    div.className = 'ag-card';
+    const wa = c.tel ? `<a href="https://wa.me/55${c.tel.replace(/\D/g,'')}" target="_blank" class="ag-wa-btn">WhatsApp</a>` : '';
+    div.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+        <div style="flex:1;min-width:0">
+          <div class="ag-card-name">${c.nome}</div>
+          <div class="ag-card-sub">${c.tel||'—'}</div>
+          ${c.endereco ? `<div class="ag-card-hint">📍 ${c.endereco}${c.bairro?' — '+c.bairro:''}</div>` : ''}
+          ${c.obs ? `<div class="ag-card-hint" style="font-style:italic">${c.obs}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+          ${wa}
+          <button class="ag-del-btn" onclick="agRemoverCliente(${realIdx})">×</button>
+        </div>
+      </div>`;
+    lista.appendChild(div);
+  });
+}
+
+function agRemoverCliente(i) {
+  if (!Array.isArray(appState.clientes)) return;
+  appState.clientes.splice(i, 1); saveState(); agListarClientes();
+}
+
+function agListarGarantias() {
+  const lista = document.getElementById('ag-lista-garantias');
+  if (!lista) return;
+  lista.innerHTML = '';
+  const hist = appState.historico || [];
+  if (!hist.length) { lista.innerHTML = '<div class="ag-empty">Nenhum serviço no histórico.</div>'; return; }
+  const hoje = new Date();
+  const itens = hist.map(h => {
+    const p = (h.data||'').split('/');
+    if (p.length < 3) return null;
+    const dt = new Date(p[2], p[1]-1, p[0]);
+    const dias = parseInt((h.garantia||'90').toString().replace(/\D/g,''), 10) || 90;
+    const venc = new Date(dt); venc.setDate(venc.getDate() + dias);
+    return { ...h, venc, restantes: Math.ceil((venc - hoje) / 86400000) };
+  }).filter(Boolean).sort((a,b) => a.restantes - b.restantes);
+  if (!itens.length) { lista.innerHTML = '<div class="ag-empty">Nenhum serviço com data encontrado.</div>'; return; }
+  itens.forEach(item => {
+    const vencido = item.restantes < 0;
+    const urgente = item.restantes >= 0 && item.restantes <= 30;
+    const cls = vencido ? 'ag-card ag-card-late' : urgente ? 'ag-card ag-card-warn' : 'ag-card ag-card-ok';
+    const badgeCls = vencido ? 'ag-badge ag-badge-exp' : urgente ? 'ag-badge ag-badge-warn' : 'ag-badge ag-badge-ok';
+    const badgeTxt = vencido ? 'Vencida' : item.restantes === 0 ? 'Hoje!' : item.restantes + 'd';
+    const div = document.createElement('div');
+    div.className = cls;
+    div.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+        <div>
+          <div class="ag-card-name">${item.cliente}</div>
+          <div class="ag-card-sub">Serviço: ${item.data} · Garantia: ${item.garantia} dias</div>
+          <div class="ag-card-hint">Vencimento: ${item.venc.toLocaleDateString('pt-BR')}</div>
+        </div>
+        <span class="${badgeCls}">${badgeTxt}</span>
+      </div>`;
+    lista.appendChild(div);
+  });
+}
+
+function agCalcularRelatorio() {
+  const mes = parseInt(document.getElementById('ag-rel-mes').value, 10);
+  const ano = parseInt(document.getElementById('ag-rel-ano').value, 10);
+  if (!ano || ano < 2000) { showToast('⚠️ Informe o ano.'); return; }
+  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const hist = appState.historico || [];
+  const filtrados = hist.filter(h => {
+    const p = (h.data||'').split('/');
+    return p.length >= 3 && parseInt(p[1],10)-1 === mes && parseInt(p[2],10) === ano;
+  });
+  const totalFat = filtrados.reduce((s,h) => s + (h.total||0), 0);
+  const totalMat = filtrados.reduce((s,h) => s + (h.mat||0), 0);
+  const ticket   = filtrados.length ? totalFat / filtrados.length : 0;
+  document.getElementById('ag-rel-titulo').textContent = meses[mes] + ' ' + ano;
+  document.getElementById('ag-rel-total').textContent  = formatBRL(totalFat);
+  document.getElementById('ag-rel-qtd').textContent    = filtrados.length;
+  document.getElementById('ag-rel-ticket').textContent = formatBRL(ticket);
+  document.getElementById('ag-rel-mat').textContent    = formatBRL(totalMat);
+  document.getElementById('ag-resultado-relatorio').style.display = 'block';
+  const relLista = document.getElementById('ag-rel-lista');
+  relLista.innerHTML = '';
+  if (!filtrados.length) { relLista.innerHTML = '<div class="ag-empty">Nenhum orçamento neste período.</div>'; return; }
+  filtrados.forEach(h => {
+    const div = document.createElement('div');
+    div.className = 'ag-card';
+    div.style.cssText = 'display:flex;justify-content:space-between;align-items:center';
+    div.innerHTML = `<div><div class="ag-card-name" style="font-size:12px">${h.cliente}</div><div class="ag-card-sub">${h.data}</div></div><div style="font-family:var(--font-display);font-size:13px;font-weight:800;color:#4ade80">${formatBRL(h.total||0)}</div>`;
+    relLista.appendChild(div);
+  });
+}
+// ══════════ / AGENDA ══════════
+
+let _miniConfirmResolve = null;
+function miniConfirm(name) {
+  return new Promise(resolve => {
+    _miniConfirmResolve = resolve;
+    document.getElementById('miniConfirmName').textContent = name;
+    const el = document.getElementById('miniConfirm');
+    el.style.display = 'flex';
+  });
+}
+function miniConfirmResolve(ok) {
+  document.getElementById('miniConfirm').style.display = 'none';
+  if (_miniConfirmResolve) { _miniConfirmResolve(ok); _miniConfirmResolve = null; }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2869,5 +3528,67 @@ document.addEventListener('DOMContentLoaded', function() {
   if (dsEl) dsEl.valueAsDate = new Date();
 });
 </script>
+
+<!-- Logo Crop Modal -->
+<div id="logoCropModal" style="display:none;position:fixed;inset:0;z-index:998;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center">
+  <div style="background:var(--surface);border-radius:22px;padding:20px;width:min(340px,94vw);display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);border:1px solid var(--border)">
+    <div style="font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--txt);text-align:center">✂️ Ajustar Logo</div>
+
+    <!-- Canvas crop area -->
+    <div style="position:relative;background:var(--bg);border-radius:14px;overflow:hidden;border:1px solid var(--border);touch-action:none" id="cropArea">
+      <canvas id="cropCanvas" style="width:100%;display:block;max-height:240px"></canvas>
+      <!-- crop overlay -->
+      <div id="cropOverlay" style="position:absolute;inset:0;pointer-events:none">
+        <div id="cropBox" style="position:absolute;border:2.5px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.5);transition:border-radius .25s"></div>
+      </div>
+    </div>
+
+    <!-- Zoom slider -->
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:14px">🔍</span>
+      <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" style="flex:1;accent-color:var(--accent)">
+      <span style="font-size:14px">🔎</span>
+    </div>
+
+    <!-- Moldura -->
+    <div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt3);margin-bottom:8px">Moldura</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button id="moldura-quad" onclick="setMoldura('quad')" class="moldura-btn active-moldura" style="padding:10px;border-radius:10px;border:2px solid var(--accent);background:rgba(59,130,246,.1);color:var(--accent);font-family:var(--font-display);font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:28px;height:28px;border:2px solid currentColor;border-radius:4px"></div>Quadrada
+        </button>
+        <button id="moldura-round" onclick="setMoldura('round')" class="moldura-btn" style="padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--surface2);color:var(--txt2);font-family:var(--font-display);font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:28px;height:28px;border:2px solid currentColor;border-radius:50%"></div>Redonda
+        </button>
+      </div>
+    </div>
+
+    <!-- Preview final -->
+    <div style="text-align:center">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt3);margin-bottom:8px">Preview</div>
+      <canvas id="cropPreview" style="width:72px;height:72px;border:2px solid var(--border)"></canvas>
+    </div>
+
+    <!-- Botões -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button onclick="closeCropModal()" style="padding:12px;font-family:var(--font-display);font-size:12px;font-weight:700;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--txt2);cursor:pointer">Cancelar</button>
+      <button onclick="confirmCrop()" style="padding:12px;font-family:var(--font-display);font-size:12px;font-weight:700;background:var(--accent-g);border:none;border-radius:10px;color:#fff;cursor:pointer">✓ Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mini confirm popup -->
+<div id="miniConfirm" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center">
+  <div style="background:var(--surface);border-radius:18px;padding:22px 20px 16px;width:260px;box-shadow:0 16px 48px rgba(0,0,0,.4);border:1px solid var(--border);text-align:center">
+    <div style="font-size:26px;margin-bottom:8px">🗑️</div>
+    <div style="font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--txt);margin-bottom:4px">Remover definitivo?</div>
+    <div id="miniConfirmName" style="font-size:12px;color:var(--txt3);margin-bottom:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button onclick="miniConfirmResolve(false)" style="padding:10px;font-family:var(--font-display);font-size:12px;font-weight:700;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--txt2);cursor:pointer">Cancelar</button>
+      <button onclick="miniConfirmResolve(true)" style="padding:10px;font-family:var(--font-display);font-size:12px;font-weight:700;background:rgba(239,68,68,.12);border:1.5px solid rgba(239,68,68,.3);border-radius:10px;color:#ef4444;cursor:pointer">Remover</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
