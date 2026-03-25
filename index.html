@@ -1162,61 +1162,122 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 </div>
 
 <div id="printable-area">
-  <div style="font-family:'Inter',sans-serif;color:#1e293b;max-width:760px;margin:0 auto;padding:32px;background:#fff">
-    <div style="background:#0f172a;border-radius:16px 16px 0 0;padding:28px 28px 50px;position:relative;overflow:hidden;margin-bottom:0">
-      <div style="position:absolute;right:20px;top:10px;font-size:100px;opacity:0.05;line-height:1;user-select:none">⚡</div>
-      <div style="display:flex;align-items:center;gap:16px;position:relative;z-index:1">
-        <img id="printLogo" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" style="height:56px;width:auto;object-fit:contain;border-radius:8px;display:none">
-        <div>
-          <div id="printPrestador" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#f1f5f9;line-height:1">Prestador</div>
-          <div style="font-size:12px;color:#64748b;margin-top:4px">Orçamento Profissional · <span id="printNumOrc">Nº 0001</span></div>
+  <div style="font-family:'Inter',sans-serif;color:#1e293b;max-width:760px;margin:0 auto;background:#fff">
+
+    <!-- HEADER com logo como fundo -->
+    <div id="printHeader" style="background:#0f172a;border-radius:16px 16px 0 0;padding:32px 28px 28px;position:relative;overflow:hidden;min-height:110px">
+      <div id="printLogoBg" style="position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0.08;display:none"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,.95) 40%,rgba(37,99,235,.3));"></div>
+      <div style="position:absolute;right:24px;top:50%;transform:translateY(-50%);opacity:.04;font-size:120px;line-height:1;user-select:none">⚡</div>
+      <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:20px">
+        <div style="display:flex;align-items:center;gap:16px">
+          <img id="printLogoImg" style="height:60px;width:auto;object-fit:contain;border-radius:10px;border:2px solid rgba(255,255,255,.15);display:none;background:rgba(255,255,255,.08);padding:4px">
+          <div>
+            <div id="printPrestador" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f1f5f9;line-height:1.1">Eletricista</div>
+            <div style="font-size:11px;color:#64748b;margin-top:5px;display:flex;gap:10px;flex-wrap:wrap">
+              <span id="printTelPrestador" style="display:none">📱 <span id="printTelPrestadorVal"></span></span>
+              <span id="printInstagramSpan" style="display:none">📸 @<span id="printInstagramVal"></span></span>
+              <span id="printPixSpan" style="display:none">💠 PIX: <span id="printPixVal"></span></span>
+            </div>
+            <div style="font-size:11px;color:#475569;margin-top:3px">
+              <span id="printDocSpan" style="display:none"><span id="printDocVal"></span> · </span>Orçamento Profissional · <span id="printNumOrc" style="color:#3b82f6">Nº 0001</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div style="position:absolute;right:28px;top:28px;text-align:right;z-index:1">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#334155;letter-spacing:.08em">Emitido em</div>
-        <div id="printData" style="font-size:15px;font-weight:700;color:#f1f5f9;margin-top:2px">--/--/----</div>
-      </div>
-    </div>
-    <div style="height:24px;background:#0f172a;position:relative;margin-bottom:20px">
-      <div style="position:absolute;bottom:0;left:0;right:0;height:24px;background:#fff;border-radius:16px 16px 0 0"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">Cliente</div>
-        <div id="printCliente" style="font-size:16px;font-weight:700;color:#0f172a">Nome do Cliente</div>
-        <div id="printTelefone" style="font-size:12px;color:#64748b;margin-top:3px"></div>
-        <div id="printEndereco" style="font-size:12px;color:#64748b;margin-top:2px"></div>
-      </div>
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:6px">Observações</div>
-        <div id="printDetalhes" style="font-size:12px;color:#475569;line-height:1.5"></div>
-      </div>
-    </div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
-      <thead>
-        <tr style="border-bottom:2px solid #0f172a">
-          <th style="text-align:left;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em">Descrição do Serviço</th>
-          <th style="text-align:center;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em;width:50px">Qtd</th>
-          <th style="text-align:right;padding:10px 0;font-size:10px;text-transform:uppercase;color:#0f172a;font-weight:800;letter-spacing:.06em">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody id="printServicesList"></tbody>
-    </table>
-    <div style="display:flex;justify-content:flex-end">
-      <div style="width:260px">
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:6px">
-          <span>Materiais/Peças:</span>
-          <span style="font-weight:600" id="printMateriais">R$ 0,00</span>
-        </div>
-        <div style="background:#0f172a;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b">Total Geral</div>
-          <div id="printTotal" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f97316">R$ 0,00</div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#334155;letter-spacing:.08em">Emitido em</div>
+          <div id="printData" style="font-size:15px;font-weight:700;color:#f1f5f9;margin-top:2px">--/--/----</div>
+          <div id="printHoraSpan" style="font-size:11px;color:#64748b;margin-top:2px"></div>
         </div>
       </div>
     </div>
-    <div style="margin-top:32px;text-align:center;font-size:11px;color:#94a3b8;border-top:1px dashed #cbd5e1;padding-top:16px">
-      <p>Garantia de <span id="printGarantia" style="font-weight:700;color:#0f172a">90 dias</span> sobre os serviços prestados.</p>
-      <p style="margin-top:4px">Gerado via <strong>⚡ Eletricista Power</strong></p>
+
+    <!-- Conector arredondado -->
+    <div style="height:20px;background:#0f172a;position:relative">
+      <div style="position:absolute;bottom:0;left:0;right:0;height:20px;background:#fff;border-radius:16px 16px 0 0"></div>
+    </div>
+
+    <div style="padding:0 28px 28px">
+
+      <!-- CLIENTE + SERVIÇO -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:8px">👤 Cliente</div>
+          <div id="printCliente" style="font-size:17px;font-weight:800;color:#0f172a;margin-bottom:4px">Nome do Cliente</div>
+          <div id="printTelefone" style="font-size:12px;color:#64748b;margin-bottom:2px"></div>
+          <div id="printEndereco" style="font-size:12px;color:#64748b"></div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:8px">📋 Serviço / Obs</div>
+          <div id="printDetalhes" style="font-size:12px;color:#475569;line-height:1.6"></div>
+          <div id="printGarantiaLine" style="font-size:11px;color:#16a34a;font-weight:700;margin-top:8px;display:flex;align-items:center;gap:4px">✅ Garantia: <span id="printGarantia">90 dias</span></div>
+        </div>
+      </div>
+
+      <!-- TABELA DE SERVIÇOS -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#0f172a;margin-bottom:8px;display:flex;align-items:center;gap:6px">🔧 Serviços Realizados</div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:#0f172a">
+              <th style="text-align:left;padding:9px 12px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;border-radius:8px 0 0 0">Descrição</th>
+              <th style="text-align:center;padding:9px 8px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;width:40px">Qtd</th>
+              <th style="text-align:right;padding:9px 8px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em">Unit.</th>
+              <th style="text-align:right;padding:9px 12px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;border-radius:0 8px 0 0">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="printServicesList"></tbody>
+        </table>
+      </div>
+
+      <!-- TABELA DE MATERIAIS -->
+      <div id="printMatSection" style="margin-bottom:20px;display:none">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#0f172a;margin-bottom:8px">📦 Materiais Utilizados</div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:#1e293b">
+              <th style="text-align:left;padding:9px 12px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;border-radius:8px 0 0 0">Material</th>
+              <th style="text-align:center;padding:9px 8px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;width:40px">Qtd</th>
+              <th style="text-align:right;padding:9px 8px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em">Unit.</th>
+              <th style="text-align:right;padding:9px 12px;font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;letter-spacing:.06em;border-radius:0 8px 0 0">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="printMatList"></tbody>
+        </table>
+      </div>
+
+      <!-- TOTAIS -->
+      <div style="display:flex;justify-content:flex-end;margin-bottom:24px">
+        <div style="width:280px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;padding:6px 0;border-bottom:1px solid #f1f5f9">
+            <span>Mão de Obra:</span><span style="font-weight:700;color:#0f172a" id="printMaoObra">R$ 0,00</span>
+          </div>
+          <div id="printMatRow" style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;padding:6px 0;border-bottom:1px solid #f1f5f9">
+            <span>Materiais:</span><span style="font-weight:700;color:#0f172a" id="printMateriais">R$ 0,00</span>
+          </div>
+          <div id="printLogRow" style="display:none;justify-content:space-between;font-size:12px;color:#64748b;padding:6px 0;border-bottom:1px solid #f1f5f9">
+            <span>Deslocamento:</span><span style="font-weight:700;color:#0f172a" id="printLogistica">R$ 0,00</span>
+          </div>
+          <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div>
+              <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b">TOTAL GERAL</div>
+              <div id="printSinalLine" style="font-size:10px;color:#94a3b8;margin-top:2px;display:none">Sinal (<span id="printSinalPct"></span>%): <span id="printSinalVal"></span></div>
+            </div>
+            <div id="printTotal" style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#f97316">R$ 0,00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="border-top:1px dashed #cbd5e1;padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div style="font-size:11px;color:#94a3b8;line-height:1.6">
+          <span id="printCartoes" style="display:block"></span>
+          Validade deste orçamento: <span id="printValidade" style="font-weight:700;color:#0f172a">15 dias</span>
+        </div>
+        <div style="font-size:11px;color:#94a3b8;text-align:right">
+          Gerado via <strong style="color:#2563eb">⚡ Eletricista Power</strong>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2196,10 +2257,12 @@ function calculateQuote() {
     data: dataFmt, dataRaw, hora,
     itens, itensMat,
     total: totais.totalFinal,
+    totalServicos,
+    mat, custoLog: totais.custoLog,
     sinal: totais.valorSinal,
     sinalPercent: totais.percSinal,
     saldo: totais.totalFinal - totais.valorSinal,
-    mat, garantia,
+    garantia,
     garantiaStr: garantia + ' dias',
   };
   saveClient(cliente, telefone, endereco);
@@ -2224,29 +2287,111 @@ function generateMessages(d) {
 async function sharePDF() {
   const d = currentQuote;
   if (!d) return;
-  document.getElementById('printPrestador').textContent = d.prestador;
-  document.getElementById('printCliente').textContent = d.cliente;
-  document.getElementById('printTelefone').textContent = d.telefone ? `📱 ${d.telefone}` : '';
-  document.getElementById('printEndereco').textContent = d.endereco ? `📍 ${d.endereco}` : '';
-  document.getElementById('printDetalhes').textContent = d.detalhes;
-  document.getElementById('printData').textContent = d.data;
-  document.getElementById('printMateriais').textContent = formatBRL(d.mat);
-  document.getElementById('printTotal').textContent = formatBRL(d.total);
-  document.getElementById('printGarantia').textContent = d.garantiaStr;
-  document.getElementById('printNumOrc').textContent = `Nº ${String(d.seq).padStart(4,'0')}`;
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || ''; };
+  const show = (id, cond) => { const el = document.getElementById(id); if (el) el.style.display = cond ? '' : 'none'; };
+
+  set('printPrestador', d.prestador);
+  set('printCliente', d.cliente);
+  set('printTelefone', d.telefone ? '📱 ' + d.telefone : '');
+  set('printEndereco', d.endereco ? '📍 ' + d.endereco : '');
+  set('printDetalhes', [d.tipo, d.detalhes].filter(Boolean).join(' — '));
+  set('printData', d.data);
+  set('printHoraSpan', d.hora ? '🕐 ' + d.hora + 'h' : '');
+  set('printNumOrc', 'Nº ' + String(d.seq).padStart(4,'0'));
+  set('printGarantia', d.garantiaStr);
+  set('printTotal', formatBRL(d.total));
+  set('printMaoObra', formatBRL(d.totalServicos || 0));
+  set('printMateriais', formatBRL(d.mat));
+  set('printLogistica', formatBRL(d.custoLog || 0));
+
+  const tel = appState.telefonePrestador;
+  const ig = appState.instagram;
+  const pix = appState.chavePix;
+  const doc = appState.documento;
+  const validade = appState.validadeDias || 15;
+  const cartoes = appState.cartoes;
+  const sinalPct = appState.sinalPercent || 30;
+
+  set('printTelPrestadorVal', tel);
+  show('printTelPrestador', !!tel);
+  set('printInstagramVal', ig);
+  show('printInstagramSpan', !!ig);
+  set('printPixVal', pix);
+  show('printPixSpan', !!pix);
+  set('printDocVal', doc);
+  show('printDocSpan', !!doc);
+  set('printValidade', validade + ' dias');
+  set('printCartoes', cartoes ? '💳 ' + cartoes : '');
+  show('printCartoes', !!cartoes);
+
+  if (d.custoLog > 0) document.getElementById('printLogRow').style.display = 'flex';
+  else document.getElementById('printLogRow').style.display = 'none';
+
+  if (d.mat > 0) document.getElementById('printMatRow').style.display = 'flex';
+  else document.getElementById('printMatRow').style.display = 'none';
+
+  const sinal = d.total * (sinalPct / 100);
+  const slEl = document.getElementById('printSinalLine');
+  if (slEl && sinalPct > 0) {
+    slEl.style.display = 'block';
+    set('printSinalPct', sinalPct);
+    set('printSinalVal', formatBRL(sinal));
+  }
+
+  const printLogo = document.getElementById('printLogoImg');
+  const printBg = document.getElementById('printLogoBg');
+  if (appState.logoBase64) {
+    printLogo.src = appState.logoBase64;
+    printLogo.style.display = 'block';
+    printBg.style.backgroundImage = 'url(' + appState.logoBase64 + ')';
+    printBg.style.display = 'block';
+  } else {
+    printLogo.style.display = 'none';
+    printBg.style.display = 'none';
+  }
+
   const tbody = document.getElementById('printServicesList');
   tbody.innerHTML = '';
-  d.itens.forEach(i => {
+  d.itens.forEach((i, idx) => {
     const tr = tbody.insertRow();
-    tr.style.borderBottom = '1px solid #f1f5f9';
-    [i.nome, i.qtd, formatBRL(i.total)].forEach((val, idx) => {
+    tr.style.cssText = 'border-bottom:1px solid #f1f5f9;background:' + (idx%2===0?'#fff':'#f8fafc');
+    const cells = [
+      {v: i.nome, a: 'left', pad: '9px 12px', fw: '600'},
+      {v: i.qtd, a: 'center', pad: '9px 8px'},
+      {v: formatBRL(i.unitario), a: 'right', pad: '9px 8px', c: '#64748b'},
+      {v: formatBRL(i.total), a: 'right', pad: '9px 12px', fw: '700', c: '#0f172a'},
+    ];
+    cells.forEach(c => {
       const td = tr.insertCell();
-      td.style.padding = '9px 0';
-      if (idx === 1) td.style.textAlign = 'center';
-      if (idx === 2) { td.style.textAlign = 'right'; td.style.fontWeight = '700'; }
-      td.textContent = val;
+      td.style.cssText = `padding:${c.pad};text-align:${c.a};font-size:12px;${c.fw?'font-weight:'+c.fw+';':''}${c.c?'color:'+c.c+';':''}`;
+      td.textContent = c.v;
     });
   });
+
+  const matSection = document.getElementById('printMatSection');
+  const matList = document.getElementById('printMatList');
+  matList.innerHTML = '';
+  if (d.itensMat && d.itensMat.length) {
+    matSection.style.display = 'block';
+    d.itensMat.forEach((m, idx) => {
+      const tr = matList.insertRow();
+      tr.style.cssText = 'border-bottom:1px solid #f1f5f9;background:' + (idx%2===0?'#fff':'#f8fafc');
+      const cells = [
+        {v: m.nome, a: 'left', pad: '9px 12px', fw: '600'},
+        {v: m.qtd, a: 'center', pad: '9px 8px'},
+        {v: formatBRL(m.unitario), a: 'right', pad: '9px 8px', c: '#64748b'},
+        {v: formatBRL(m.total), a: 'right', pad: '9px 12px', fw: '700', c: '#0f172a'},
+      ];
+      cells.forEach(c => {
+        const td = tr.insertCell();
+        td.style.cssText = `padding:${c.pad};text-align:${c.a};font-size:12px;${c.fw?'font-weight:'+c.fw+';':''}${c.c?'color:'+c.c+';':''}`;
+        td.textContent = c.v;
+      });
+    });
+  } else {
+    matSection.style.display = 'none';
+  }
   const el = document.getElementById('printable-area');
   const btn = document.getElementById('btnPDF');
   const label = document.getElementById('labelPDF');
@@ -2338,15 +2483,11 @@ function saveState() {
 function applyUIFromState() {
   const logoArea = document.getElementById('headerLogoArea');
   const logoImg = document.getElementById('headerLogoImg');
-  const printLogo = document.getElementById('printLogo');
   if (appState.logoBase64) {
     logoArea.classList.add('show');
     logoImg.src = appState.logoBase64;
-    printLogo.src = appState.logoBase64;
-    printLogo.style.display = 'block';
   } else {
     logoArea.classList.remove('show');
-    printLogo.style.display = 'none';
   }
   const npEl = document.getElementById('nomePrestador');
   if (npEl) npEl.value = appState.prestadorPadrao || '';
