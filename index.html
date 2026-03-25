@@ -554,6 +554,24 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .pi-add:hover { transform: scale(1.15); }
 .pi-add:active { transform: scale(.88); }
 .panel-empty { padding: 16px; text-align: center; font-size: 13px; color: var(--txt3); font-weight: 600; }
+.inline-results {
+  position: absolute;
+  left: 14px; right: 14px;
+  top: calc(100% - 2px);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: 30;
+  max-height: 260px;
+  overflow-y: auto;
+  display: none;
+}
+.inline-results.show { display: block; }
+.inline-results::-webkit-scrollbar { width: 4px; }
+.inline-results::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.inline-result-cat { padding: 5px 12px 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--txt3); background: var(--surface2); border-bottom: 1px solid var(--border); }
+.inline-result-empty { padding: 14px 16px; text-align: center; font-size: 13px; color: var(--txt3); font-weight: 600; }
 .srv-row {
   display: flex;
   align-items: center;
@@ -819,60 +837,38 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 
   <div class="card bloco-srv" style="overflow:visible;margin-bottom:12px;border-top:2px solid var(--c-srv);border-left:3px solid var(--c-srv)">
     <div style="position:sticky;top:0;z-index:12;background:var(--surface);border-radius:var(--radius) var(--radius) 0 0">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px">
         <span class="section-label" style="margin:0;color:var(--c-srv)">🔧 Serviços Elétricos</span>
         <span id="srv-badge" style="font-size:10px;background:rgba(249,115,22,.12);color:var(--c-srv);padding:3px 10px;border-radius:99px;font-weight:700">0 itens</span>
       </div>
-      <div class="chips-row" id="srv-chips-row" style="position:sticky;top:38px;z-index:11;background:var(--surface)"></div>
-    </div>
-    <div class="category-panel" id="srv-panel">
-      <div class="panel-inner">
-        <div class="panel-header" style="position:sticky;top:74px;z-index:10">
-          <span class="panel-header-icon" id="srv-ph-icon"></span>
-          <span class="panel-header-name" id="srv-ph-name">Serviços</span>
-          <span class="panel-header-count" id="srv-ph-cnt">0</span>
-          <button class="panel-close-btn" onclick="closeCategoryPanel('srv')">✕</button>
-        </div>
-        <div class="panel-search" style="position:sticky;top:98px;z-index:9">
-          <span class="panel-search-icon">🔍</span>
-          <input class="panel-search-input" id="srv-ps" placeholder="Filtrar serviços..." oninput="filterPanelItems('srv',this.value)" autocomplete="off">
-        </div>
-        <div id="srv-panel-items"></div>
+      <div style="position:relative;padding:0 14px 10px">
+        <span style="position:absolute;left:22px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;color:var(--txt3)">🔍</span>
+        <input class="panel-search-input" id="srv-inline-search" placeholder="Buscar serviço para adicionar..." oninput="inlineSearch('srv',this.value)" autocomplete="off" style="padding-left:32px;width:100%">
+        <div id="srv-inline-results" class="inline-results"></div>
       </div>
     </div>
     <div id="srv-container" style="padding:4px 0 0"></div>
     <div id="srv-empty" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;color:var(--txt3);font-size:12px;font-weight:600">
-      Escolha uma categoria acima para adicionar
+      🔍 Busque um serviço acima para adicionar
     </div>
     <textarea id="detalhesServico" rows="2" class="input-field" style="resize:none;margin:8px 14px;width:calc(100% - 28px)" placeholder="Observações técnicas dos serviços..."></textarea>
   </div>
 
   <div class="card bloco-mat" style="overflow:visible;margin-bottom:12px;border-top:2px solid var(--c-mat);border-left:3px solid var(--c-mat)">
     <div style="position:sticky;top:0;z-index:12;background:var(--surface);border-radius:var(--radius) var(--radius) 0 0">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px">
         <span class="section-label" style="margin:0;color:var(--c-mat)">📦 Materiais Elétricos</span>
         <span id="mat-badge" style="font-size:10px;background:rgba(34,197,94,.12);color:var(--c-mat);padding:3px 10px;border-radius:99px;font-weight:700">0 itens</span>
       </div>
-      <div class="chips-row" id="mat-chips-row" style="position:sticky;top:38px;z-index:11;background:var(--surface)"></div>
-    </div>
-    <div class="category-panel" id="mat-panel">
-      <div class="panel-inner">
-        <div class="panel-header" style="position:sticky;top:74px;z-index:10">
-          <span class="panel-header-icon" id="mat-ph-icon"></span>
-          <span class="panel-header-name" id="mat-ph-name">Materiais</span>
-          <span class="panel-header-count" id="mat-ph-cnt">0</span>
-          <button class="panel-close-btn" onclick="closeCategoryPanel('mat')">✕</button>
-        </div>
-        <div class="panel-search" style="position:sticky;top:98px;z-index:9">
-          <span class="panel-search-icon">🔍</span>
-          <input class="panel-search-input orange" id="mat-ps" placeholder="Filtrar materiais..." oninput="filterPanelItems('mat',this.value)" autocomplete="off">
-        </div>
-        <div id="mat-panel-items"></div>
+      <div style="position:relative;padding:0 14px 10px">
+        <span style="position:absolute;left:22px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;color:var(--txt3)">🔍</span>
+        <input class="panel-search-input orange" id="mat-inline-search" placeholder="Buscar material para adicionar..." oninput="inlineSearch('mat',this.value)" autocomplete="off" style="padding-left:32px;width:100%">
+        <div id="mat-inline-results" class="inline-results"></div>
       </div>
     </div>
     <div id="mat-container" style="padding:4px 0 0"></div>
     <div id="mat-empty" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;color:var(--txt3);font-size:12px;font-weight:600">
-      Escolha uma categoria acima para adicionar
+      🔍 Busque um material acima para adicionar
     </div>
     <textarea id="detalhesMateriais" rows="2" class="input-field" style="resize:none;margin:8px 14px;width:calc(100% - 28px)" placeholder="Observações sobre materiais (marca, especificações)..."></textarea>
   </div>
@@ -1694,6 +1690,18 @@ function fillClientData(c) {
 document.addEventListener('click', e => {
   if (!e.target.closest('#nomeCliente') && !e.target.closest('#autocompleteList'))
     document.getElementById('autocompleteList').classList.remove('show');
+  if (!e.target.closest('#srv-inline-search') && !e.target.closest('#srv-inline-results')) {
+    const b = document.getElementById('srv-inline-results');
+    if (b) { b.classList.remove('show'); b.innerHTML = ''; }
+    const i = document.getElementById('srv-inline-search');
+    if (i) i.value = '';
+  }
+  if (!e.target.closest('#mat-inline-search') && !e.target.closest('#mat-inline-results')) {
+    const b = document.getElementById('mat-inline-results');
+    if (b) { b.classList.remove('show'); b.innerHTML = ''; }
+    const i = document.getElementById('mat-inline-search');
+    if (i) i.value = '';
+  }
 });
 
 function saveClient(nome, telefone, endereco) {
@@ -1915,73 +1923,63 @@ function buildContextSelectors(ctx, tipo) {
   }
 }
 
-function buildFilterChips(containerId, chips, type) {
-  const c = document.getElementById(containerId);
-  chips.forEach(ch => {
-    const el = document.createElement('div');
-    el.className = 'chip ' + ch.cls;
-    el.textContent = ch.l;
-    el.onclick = () => toggleCategoryPanel(type, ch, el);
-    c.appendChild(el);
-  });
-}
-
-function toggleCategoryPanel(type, ch, el) {
-  const act = type === 'srv' ? srvActiveCat : matActiveCat;
-  if (act === ch.k && ch.k !== '') {
-    closeCategoryPanel(type);
-    document.querySelectorAll('#' + type + '-chips-row .chip').forEach(c => c.classList.remove('on'));
+function inlineSearch(type, q) {
+  const inp = document.getElementById(type + '-inline-search');
+  const box = document.getElementById(type + '-inline-results');
+  if (!q || q.length < 1) { box.classList.remove('show'); box.innerHTML = ''; return; }
+  const data = type === 'srv' ? SRV : MAT;
+  const cats = type === 'srv' ? SRV_CATS : MAT_CATS;
+  const ql = q.toLowerCase();
+  const matches = data.filter(d => d.n.toLowerCase().includes(ql)).slice(0, 40);
+  box.innerHTML = '';
+  if (!matches.length) {
+    const empty = document.createElement('div');
+    empty.className = 'inline-result-empty';
+    empty.textContent = 'Nenhum resultado para "' + q + '"';
+    box.appendChild(empty);
+    box.classList.add('show');
     return;
   }
-  if (type === 'srv') srvActiveCat = ch.k || null; else matActiveCat = ch.k || null;
-  document.querySelectorAll('#' + type + '-chips-row .chip').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById(type + '-ph-icon').textContent = ch.icon || '';
-  document.getElementById(type + '-ph-name').textContent = ch.l;
-  document.getElementById(type + '-ps').value = '';
-  renderPanelItems(type, '');
-  document.getElementById(type + '-panel').classList.add('open');
-}
-
-function closeCategoryPanel(type) {
-  document.getElementById(type + '-panel').classList.remove('open');
-  if (type === 'srv') srvActiveCat = null; else matActiveCat = null;
-  document.querySelectorAll('#' + type + '-chips-row .chip').forEach(c => c.classList.remove('on'));
-}
-
-function renderPanelItems(type, q) {
-  const data = type === 'srv' ? SRV : MAT;
-  const act = type === 'srv' ? srvActiveCat : matActiveCat;
-  let f = data;
-  if (act) f = f.filter(d => d.cat === act);
-  if (q) f = f.filter(d => d.n.toLowerCase().includes(q.toLowerCase()));
-  document.getElementById(type + '-ph-cnt').textContent = f.length;
-  const c = document.getElementById(type + '-panel-items');
-  c.innerHTML = '';
-  if (!f.length) {
-    const e = document.createElement('div');
-    e.className = 'panel-empty';
-    e.textContent = 'Nenhum resultado para "' + q + '"';
-    c.appendChild(e); return;
-  }
   const em = type === 'srv' ? 'b' : 'o';
-  f.forEach(d => {
-    const row = document.createElement('div');
-    row.className = 'panel-item';
-    const hl = q ? d.n.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi'),'<em class="'+em+'">$1</em>') : d.n;
-    const val = type === 'srv' ? 'R$ ' + d.v : (d.t==='fio'||d.t==='caboPP' ? 'R$ '+d.p+'/rolo' : 'R$ '+(typeof d.p==='number'?d.p.toFixed(2).replace('.',','):d.p));
-    const ac = type === 'srv' ? 'pi-add pi-add-blue' : 'pi-add pi-add-orange';
-    const ico = document.createElement('span'); ico.className = 'pi-icon'; ico.textContent = d.icon;
-    const nm = document.createElement('span'); nm.className = 'pi-name'; nm.innerHTML = hl;
-    const vl = document.createElement('span'); vl.className = 'pi-price'; vl.textContent = val;
-    const btn = document.createElement('button'); btn.className = ac; btn.textContent = '+';
-    btn.addEventListener('click', function(ev) { ev.stopPropagation(); addCatalogItem(ev, type, d); });
-    row.appendChild(ico); row.appendChild(nm); row.appendChild(vl); row.appendChild(btn);
-    c.appendChild(row);
+  const byCat = {};
+  matches.forEach(d => { if (!byCat[d.cat]) byCat[d.cat] = []; byCat[d.cat].push(d); });
+  Object.keys(byCat).forEach(catKey => {
+    const cat = cats.find(c => c.k === catKey);
+    if (cat) {
+      const lbl = document.createElement('div');
+      lbl.className = 'inline-result-cat';
+      lbl.textContent = cat.icon + ' ' + cat.name;
+      box.appendChild(lbl);
+    }
+    byCat[catKey].forEach(d => {
+      const hl = d.n.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi'), '<em class="'+em+'">$1</em>');
+      const val = type === 'srv' ? 'R$ ' + d.v : (d.t==='fio'||d.t==='caboPP' ? 'R$ '+d.p+'/rolo' : 'R$ '+(typeof d.p==='number'?d.p.toFixed(2).replace('.',','):d.p));
+      const ac = type === 'srv' ? 'pi-add pi-add-blue' : 'pi-add pi-add-orange';
+      const row = document.createElement('div');
+      row.className = 'panel-item';
+      const ico = document.createElement('span'); ico.className = 'pi-icon'; ico.textContent = d.icon;
+      const nm = document.createElement('span'); nm.className = 'pi-name'; nm.innerHTML = hl;
+      const vl = document.createElement('span'); vl.className = 'pi-price'; vl.textContent = val;
+      const btn = document.createElement('button'); btn.className = ac; btn.textContent = '+';
+      btn.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        addCatalogItem(ev, type, d);
+        inp.value = '';
+        box.classList.remove('show');
+        box.innerHTML = '';
+      });
+      row.appendChild(ico); row.appendChild(nm); row.appendChild(vl); row.appendChild(btn);
+      box.appendChild(row);
+    });
   });
+  box.classList.add('show');
 }
 
-function filterPanelItems(type, q) { renderPanelItems(type, q); }
+function buildFilterChips() {}
+function toggleCategoryPanel() {}
+function closeCategoryPanel() {}
+function renderPanelItems() {}
+function filterPanelItems() {}
 
 function updateServiceBadge() {
   const rows = document.querySelectorAll('#srv-container .srv-row');
@@ -2726,8 +2724,6 @@ document.addEventListener('DOMContentLoaded', function() {
   loadState();
   applyUIFromState();
   checkWarrantyAlerts();
-  buildFilterChips('srv-chips-row', SRV_CHIPS, 'srv');
-  buildFilterChips('mat-chips-row', MAT_CHIPS, 'mat');
   const dsEl = document.getElementById('dataServico');
   if (dsEl) dsEl.valueAsDate = new Date();
 });
