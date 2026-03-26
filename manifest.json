@@ -1,0 +1,16 @@
+{
+  "name": "Eletricista Power",
+  "short_name": "Eletricista",
+  "start_url": "/BASIC.github.io/",
+  "scope": "/BASIC.github.io/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/BASIC.github.io/Eletricista POWER 5.2_arquivos/recurso_salvo",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
