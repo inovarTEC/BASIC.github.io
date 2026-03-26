@@ -3590,5 +3590,9 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-</body>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script></body>
 </html>
