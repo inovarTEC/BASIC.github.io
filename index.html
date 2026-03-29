@@ -1118,7 +1118,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     <div style="font-size:10px;color:#94a3b8">✅ 100% OFFLINE · ✅ Sem bloqueio · ✅ Nuvem</div>
   </div>
   <a href="#" id="footer-pro-link" style="font-family:'Syne',sans-serif;font-size:10px;font-weight:800;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0">QUERO O PRO</a>
-  <button class="pro-close" onclick="document.getElementById('pro-footer-banner').classList.remove('show')">×</button>
+  <button class="pro-close" onclick="const b=document.getElementById('pro-footer-banner');clearTimeout(b._closeTimer);b.classList.remove('show')">×</button>
 </div>
 
 <!-- ===== BOTÃO FLUTUANTE PRO ===== -->
@@ -1126,7 +1126,8 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 
 <!-- ===== POPUP PRO ===== -->
 <div id="pro-popup">
-  <div class="pro-popup-card">
+  <div class="pro-popup-card" style="position:relative">
+    <button onclick="const p=document.getElementById('pro-popup');clearTimeout(p._closeTimer);p.classList.remove('show')" style="position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#94a3b8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:1">×</button>
     <div style="font-size:36px;margin-bottom:10px">⚡</div>
     <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#f97316;margin-bottom:4px">🔥 Novo visual incrível no PRO!</div>
     <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#f1f5f9;margin-bottom:12px">🚀 VERSÃO PRO</div>
@@ -1140,7 +1141,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     </div>
     <div style="font-size:11px;color:#94a3b8;margin-bottom:14px">Chega de depender de internet para trabalhar!</div>
     <a href="#" id="popup-pro-btn" class="pro-btn lg" style="margin-bottom:10px">👉 QUERO O PRO AGORA</a>
-    <button onclick="document.getElementById('pro-popup').classList.remove('show')" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer">Agora não</button>
+    <button onclick="const p=document.getElementById('pro-popup');clearTimeout(p._closeTimer);p.classList.remove('show')" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer">Agora não</button>
   </div>
 </div>
 
@@ -1713,7 +1714,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
   </div>
 </div>
 
-<div id="printable-area">
+<div id="printable-area" style="display:none">
   <div style="font-family:'Inter',sans-serif;color:#1e293b;max-width:760px;margin:0 auto;background:#fff">
 
     
@@ -4052,6 +4053,8 @@ const msgs = ['','❌ Senha incorreta! Você tem 5 tentativas restantes','❌ Se
 showLoginMsg(msgs[_loginAttempts]);
 const sz = _loginAttempts <= 2 ? 'sm' : _loginAttempts <= 4 ? 'md' : 'lg';
 bc.innerHTML = buildProBannerHTML(sz);
+clearTimeout(bc._closeTimer);
+bc._closeTimer = setTimeout(() => { bc.style.display = 'none'; }, 3000);
 document.getElementById('login-pass').value = '';
 document.getElementById('login-pass').focus();
 }
@@ -4064,7 +4067,8 @@ el.className = 'login-msg' + (ok ? ' ok' : '');
 }
 function buildProBannerHTML(size) {
 const isLg = size === 'lg', isMd = size === 'md';
-return `<div class="pro-banner-login ${size}">
+return `<div class="pro-banner-login ${size}" style="position:relative">
+<button onclick="this.closest('#pro-login-banner').style.display='none'" style="position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#94a3b8;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">×</button>
 <div class="pro-banner-title ${isLg?'lg':''}">⚡ 🔥 Novo visual incrível no PRO!</div>
 ${isMd||isLg?`<div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:#f1f5f9;margin-bottom:8px">🚀 VERSÃO PRO</div>`:''}
 <div class="pro-features">
@@ -4096,16 +4100,18 @@ const b = document.getElementById('pro-footer-banner');
 if (b && !_footerBannerShown) {
 _footerBannerShown = true;
 b.classList.add('show');
-setTimeout(() => b.classList.remove('show'), 10000);
+b._closeTimer = setTimeout(() => b.classList.remove('show'), 3000);
 }
-}, 5 * 60 * 1000);
+}, 2 * 60 * 1000);
 }
 function trackAction() {
 _actionCount++;
 if (_actionCount > 0 && _actionCount % 10 === 0) showProPopup();
 }
 function showProPopup() {
-document.getElementById('pro-popup').classList.add('show');
+const popup = document.getElementById('pro-popup');
+popup.classList.add('show');
+setTimeout(() => popup.classList.remove('show'), 3000);
 }
 function showProFloat() {
 const btn = document.getElementById('pro-float-btn');
@@ -4118,6 +4124,8 @@ function showProModal(mensagem) {
 trackAction();
 const popup = document.getElementById('pro-popup');
 popup.classList.add('show');
+clearTimeout(popup._closeTimer);
+popup._closeTimer = setTimeout(() => popup.classList.remove('show'), 3000);
 if (mensagem) {
 const card = popup.querySelector('.pro-popup-card');
 const old = card.querySelector('.limit-msg');
