@@ -951,11 +951,11 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 }
 
 /* ===== BANNERS INTERNOS (pós-login) ===== */
-/* Banner rodapé */
 #pro-footer-banner {
   position: fixed;
   bottom: calc(env(safe-area-inset-bottom) + 72px);
-  left: 50%; transform: translateX(-50%) translateY(120px);
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(100% + 100px));
   width: calc(100% - 32px); max-width: 408px;
   background: linear-gradient(135deg, #0f172a, #1e3a5f);
   border: 1.5px solid rgba(249,115,22,.5);
@@ -964,36 +964,36 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
   box-shadow: 0 8px 32px rgba(249,115,22,.2);
   z-index: 8000;
   display: flex; align-items: center; gap: 12px;
-  transition: transform .4s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+  transition: transform .42s cubic-bezier(.16,1,.3,1);
 }
-#pro-footer-banner.show { transform: translateX(-50%) translateY(0); }
-#pro-footer-banner .pro-close { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); color: #94a3b8; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-
-/* Botão flutuante PRO */
-#pro-float-btn {
-  position: fixed;
-  bottom: calc(env(safe-area-inset-bottom) + 140px);
-  right: 16px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 10px 14px;
-  border-radius: 99px;
-  box-shadow: 0 6px 24px rgba(249,115,22,.5);
-  z-index: 8000;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  opacity: 0;
-  transform: scale(.8);
-  transition: opacity .3s, transform .3s;
+#pro-footer-banner.show {
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+#pro-footer-banner.dismissing {
+  transform: translateX(-50%) translateY(calc(-100% - 200px));
   pointer-events: none;
 }
-#pro-float-btn.show { opacity: 1; transform: scale(1); pointer-events: auto; }
-
-/* Popup PRO */
+#pro-footer-banner .pro-close {
+  min-width: 42px; height: 30px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.2);
+  color: #f1f5f9;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  padding: 0 8px;
+  line-height: 1;
+  letter-spacing: .02em;
+  transition: background .2s, min-width .3s;
+  white-space: nowrap;
+}
+#pro-footer-banner .pro-close:hover { background: rgba(255,255,255,.22); }
 #pro-popup {
   position: fixed; inset: 0; z-index: 9000;
   background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
@@ -1079,7 +1079,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
         <div style="font-size:12px;color:#cbd5e1">✅ Funções avançadas completas</div>
       </div>
       <div style="font-size:11px;color:#94a3b8;text-align:center;margin-bottom:12px">Chega de depender de internet para trabalhar!</div>
-      <a href="#" id="blocked-pro-btn" class="pro-btn lg">👉 COMPRAR O PRO AGORA</a>
+      <a href="https://www.eletricistapro.com.br" target="_blank" id="blocked-pro-btn" class="pro-btn lg">👉 COMPRAR O PRO AGORA</a>
     </div>
     <a href="#" id="blocked-free-btn" style="display:block;text-align:center;font-size:11px;color:#64748b;text-decoration:none;padding:8px;border:1px solid #1e2d45;border-radius:10px;font-weight:600">↓ Baixar versão gratuita novamente</a>
   </div>
@@ -1111,23 +1111,20 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
   <div id="pro-login-banner" style="display:none;width:100%;max-width:400px;margin-top:14px"></div>
 </div>
 
-<!-- ===== BANNER RODAPÉ PRO (interno) ===== -->
-<div id="pro-footer-banner">
-  <div style="flex:1">
+<div id="pro-footer-banner" role="banner" aria-label="Promoção versão PRO">
+  <div style="flex:1;min-width:0">
     <div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:#f97316;margin-bottom:3px">⚡ 🔥 Novo visual incrível no PRO!</div>
     <div style="font-size:10px;color:#94a3b8">✅ 100% OFFLINE · ✅ Sem bloqueio · ✅ Nuvem</div>
   </div>
-  <a href="#" id="footer-pro-link" style="font-family:'Syne',sans-serif;font-size:10px;font-weight:800;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0">QUERO O PRO</a>
-  <button class="pro-close" onclick="const b=document.getElementById('pro-footer-banner');clearTimeout(b._closeTimer);b.classList.remove('show')">×</button>
+  <a href="https://www.eletricistapro.com.br" target="_blank" style="font-family:'Syne',sans-serif;font-size:10px;font-weight:800;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0">VER MAIS</a>
+  <button class="pro-close" onclick="closeBanner()" aria-label="Fechar anúncio">×</button>
 </div>
 
-<!-- ===== BOTÃO FLUTUANTE PRO ===== -->
-<button id="pro-float-btn" onclick="window.open('#','_blank')">⚡ Conheça o PRO!</button>
 
 <!-- ===== POPUP PRO ===== -->
 <div id="pro-popup">
   <div class="pro-popup-card" style="position:relative">
-    <button onclick="const p=document.getElementById('pro-popup');clearTimeout(p._closeTimer);p.classList.remove('show')" style="position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#94a3b8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:1">×</button>
+    <button onclick="closePopupPro()" style="position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#94a3b8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:1">×</button>
     <div style="font-size:36px;margin-bottom:10px">⚡</div>
     <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#f97316;margin-bottom:4px">🔥 Novo visual incrível no PRO!</div>
     <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#f1f5f9;margin-bottom:12px">🚀 VERSÃO PRO</div>
@@ -1140,8 +1137,8 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       <div style="font-size:12px;color:#cbd5e1">✅ Funções avançadas completas</div>
     </div>
     <div style="font-size:11px;color:#94a3b8;margin-bottom:14px">Chega de depender de internet para trabalhar!</div>
-    <a href="#" id="popup-pro-btn" class="pro-btn lg" style="margin-bottom:10px">👉 QUERO O PRO AGORA</a>
-    <button onclick="const p=document.getElementById('pro-popup');clearTimeout(p._closeTimer);p.classList.remove('show')" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer">Agora não</button>
+    <a href="https://www.eletricistapro.com.br" target="_blank" id="popup-pro-btn" class="pro-btn lg" style="margin-bottom:10px">👉 QUERO O PRO AGORA</a>
+    <button onclick="closePopupPro()" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer">Agora não</button>
   </div>
 </div>
 
@@ -1697,7 +1694,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       </div>
       <div class="settings-section" style="border:none">
         <div class="settings-section-title">🎁 Parceiros</div>
-        <a href="https://beacons.ai/josetecinstalation/eletronicos" target="_blank" class="affiliate-btn">
+        <a href="https://www.eletricistapro.com.br" target="_blank" class="affiliate-btn">
           🎁 OFERTAS DA SEMANA ↗
         </a>
         <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Materiais e equipamentos com preços especiais para eletricistas</p>
@@ -3668,6 +3665,8 @@ document.getElementById('bnav-agenda').className    = 'bottom-nav-btn' + (tab ==
 document.getElementById('bnav-historico').className = 'bottom-nav-btn' + (tab === 'historico' ? ' active-historico' : '');
 if (tab === 'agenda') { agListarVisitas(); agListarClientes(); }
 if (tab === 'historico') { renderHistory(); checkWarrantyAlerts(); }
+_tabSwitchCount++;
+if (_tabSwitchCount % 3 === 0) showFooterBanner();
 }
 function agMudarAba(aba) {
 document.querySelectorAll('.ag-tab').forEach(b => b.classList.remove('active'));
@@ -3978,7 +3977,7 @@ tag: 'warranty-alert',
 });
 } catch(e) {}
 }
-const PRO_LINK = '#';
+const PRO_LINK = 'https://www.eletricistapro.com.br';
 function checkInternet() {
 if (!navigator.onLine) {
 document.getElementById('offline-screen').classList.add('show');
@@ -4017,9 +4016,6 @@ document.getElementById('login-subtitle').textContent = 'Versão Gratuita';
 setTimeout(() => { const el = document.getElementById('login-pass'); if(el) el.focus(); }, 300);
 }
 document.querySelectorAll('#blocked-pro-btn,#popup-pro-btn').forEach(el => { if(el) el.href = PRO_LINK; });
-document.querySelectorAll('#footer-pro-link').forEach(el => { if(el) el.href = PRO_LINK; });
-const fb = document.getElementById('pro-float-btn');
-if(fb) fb.onclick = () => window.open(PRO_LINK,'_blank');
 const bd = document.getElementById('blocked-free-btn');
 if(bd) bd.href = window.location.href;
 }
@@ -4053,8 +4049,8 @@ const msgs = ['','❌ Senha incorreta! Você tem 5 tentativas restantes','❌ Se
 showLoginMsg(msgs[_loginAttempts]);
 const sz = _loginAttempts <= 2 ? 'sm' : _loginAttempts <= 4 ? 'md' : 'lg';
 bc.innerHTML = buildProBannerHTML(sz);
-clearTimeout(bc._closeTimer);
-bc._closeTimer = setTimeout(() => { bc.style.display = 'none'; }, 3000);
+clearTimeout(_loginBannerTimer);
+_loginBannerTimer = setTimeout(() => { bc.style.display = 'none'; }, 3000);
 document.getElementById('login-pass').value = '';
 document.getElementById('login-pass').focus();
 }
@@ -4092,51 +4088,94 @@ if(ls) ls.style.display = 'none';
 _initAppAfterLogin();
 startAppTimers();
 }
-let _actionCount = 0;
-let _footerBannerShown = false;
-function startAppTimers() {
-setTimeout(() => {
-const b = document.getElementById('pro-footer-banner');
-if (b && !_footerBannerShown) {
-_footerBannerShown = true;
-b.classList.add('show');
-b._closeTimer = setTimeout(() => b.classList.remove('show'), 3000);
-}
-}, 2 * 60 * 1000);
-}
-function trackAction() {
-_actionCount++;
-if (_actionCount > 0 && _actionCount % 10 === 0) showProPopup();
-}
-function showProPopup() {
-const popup = document.getElementById('pro-popup');
-popup.classList.add('show');
-setTimeout(() => popup.classList.remove('show'), 3000);
-}
-function showProFloat() {
-const btn = document.getElementById('pro-float-btn');
-if(!btn) return;
-btn.classList.add('show');
-setTimeout(() => btn.classList.remove('show'), 3000);
-}
 const LIMITES = { orcamentos:10, clientes:10, agendamentos:10, servicos_catalogo:10, materiais_catalogo:10, logo_trocas:6 };
-function showProModal(mensagem) {
-trackAction();
-const popup = document.getElementById('pro-popup');
-popup.classList.add('show');
-clearTimeout(popup._closeTimer);
-popup._closeTimer = setTimeout(() => popup.classList.remove('show'), 3000);
-if (mensagem) {
-const card = popup.querySelector('.pro-popup-card');
-const old = card.querySelector('.limit-msg');
-if(old) old.remove();
-const d = document.createElement('div');
-d.className = 'limit-msg';
-d.style.cssText = 'font-size:12px;color:#fbbf24;font-weight:700;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:8px 12px;margin-bottom:12px;';
-d.textContent = mensagem;
-const btn = card.querySelector('.pro-btn');
-if(btn) card.insertBefore(d, btn); else card.appendChild(d);
+const _BANNER_KEY = 'ep_banner_closes';
+const _BANNER_BLOCK_KEY = 'ep_banner_block_until';
+let _bannerDismissedSession = false;
+let _tabSwitchCount = 0;
+let _popupTimer = null;
+let _loginBannerTimer = null;
+let _closeCountdown = null;
+
+function _getBannerCloses() {
+  return parseInt(localStorage.getItem(_BANNER_KEY) || '0');
 }
+function _isBannerBlocked() {
+  const until = parseInt(localStorage.getItem(_BANNER_BLOCK_KEY) || '0');
+  return Date.now() < until;
+}
+function _shouldStopBanner() {
+  return _getBannerCloses() >= 5;
+}
+
+function closeBanner() {
+  clearInterval(_closeCountdown);
+  _closeCountdown = null;
+  _bannerDismissedSession = true;
+  const closes = _getBannerCloses() + 1;
+  localStorage.setItem(_BANNER_KEY, closes);
+  if (closes >= 3 && closes < 5) {
+    localStorage.setItem(_BANNER_BLOCK_KEY, Date.now() + 24 * 60 * 60 * 1000);
+  }
+  const b = document.getElementById('pro-footer-banner');
+  const btn = b.querySelector('.pro-close');
+  if (btn) btn.textContent = '×';
+  b.classList.remove('show');
+  b.classList.add('dismissing');
+  setTimeout(() => b.classList.remove('dismissing'), 460);
+}
+
+function showFooterBanner() {
+  if (_bannerDismissedSession) return;
+  if (_shouldStopBanner()) return;
+  if (_isBannerBlocked()) return;
+  const b = document.getElementById('pro-footer-banner');
+  if (b.classList.contains('show')) return;
+  b.classList.remove('dismissing');
+  void b.offsetWidth;
+  b.classList.add('show');
+  let secs = 5;
+  const btn = b.querySelector('.pro-close');
+  if (btn) btn.textContent = '× ' + secs;
+  clearInterval(_closeCountdown);
+  _closeCountdown = setInterval(() => {
+    secs--;
+    if (btn) btn.textContent = secs > 0 ? '× ' + secs : '×';
+    if (secs <= 0) {
+      clearInterval(_closeCountdown);
+      _closeCountdown = null;
+    }
+  }, 1000);
+}
+
+function closePopupPro() {
+  clearTimeout(_popupTimer);
+  _popupTimer = null;
+  document.getElementById('pro-popup').classList.remove('show');
+}
+
+function showProModal(mensagem) {
+  const popup = document.getElementById('pro-popup');
+  if (mensagem) {
+    const card = popup.querySelector('.pro-popup-card');
+    const old = card.querySelector('.limit-msg');
+    if (old) old.remove();
+    const d = document.createElement('div');
+    d.className = 'limit-msg';
+    d.style.cssText = 'font-size:12px;color:#fbbf24;font-weight:700;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:8px 12px;margin-bottom:12px;';
+    d.textContent = mensagem;
+    const btn = card.querySelector('.pro-btn');
+    if (btn) card.insertBefore(d, btn); else card.appendChild(d);
+  }
+  popup.classList.add('show');
+  clearTimeout(_popupTimer);
+  _popupTimer = setTimeout(closePopupPro, 3000);
+}
+
+function startAppTimers() {
+  localStorage.removeItem(_BANNER_KEY);
+  localStorage.removeItem(_BANNER_BLOCK_KEY);
+  setTimeout(showFooterBanner, 3000);
 }
 const _orig_calculateQuote = calculateQuote;
 calculateQuote = function() {
@@ -4146,8 +4185,6 @@ showProModal(`🚫 Limite de ${LIMITES.orcamentos} orçamentos atingido! Faça u
 return;
 }
 _orig_calculateQuote.apply(this, arguments);
-showProFloat();
-trackAction();
 };
 const _orig_saveClient = saveClient;
 saveClient = function(nome, telefone, endereco) {
@@ -4167,7 +4204,6 @@ showProModal(`🚫 Limite de ${LIMITES.agendamentos} agendamentos atingido!`);
 return;
 }
 _orig_agRegistrarVisita.apply(this, arguments);
-trackAction();
 };
 const _orig_agRegistrarCliente = agRegistrarCliente;
 agRegistrarCliente = function() {
@@ -4179,7 +4215,6 @@ showProModal(`🚫 Limite de ${LIMITES.clientes} clientes atingido!`);
 return;
 }
 _orig_agRegistrarCliente.apply(this, arguments);
-trackAction();
 };
 const _orig_quickAddItem = quickAddItem;
 quickAddItem = function(type) {
@@ -4191,7 +4226,6 @@ showProModal(`🚫 Limite de ${lim} itens personalizados no catálogo atingido!`
 return;
 }
 _orig_quickAddItem.apply(this, arguments);
-trackAction();
 };
 const _orig_handleLogo = handleLogo;
 handleLogo = function(input) {
@@ -4228,7 +4262,6 @@ if (wm) wm.remove();
 setTimeout(() => {
 showProModal('📄 Quer melhorar seu PDF? Conheça o PRO!');
 }, 1500);
-trackAction();
 };
 const _orig_saveToHistory = saveToHistory;
 saveToHistory = function(dados) {
