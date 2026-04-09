@@ -1160,6 +1160,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     </div>
   </div>
   <div class="header-actions">
+    <button class="header-btn" onclick="openSettings();setTimeout(()=>{switchSettingsTab('meusapps',document.querySelector('[onclick*=meusapps]'))},100)" title="Meus Apps" style="font-size:12px;font-weight:800;letter-spacing:-.02em">📱</button>
     <button class="header-btn" onclick="openSettings()" title="Configurações">⚙️</button>
   </div>
 </header>
@@ -1545,6 +1546,9 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       <button class="settings-tab-btn" onclick="switchSettingsTab('backup',this)">
         <span class="tab-icon">☁️</span>Backup
       </button>
+      <button class="settings-tab-btn" onclick="switchSettingsTab('meusapps',this)">
+        <span class="tab-icon">📱</span>Meus Apps
+      </button>
     </nav>
 
     <div id="tab-perfil" class="settings-tab-content active">
@@ -1704,6 +1708,22 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
           🎁 OFERTAS DA SEMANA ↗
         </a>
         <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Materiais e equipamentos com preços especiais para eletricistas</p>
+      </div>
+    </div>
+
+
+    <div id="tab-meusapps" class="settings-tab-content">
+      <div class="settings-section">
+        <div class="settings-section-title">🌐 Página Principal</div>
+        <a href="[COLE_SEU_LINK_AQUI]" target="_blank" class="affiliate-btn" style="background:linear-gradient(135deg,#7c3aed,#4f46e5)">
+          🌐 VER MINHA PÁGINA PRINCIPAL ↗
+        </a>
+        <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Acesse minha página com todos os meus apps e serviços.</p>
+      </div>
+      <div class="settings-section" style="border:none">
+        <div class="settings-section-title">📱 Vitrine de Apps</div>
+        <p style="font-size:11px;color:var(--txt3);margin-bottom:14px;line-height:1.5">Outros aplicativos que desenvolvi para profissionais como você.</p>
+        <div id="vitrine-apps-list" style="display:flex;flex-direction:column;gap:10px"></div>
       </div>
     </div>
 
@@ -2069,7 +2089,31 @@ const SRV = [
 {n:"Instalacao de timer/minuteria",v:180,cat:"seg",icon:"⏱"},
 {n:"Instalacao de central de alarme",v:500,cat:"seg",icon:"🚨"},
 {n:"Instalacao de automacao residencial",v:800,cat:"seg",icon:"🏠"},
-{n:"Instalacao de tomada inteligente",v:200,cat:"seg",icon:"📱"}
+{n:"Instalacao de tomada inteligente",v:200,cat:"seg",icon:"📱"},
+
+{n:"Instalacao de painel solar residencial",v:3500,cat:"res",icon:"☀"},
+{n:"Instalacao de painel solar comercial",v:6000,cat:"com",icon:"☀"},
+{n:"Instalacao de microinversor solar",v:800,cat:"res",icon:"☀"},
+{n:"Instalacao de ponto para carro eletrico",v:650,cat:"res",icon:"🔌"},
+{n:"Instalacao de carregador EV residencial",v:900,cat:"res",icon:"⚡"},
+{n:"Instalacao de wallbox 7kW monofasico",v:1200,cat:"res",icon:"⚡"},
+{n:"Instalacao de carregador EV comercial",v:1800,cat:"com",icon:"⚡"},
+{n:"Instalacao de ponto para carro eletrico 3F",v:1000,cat:"com",icon:"🔌"},
+{n:"Instalacao de automacao residencial completa",v:2500,cat:"seg",icon:"🏠"},
+{n:"Instalacao de interruptor inteligente",v:220,cat:"seg",icon:"📱"},
+{n:"Instalacao de tomada inteligente Wi-Fi",v:180,cat:"seg",icon:"📱"},
+{n:"Instalacao de persiana motorizada",v:400,cat:"seg",icon:"🪟"},
+{n:"Instalacao de hub de automacao",v:600,cat:"seg",icon:"🏠"},
+{n:"Configuracao de automacao Alexa/Google",v:300,cat:"seg",icon:"📱"},
+{n:"Instalacao de gerador a gas/gasolina",v:1800,cat:"res",icon:"⚙"},
+{n:"Instalacao de gerador diesel residencial",v:2800,cat:"res",icon:"⚙"},
+{n:"Instalacao de quadro de transferencia",v:800,cat:"res",icon:"📋"},
+{n:"Instalacao de nobreak residencial",v:500,cat:"res",icon:"🔋"},
+{n:"Instalacao de inversor solar offgrid",v:2000,cat:"res",icon:"☀"},
+{n:"Instalacao de bateria solar LiPo",v:3000,cat:"res",icon:"🔋"},
+{n:"Instalacao de estacao de recarga publica",v:4500,cat:"com",icon:"⚡"},
+{n:"Instalacao de rastreador eletrico predial",v:500,cat:"com",icon:"📡"},
+
 ];
 const MAT = [
 {n:"Fio 1,5mm rolo 100m",p:350,t:"fio",cat:"cond",icon:"⚡"},
@@ -2305,7 +2349,6 @@ if (!v) { input.value = ''; return; }
 v = (parseInt(v)/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d{3})+(?!\d))/g,'$1.');
 input.value = v;
 }
-const formatPriceInput = formatMoneyInput;
 function maskPhone(input) {
 let v = input.value.replace(/\D/g,'').substring(0,11);
 if (v.length > 10) v = v.replace(/^(\d\d)(\d{5})(\d{4})/,'($1)$2-$3');
@@ -2557,8 +2600,8 @@ w.appendChild(b);
 });
 ctx.appendChild(w);
 } else if (tipo === 'caboPP') {
-mk([], 'or', 'Seção...');
-mk([], 'or', 'Condutores...');
+mk(['2x1,5mm','2x2,5mm','3x2,5mm','4x4mm','5x6mm'], 'or', 'Seção...');
+mk(['2 condutores','3 condutores','4 condutores','5 condutores'], 'or', 'Condutores...');
 } else if (tipo === 'disjuntor') {
 mk(['Monopolar','Bipolar','Tripolar'], 'gr', 'Polo...');
 mk(['B','C','D'], 'gr', 'Curva...');
@@ -2685,7 +2728,7 @@ const pp = document.createElement('span'); pp.className = 'price-prefix'; pp.tex
 const pi = document.createElement('input'); pi.className = 'price-input';
 const pv = typeof s.v === 'number' ? s.v.toFixed(0) + ',00' : s.v;
 pi.value = pv;
-pi.addEventListener('input', function() { formatPriceInput(this); updateFloatingButton(); });
+pi.addEventListener('input', function() { formatMoneyInput(this); updateFloatingButton(); });
 pw.appendChild(pp); pw.appendChild(pi);
 const qw = document.createElement('div'); qw.className = 'qty-wrap';
 const qm = document.createElement('button'); qm.className = 'qty-btn'; qm.textContent = '−';
@@ -2734,7 +2777,7 @@ const pp = document.createElement('span'); pp.className = 'price-prefix'; pp.tex
 const pi = document.createElement('input'); pi.className = 'price-input';
 const pv = typeof m.p === 'number' ? m.p.toFixed(2).replace('.',',') : String(m.p);
 pi.value = pv;
-pi.addEventListener('input', function() { formatPriceInput(this); updateMaterialBadge(); });
+pi.addEventListener('input', function() { formatMoneyInput(this); updateMaterialBadge(); });
 pw.appendChild(pp); pw.appendChild(pi);
 const qw = document.createElement('div'); qw.className = 'qty-wrap';
 const qm = document.createElement('button'); qm.className = 'qty-btn'; qm.textContent = '−';
@@ -3146,7 +3189,7 @@ if (_settingsDirty) return;
 _settingsDirty = true;
 const footer = document.getElementById('settings-save-footer');
 const activeTab = document.querySelector('.settings-tab-btn.active')?.dataset?.tab;
-const hiddenTabs = ['catalogo', 'backup'];
+const hiddenTabs = ['catalogo', 'backup', 'meusapps'];
 const currentTab = document.querySelector('.settings-tab-content.active')?.id?.replace('tab-', '');
 if (footer && !hiddenTabs.includes(currentTab)) footer.style.display = 'flex';
 }
@@ -3155,9 +3198,10 @@ document.querySelectorAll('.settings-tab-content').forEach(el => el.classList.re
 document.querySelectorAll('.settings-tab-btn').forEach(el => el.classList.remove('active'));
 document.getElementById('tab-' + tab).classList.add('active');
 if (btn) btn.classList.add('active');
+if (tab === 'meusapps') renderVitrineApps();
 const footer = document.getElementById('settings-save-footer');
 if (footer) {
-const hiddenTabs = ['catalogo', 'backup'];
+const hiddenTabs = ['catalogo', 'backup', 'meusapps'];
 footer.style.display = (_settingsDirty && !hiddenTabs.includes(tab)) ? 'flex' : 'none';
 }
 }
@@ -3983,6 +4027,51 @@ tag: 'warranty-alert',
 });
 } catch(e) {}
 }
+
+const MEUS_APPS = [
+  {
+    nome: "Eletricista Power PRO",
+    desc: "Versão completa offline com nuvem, sem anúncios e sem limites.",
+    icon: "⚡",
+    cor: "#f97316",
+    link: "http://eletricistapro.com.br/"
+  },
+  {
+    nome: "App Exemplo 2",
+    desc: "Descrição do seu segundo aplicativo. Edite este texto em Ajustes > Meus Apps.",
+    icon: "🛠️",
+    cor: "#2563eb",
+    link: "[COLE_SEU_LINK_AQUI]"
+  },
+  {
+    nome: "App Exemplo 3",
+    desc: "Descrição do seu terceiro aplicativo. Adicione o link real no código.",
+    icon: "📱",
+    cor: "#16a34a",
+    link: "[COLE_SEU_LINK_AQUI]"
+  }
+];
+
+function renderVitrineApps() {
+  var container = document.getElementById('vitrine-apps-list');
+  if (!container) return;
+  container.innerHTML = '';
+  MEUS_APPS.forEach(function(app) {
+    var card = document.createElement('a');
+    card.href = app.link;
+    card.target = '_blank';
+    card.style.cssText = 'display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px;text-decoration:none;transition:border-color .2s;border-left:3px solid ' + app.cor;
+    card.innerHTML =
+      '<div style="width:44px;height:44px;border-radius:12px;background:rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + app.icon + '</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-family:var(--font-display);font-size:13px;font-weight:800;color:var(--txt);margin-bottom:2px">' + app.nome + '</div>' +
+        '<div style="font-size:11px;color:var(--txt3);line-height:1.4">' + app.desc + '</div>' +
+      '</div>' +
+      '<div style="font-size:14px;color:var(--txt3);flex-shrink:0">&#8599;</div>';
+    container.appendChild(card);
+  });
+}
+
 const PRO_LINK = 'http://eletricistapro.com.br/';
 function checkInternet() {
 if (!navigator.onLine) {
