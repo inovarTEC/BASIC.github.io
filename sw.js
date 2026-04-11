@@ -9,7 +9,6 @@ const SW_VERSION = 'ep-v1.0.0';
 // ── Instalação: não cacheamos nada ──────────────────────────────────────────
 self.addEventListener('install', event => {
   console.log('[SW] Instalado — modo 100% online');
-  // Ativa imediatamente sem esperar tabs fecharem
   self.skipWaiting();
 });
 
@@ -25,7 +24,6 @@ self.addEventListener('activate', event => {
       );
     }).then(() => {
       console.log('[SW] Ativado — todos os caches limpos');
-      // Assume controle imediato de todas as abas abertas
       return self.clients.claim();
     })
   );
@@ -33,20 +31,31 @@ self.addEventListener('activate', event => {
 
 // ── Interceptação de requisições: SEMPRE vai para a rede ────────────────────
 self.addEventListener('fetch', event => {
-  // Ignora requisições que não sejam HTTP/HTTPS
   if (!event.request.url.startsWith('http')) return;
+
+  // Ignora requisições de extensões do navegador
+  if (event.request.url.startsWith('chrome-extension')) return;
+
+  // Ignora requisições de analytics e tracking
+  if (
+    event.request.url.includes('google-analytics') ||
+    event.request.url.includes('googletagmanager') ||
+    event.request.url.includes('facebook.net')
+  ) return;
 
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Retorna a resposta da rede diretamente, sem cachear
+        // Verifica se a resposta é válida
+        if (!response || response.status === 0) {
+          throw new Error('Resposta inválida da rede');
+        }
         return response;
       })
       .catch(error => {
-        // Sem internet: retorna página de erro personalizada
         console.log('[SW] Sem internet — requisição bloqueada:', event.request.url);
 
-        // Se for uma navegação (abrir o app), mostra tela de erro
+        // Se for navegação (abrir o app), mostra tela de erro
         if (event.request.mode === 'navigate') {
           return new Response(
             getOfflineHTML(),
@@ -58,9 +67,13 @@ self.addEventListener('fetch', event => {
           );
         }
 
-        // Para outros recursos (scripts, imagens), retorna erro simples
+        // Para outros recursos, retorna erro JSON
         return new Response(
-          JSON.stringify({ error: 'Sem conexão com a internet', offline: true }),
+          JSON.stringify({
+            error: 'Sem conexão com a internet',
+            offline: true,
+            url: event.request.url
+          }),
           {
             status: 503,
             headers: { 'Content-Type': 'application/json' }
@@ -178,10 +191,17 @@ function getOfflineHTML() {
       box-shadow: 0 6px 24px rgba(37,99,235,.35);
       letter-spacing: .04em;
     }
+    .btn:active { transform: scale(.97); }
     .version {
       font-size: 10px;
       color: #334155;
       margin-top: 20px;
+    }
+    /* ── Animação de pulso no ícone ── */
+    .icon { animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
   </style>
 </head>
@@ -212,19 +232,20 @@ function getOfflineHTML() {
 
   <button class="btn" onclick="location.reload()">↺ Tentar Novamente</button>
 
-  <div class="version">⚡ Eletricista Power · Versão Online</div>
+  <div class="version">⚡ Eletricista Power · Versão Online · ${SW_VERSION}</div>
 </body>
 </html>`;
 }
 
 // ── Mensagens vindas do app principal ────────────────────────────────────────
 self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'CHECK_VERSION') {
+  if (!event.data) return;
+
+  if (event.data.type === 'CHECK_VERSION') {
     event.ports[0].postMessage({ version: SW_VERSION });
   }
 
-  // Força atualização imediata quando solicitado
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+  if (event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
