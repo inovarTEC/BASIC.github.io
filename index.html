@@ -1160,7 +1160,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     </div>
   </div>
   <div class="header-actions">
-    <button class="header-btn" onclick="openSettings();setTimeout(()=>{switchSettingsTab('meusapps',document.querySelector('[onclick*=meusapps]'))},100)" title="Meus Apps" style="font-size:12px;font-weight:800;letter-spacing:-.02em">📱</button>
+
     <button class="header-btn" onclick="openSettings()" title="Configurações">⚙️</button>
   </div>
 </header>
@@ -1546,9 +1546,7 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       <button class="settings-tab-btn" onclick="switchSettingsTab('backup',this)">
         <span class="tab-icon">☁️</span>Backup
       </button>
-      <button class="settings-tab-btn" onclick="switchSettingsTab('meusapps',this)">
-        <span class="tab-icon">📱</span>Meus Apps
-      </button>
+
     </nav>
 
     <div id="tab-perfil" class="settings-tab-content active">
@@ -1704,28 +1702,19 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       </div>
       <div class="settings-section" style="border:none">
         <div class="settings-section-title">🎁 Parceiros</div>
-        <a href="http://eletricistapro.com.br/" target="_blank" class="affiliate-btn">
+        <a href="https://collshp.com/jose_o_souza271?view=storefront" target="_blank" class="affiliate-btn">
           🎁 OFERTAS DA SEMANA ↗
         </a>
         <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Materiais e equipamentos com preços especiais para eletricistas</p>
-      </div>
-    </div>
-
-
-    <div id="tab-meusapps" class="settings-tab-content">
-      <div class="settings-section">
-        <div class="settings-section-title">🌐 Página Principal</div>
-        <a href="[COLE_SEU_LINK_AQUI]" target="_blank" class="affiliate-btn" style="background:linear-gradient(135deg,#7c3aed,#4f46e5)">
-          🌐 VER MINHA PÁGINA PRINCIPAL ↗
+        <a href="https://eletricistapro.com.br/" target="_blank" class="affiliate-btn" style="background:linear-gradient(135deg,#f97316,#ea580c);box-shadow:0 4px 16px rgba(249,115,22,.35);border:1px solid rgba(249,115,22,.3)">
+          📱 VEJA OUTROS APPS ↗
         </a>
-        <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Acesse minha página com todos os meus apps e serviços.</p>
-      </div>
-      <div class="settings-section" style="border:none">
-        <div class="settings-section-title">📱 Vitrine de Apps</div>
-        <p style="font-size:11px;color:var(--txt3);margin-bottom:14px;line-height:1.5">Outros aplicativos que desenvolvi para profissionais como você.</p>
-        <div id="vitrine-apps-list" style="display:flex;flex-direction:column;gap:10px"></div>
+        <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:-8px;line-height:1.5">Conheça todos os nossos aplicativos</p>
       </div>
     </div>
+
+
+
 
     </div>
 
@@ -3189,7 +3178,7 @@ if (_settingsDirty) return;
 _settingsDirty = true;
 const footer = document.getElementById('settings-save-footer');
 const activeTab = document.querySelector('.settings-tab-btn.active')?.dataset?.tab;
-const hiddenTabs = ['catalogo', 'backup', 'meusapps'];
+const hiddenTabs = ['catalogo', 'backup'];
 const currentTab = document.querySelector('.settings-tab-content.active')?.id?.replace('tab-', '');
 if (footer && !hiddenTabs.includes(currentTab)) footer.style.display = 'flex';
 }
@@ -3198,10 +3187,9 @@ document.querySelectorAll('.settings-tab-content').forEach(el => el.classList.re
 document.querySelectorAll('.settings-tab-btn').forEach(el => el.classList.remove('active'));
 document.getElementById('tab-' + tab).classList.add('active');
 if (btn) btn.classList.add('active');
-if (tab === 'meusapps') renderVitrineApps();
 const footer = document.getElementById('settings-save-footer');
 if (footer) {
-const hiddenTabs = ['catalogo', 'backup', 'meusapps'];
+const hiddenTabs = ['catalogo', 'backup'];
 footer.style.display = (_settingsDirty && !hiddenTabs.includes(tab)) ? 'flex' : 'none';
 }
 }
@@ -4028,49 +4016,8 @@ tag: 'warranty-alert',
 } catch(e) {}
 }
 
-const MEUS_APPS = [
-  {
-    nome: "Eletricista Power PRO",
-    desc: "Versão completa offline com nuvem, sem anúncios e sem limites.",
-    icon: "⚡",
-    cor: "#f97316",
-    link: "http://eletricistapro.com.br/"
-  },
-  {
-    nome: "App Exemplo 2",
-    desc: "Descrição do seu segundo aplicativo. Edite este texto em Ajustes > Meus Apps.",
-    icon: "🛠️",
-    cor: "#2563eb",
-    link: "[COLE_SEU_LINK_AQUI]"
-  },
-  {
-    nome: "App Exemplo 3",
-    desc: "Descrição do seu terceiro aplicativo. Adicione o link real no código.",
-    icon: "📱",
-    cor: "#16a34a",
-    link: "[COLE_SEU_LINK_AQUI]"
-  }
-];
 
-function renderVitrineApps() {
-  var container = document.getElementById('vitrine-apps-list');
-  if (!container) return;
-  container.innerHTML = '';
-  MEUS_APPS.forEach(function(app) {
-    var card = document.createElement('a');
-    card.href = app.link;
-    card.target = '_blank';
-    card.style.cssText = 'display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px;text-decoration:none;transition:border-color .2s;border-left:3px solid ' + app.cor;
-    card.innerHTML =
-      '<div style="width:44px;height:44px;border-radius:12px;background:rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + app.icon + '</div>' +
-      '<div style="flex:1;min-width:0">' +
-        '<div style="font-family:var(--font-display);font-size:13px;font-weight:800;color:var(--txt);margin-bottom:2px">' + app.nome + '</div>' +
-        '<div style="font-size:11px;color:var(--txt3);line-height:1.4">' + app.desc + '</div>' +
-      '</div>' +
-      '<div style="font-size:14px;color:var(--txt3);flex-shrink:0">&#8599;</div>';
-    container.appendChild(card);
-  });
-}
+
 
 const PRO_LINK = 'http://eletricistapro.com.br/';
 function checkInternet() {
