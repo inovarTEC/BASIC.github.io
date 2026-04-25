@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#0f172a">
+<meta name="msapplication-TileColor" content="#0f172a">
 <meta name="application-name" content="Eletricista Power">
 <title>Eletricista Power</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwZjE3MmEiLz48cG9seWdvbiBwb2ludHM9IjM4LDYgMjIsMzQgMzEsMzQgMjYsNTggNDYsMjggMzYsMjggNDQsNiIgZmlsbD0iI2Y5NzMxNiIvPjwvc3ZnPg==">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwZjE3MmEiLz48cG9seWdvbiBwb2ludHM9IjM4LDYgMjIsMzQgMzEsMzQgMjYsNTggNDYsMjggMzYsMjggNDQsNiIgZmlsbD0iI2Y5NzMxNiIvPjwvc3ZnPg==">
+<link rel="icon" type="image/png" sizes="512x512" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -679,8 +680,43 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .settings-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; gap: 8px; }
 .settings-tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--surface2); }
 .settings-tabs::-webkit-scrollbar { display: none; }
-.settings-tab-btn { flex-shrink: 0; padding: 10px 14px; background: none; border: none; cursor: pointer; font-family: var(--font-display); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--txt3); transition: color .2s; border-bottom: 2px solid transparent; }
-.settings-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.settings-tab-btn {
+  flex: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--txt3);
+  transition: all .2s;
+  border-bottom: 2px solid transparent;
+  line-height: 1;
+}
+.tab-icon { font-size: 18px; line-height: 1; margin-bottom: 1px; }
+.settings-tab-btn.active { background: var(--surface); }
+
+/* Cores fixas sempre visíveis — Ajustes */
+.settings-tab-btn[onclick*="perfil"]   { color: #3b82f6; font-weight: 800; }
+.settings-tab-btn[onclick*="negocio"]  { color: #f97316; font-weight: 800; }
+.settings-tab-btn[onclick*="catalogo"] { color: #22c55e; font-weight: 800; }
+.settings-tab-btn[onclick*="backup"]   { color: #a855f7; font-weight: 800; }
+.settings-tab-btn[onclick*="chat"]     { color: #06b6d4; font-weight: 800; }
+
+/* Aba ativa: fundo suave + barra grossa */
+.settings-tab-btn[onclick*="perfil"].active   { background: rgba(59,130,246,.08);  border-bottom: 3px solid #3b82f6; }
+.settings-tab-btn[onclick*="negocio"].active  { background: rgba(249,115,22,.08);  border-bottom: 3px solid #f97316; }
+.settings-tab-btn[onclick*="catalogo"].active { background: rgba(34,197,94,.08);   border-bottom: 3px solid #22c55e; }
+.settings-tab-btn[onclick*="backup"].active   { background: rgba(168,85,247,.08);  border-bottom: 3px solid #a855f7; }
+.settings-tab-btn[onclick*="chat"].active     { background: rgba(6,182,212,.08);   border-bottom: 3px solid #06b6d4; }
 .settings-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; }
 .settings-tab-content { display: none; }
 .settings-tab-content.active { display: block; }
@@ -739,8 +775,20 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .stat-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--txt3); }
 .ag-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
 .ag-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px; background: none; border: none; cursor: pointer; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--txt3); border-bottom: 2px solid transparent; transition: all .2s; }
-.ag-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--surface); }
-.ag-tab-icon { font-size: 16px; }
+.ag-tab.active { background: var(--surface); }
+.ag-tab-icon { font-size: 18px; line-height: 1; }
+
+/* Cores fixas sempre visíveis — Agenda */
+#agtab-visitas   { color: #22c55e; font-weight: 800; }
+#agtab-clientes  { color: #3b82f6; font-weight: 800; }
+#agtab-garantias { color: #f97316; font-weight: 800; }
+#agtab-relatorio { color: #a855f7; font-weight: 800; }
+
+/* Aba ativa: fundo suave + barra grossa */
+#agtab-visitas.active   { background: rgba(34,197,94,.08);  border-bottom: 3px solid #22c55e; }
+#agtab-clientes.active  { background: rgba(59,130,246,.08); border-bottom: 3px solid #3b82f6; }
+#agtab-garantias.active { background: rgba(249,115,22,.08); border-bottom: 3px solid #f97316; }
+#agtab-relatorio.active { background: rgba(168,85,247,.08); border-bottom: 3px solid #a855f7; }
 .ag-panel { display: none; padding: 12px; }
 .ag-panel.active { display: block; }
 .ag-form-toggle { display: flex; align-items: center; gap: 8px; width: 100%; padding: 10px 14px; background: var(--surface); border: 1.5px dashed var(--border2); border-radius: var(--radius); cursor: pointer; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--txt2); margin-bottom: 10px; transition: border-color .2s, color .2s; }
@@ -1056,6 +1104,527 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 .acc-item-name-input { flex:1; font-size:12px; font-weight:600; background:var(--input-bg); border:1.5px solid var(--accent); border-radius:6px; padding:3px 8px; color:var(--txt); outline:none; font-family:var(--font-body); min-width:0; }
 .acc-item-val-input { width:72px; font-size:12px; font-weight:700; background:var(--input-bg); border:1.5px solid var(--accent); border-radius:6px; padding:3px 6px; color:var(--txt); outline:none; text-align:right; }
 .acc-cat-count.has-custom { background:rgba(34,197,94,.15); color:#16a34a; }
+/* ===== TELA HOME ===== */
+#screen-home {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 57px);
+  overflow: hidden;
+}
+.home-header {
+  background: var(--header-bg);
+  padding: clamp(10px,2dvh,18px) 14px clamp(14px,2.5dvh,22px);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.home-header::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(59,130,246,.25), transparent 70%);
+  pointer-events: none;
+}
+.home-greet {
+  font-family: var(--font-display);
+  font-size: clamp(15px,4dvh,20px);
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1.1;
+  margin-bottom: 1px;
+}
+.home-greet span { color: var(--accent2); }
+.home-sub {
+  font-size: clamp(9px,1.8dvh,11px);
+  color: #475569;
+  margin-bottom: clamp(8px,1.5dvh,12px);
+}
+.home-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.home-stat {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  padding: clamp(6px,1.2dvh,10px) 6px;
+  text-align: center;
+}
+.home-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(13px,3dvh,17px);
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1;
+}
+.home-stat-lbl {
+  font-size: clamp(7px,1.2dvh,9px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #475569;
+  margin-top: 2px;
+}
+.home-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(8px,1.5dvh,14px) 12px clamp(6px,1dvh,10px);
+  background: var(--bg);
+  border-radius: 18px 18px 0 0;
+  margin-top: -10px;
+  position: relative;
+  z-index: 20;
+  overflow: hidden;
+}
+.home-section-lbl {
+  font-family: var(--font-display);
+  font-size: clamp(8px,1.5dvh,10px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--txt3);
+  margin-bottom: clamp(6px,1dvh,10px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.home-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(6px,1.2dvh,10px);
+  flex: 1;
+}
+.home-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: clamp(10px,2dvh,16px);
+  padding: clamp(8px,1.5dvh,12px) 6px;
+  cursor: pointer;
+  transition: transform .15s, border-color .2s;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: slideUp .35s cubic-bezier(.16,1,.3,1) both;
+}
+.home-card:active { transform: scale(.94); }
+.home-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  border-radius: 2px 0 0 2px;
+}
+.hc-blue::before   { background: linear-gradient(180deg,#2563eb,#1d4ed8); }
+.hc-orange::before { background: linear-gradient(180deg,#f97316,#ea580c); }
+.hc-green::before  { background: linear-gradient(180deg,#22c55e,#16a34a); }
+.hc-purple::before { background: linear-gradient(180deg,#a855f7,#9333ea); }
+.hc-cyan::before   { background: linear-gradient(180deg,#06b6d4,#0891b2); }
+.hc-yellow::before { background: linear-gradient(180deg,#eab308,#ca8a04); }
+.home-card-icon {
+  width: clamp(28px,5dvh,38px);
+  height: clamp(28px,5dvh,38px);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(14px,3dvh,20px);
+  margin-bottom: clamp(4px,.8dvh,8px);
+}
+.hci-blue   { background: rgba(37,99,235,.12); }
+.hci-orange { background: rgba(249,115,22,.12); }
+.hci-green  { background: rgba(34,197,94,.12); }
+.hci-purple { background: rgba(168,85,247,.12); }
+.hci-cyan   { background: rgba(6,182,212,.12); }
+.hci-yellow { background: rgba(234,179,8,.12); }
+.home-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(9px,1.8dvh,12px);
+  font-weight: 800;
+  color: var(--txt);
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 1px;
+}
+.home-card-desc {
+  font-size: clamp(8px,1.4dvh,10px);
+  color: var(--txt3);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  display: none;
+}
+.home-card-hero {
+  grid-column: span 3;
+  background: var(--header-bg);
+  border: 1px solid var(--border);
+  border-radius: clamp(10px,2dvh,16px);
+  padding: clamp(10px,2dvh,16px) 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: transform .15s;
+  flex-shrink: 0;
+  animation: slideUp .2s ease both;
+}
+.home-card-hero:active { transform: scale(.98); }
+.home-card-hero::before { display: none; }
+.home-card-hero::after {
+  content: '⚡';
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 50px;
+  opacity: .04;
+  pointer-events: none;
+}
+.hero-icon-wrap {
+  width: clamp(36px,6dvh,46px);
+  height: clamp(36px,6dvh,46px);
+  border-radius: 12px;
+  background: linear-gradient(135deg,#f97316,#ea580c);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(18px,3.5dvh,24px);
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(249,115,22,.4);
+}
+.hero-texts { flex: 1; min-width: 0; }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(13px,2.8dvh,16px);
+  font-weight: 800;
+  color: #f1f5f9;
+  margin-bottom: 1px;
+}
+.hero-desc { font-size: clamp(9px,1.6dvh,11px); color: #475569; }
+.hero-arrow {
+  width: 28px; height: 28px;
+  background: rgba(249,115,22,.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: #f97316;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.home-card:nth-child(2) { animation-delay: .06s; }
+.home-card:nth-child(3) { animation-delay: .10s; }
+.home-card:nth-child(4) { animation-delay: .14s; }
+.home-card:nth-child(5) { animation-delay: .18s; }
+.home-card:nth-child(6) { animation-delay: .22s; }
+.home-card:nth-child(7) { animation-delay: .26s; }
+
+/* Compat: remover estilos antigos que conflitam */
+.home-next-visit { display: none !important; }
+.home-nv-dot,.home-nv-label,.home-nv-name,.home-nv-time,.home-nv-badge,.home-nv-empty { display: none; }
+.home-card:not(.home-card-hero) { text-align: center; }
+/* ===== SINO DE NOTIFICAÇÕES ===== */
+.notif-btn {
+  position: relative;
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #e2e8f0;
+  font-size: 16px;
+  transition: background .2s, transform .2s;
+  flex-shrink: 0;
+}
+.notif-btn:hover { background: rgba(255,255,255,.16); }
+.notif-btn.has-alert { animation: bellShake 3s ease-in-out infinite; }
+@keyframes bellShake {
+  0%,80%,100% { transform: rotate(0); }
+  85% { transform: rotate(-12deg); }
+  90% { transform: rotate(12deg); }
+  95% { transform: rotate(-8deg); }
+}
+.notif-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 8px; height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid var(--header-bg);
+  display: none;
+}
+.notif-dot.show { display: block; }
+
+/* PAINEL DE NOTIFICAÇÕES */
+.notif-overlay {
+  position: fixed; inset: 0; z-index: 55;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(6px);
+  display: none;
+}
+.notif-overlay.open { display: flex; align-items: flex-end; justify-content: center; }
+.notif-sheet {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  max-height: 80dvh;
+  display: flex; flex-direction: column;
+  transform: translateY(100%);
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.notif-overlay.open .notif-sheet { transform: translateY(0); }
+@media (min-width: 600px) {
+  .notif-sheet {
+    left: 50%; top: 50%; right: auto; bottom: auto;
+    transform: translate(-50%,-50%) scale(.96);
+    border-radius: 24px; width: 100%;
+    max-width: 440px; max-height: 80dvh;
+    opacity: 0;
+    transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .25s;
+  }
+  .notif-overlay.open .notif-sheet { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+  .notif-overlay.open { align-items: center; }
+}
+.notif-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 99px; margin: 10px auto 0; flex-shrink: 0; }
+.notif-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.notif-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--txt); display: flex; align-items: center; gap: 8px; }
+.notif-close { width: 30px; height: 30px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 99px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--txt2); font-size: 14px; }
+.notif-body { flex: 1; overflow-y: auto; padding: 14px 16px 20px; overscroll-behavior: contain; }
+.notif-section-lbl {
+  font-family: var(--font-display);
+  font-size: 9px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--txt3);
+  margin: 12px 0 8px;
+}
+.notif-section-lbl:first-child { margin-top: 0; }
+.notif-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+  margin-bottom: 8px;
+}
+.notif-item-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.notif-item-text { flex: 1; min-width: 0; }
+.notif-item-title { font-family: var(--font-display); font-size: 12px; font-weight: 800; color: var(--txt); margin-bottom: 2px; }
+.notif-item-desc { font-size: 11px; color: var(--txt2); line-height: 1.4; }
+.notif-item-time { font-size: 10px; color: var(--txt3); margin-top: 2px; font-weight: 600; }
+.notif-item.alert { border-color: rgba(239,68,68,.25); background: rgba(239,68,68,.04); }
+.notif-item.warn  { border-color: rgba(249,115,22,.25); background: rgba(249,115,22,.04); }
+.notif-item.ok    { border-color: rgba(34,197,94,.2); background: rgba(34,197,94,.03); }
+.notif-locked {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.notif-locked-blur {
+  filter: blur(2px);
+  pointer-events: none;
+  opacity: .5;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.notif-locked-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(var(--surface-rgb, 255,255,255),.7);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  padding: 16px;
+  text-align: center;
+  gap: 8px;
+}
+[data-theme="dark"] .notif-locked-overlay { background: rgba(17,24,39,.8); }
+.notif-locked-icon { font-size: 28px; margin-bottom: 4px; }
+.notif-locked-title { font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--txt); }
+.notif-locked-desc { font-size: 11px; color: var(--txt2); line-height: 1.4; margin-bottom: 4px; }
+.notif-pro-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 11px;
+  background: linear-gradient(135deg,#f97316,#ea580c);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 800;
+  border: none; border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(249,115,22,.35);
+  letter-spacing: .04em;
+}
+.notif-empty { text-align: center; color: var(--txt3); font-size: 13px; padding: 20px 0; }
+/* ===== CHATBOT ===== */
+.chat-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin: 14px 16px;
+}
+.chat-card-header {
+  background: var(--header-bg);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chat-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#f97316,#ea580c);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(249,115,22,.35);
+}
+.chat-header-info { flex: 1; }
+.chat-header-name {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 800;
+  color: #f1f5f9;
+}
+.chat-header-status {
+  font-size: 10px; color: #4ade80;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.chat-status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.chat-messages {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--surface2);
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.chat-msg {
+  display: flex;
+  gap: 7px;
+  align-items: flex-end;
+  animation: msgIn .25s ease;
+}
+@keyframes msgIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.chat-msg.user { flex-direction: row-reverse; }
+.chat-msg-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#f97316,#ea580c);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.chat-msg-avatar.user-av {
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+.chat-bubble {
+  max-width: 82%;
+  padding: 9px 12px;
+  border-radius: 14px 14px 14px 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--txt);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.chat-bubble.user {
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  color: #fff;
+  border: none;
+  border-radius: 14px 14px 4px 14px;
+}
+.chat-bubble strong { font-weight: 800; }
+.chat-bubble a { color: #f97316; font-weight: 700; text-decoration: none; }
+.chat-bubble.user a { color: #bfdbfe; }
+.chat-options {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.chat-opt-btn {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--txt);
+  cursor: pointer;
+  text-align: left;
+  transition: all .18s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chat-opt-btn:hover { border-color: var(--accent2); color: var(--accent2); background: rgba(249,115,22,.04); }
+.chat-opt-btn:active { transform: scale(.98); }
+.chat-reset-btn {
+  width: 100%;
+  padding: 7px;
+  background: none;
+  border: none;
+  font-size: 10px;
+  color: var(--txt3);
+  cursor: pointer;
+  font-family: var(--font-body);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.chat-reset-btn:hover { color: var(--accent); }
+
+/* Botão discreto na Agenda */
+.chat-agenda-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: rgba(249,115,22,.06);
+  border: 1px solid rgba(249,115,22,.18);
+  border-radius: 99px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent2);
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background .2s;
+}
+.chat-agenda-btn:hover { background: rgba(249,115,22,.12); }
 </style>
 </head>
 <body>
@@ -1160,14 +1729,85 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
     </div>
   </div>
   <div class="header-actions">
-
+    <button class="notif-btn" id="notifBtn" onclick="openNotifPanel()" title="Notificações">
+      🔔
+      <span class="notif-dot" id="notifDot"></span>
+    </button>
     <button class="header-btn" onclick="openSettings()" title="Configurações">⚙️</button>
   </div>
 </header>
 
 <main class="app-body">
 
-<div id="screen-input" class="screen active">
+<div id="screen-home" class="screen active">
+  <div class="home-header">
+    <div class="header-badge"><span class="bolt-pulse">⚡</span> Eletricista Power</div>
+    <div class="home-greet" id="home-greet-txt">Bem-vindo! <span>👷</span></div>
+    <div class="home-sub" id="home-sub-txt">Carregando...</div>
+    <div class="home-stats">
+      <div class="home-stat">
+        <div class="home-stat-num" id="home-stat-fat" style="color:#4ade80">R$0</div>
+        <div class="home-stat-lbl">Este mês</div>
+      </div>
+      <div class="home-stat">
+        <div class="home-stat-num" id="home-stat-orc" style="color:#f97316">0</div>
+        <div class="home-stat-lbl">Orçamentos</div>
+      </div>
+      <div class="home-stat">
+        <div class="home-stat-num" id="home-stat-vis" style="color:#3b82f6">0</div>
+        <div class="home-stat-lbl">Visitas hoje</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-body">
+    <div class="home-section-lbl">⚡ Atalhos rápidos</div>
+    <div class="home-cards">
+
+      <div class="home-card home-card-hero" onclick="switchMainTab('orcamento')">
+        <div class="hero-icon-wrap">⚡</div>
+        <div class="hero-texts">
+          <div class="hero-title">Novo Orçamento</div>
+          <div class="hero-desc">Calcule serviços e materiais</div>
+        </div>
+        <div class="hero-arrow">→</div>
+      </div>
+
+      <div class="home-card hc-blue" onclick="switchMainTab('agenda')">
+        <div class="home-card-icon hci-blue">📅</div>
+        <div class="home-card-title">Agenda</div>
+      </div>
+
+      <div class="home-card hc-green" onclick="switchMainTab('agenda');setTimeout(()=>agMudarAba('clientes'),200)">
+        <div class="home-card-icon hci-green">👥</div>
+        <div class="home-card-title">Clientes</div>
+      </div>
+
+      <div class="home-card hc-orange" onclick="switchMainTab('historico')">
+        <div class="home-card-icon hci-orange">🕐</div>
+        <div class="home-card-title">Histórico</div>
+      </div>
+
+      <div class="home-card hc-purple" onclick="switchMainTab('agenda');setTimeout(()=>agMudarAba('garantias'),200)">
+        <div class="home-card-icon hci-purple">🛡️</div>
+        <div class="home-card-title">Garantias</div>
+      </div>
+
+      <div class="home-card hc-cyan" onclick="switchMainTab('agenda');setTimeout(()=>agMudarAba('relatorio'),200)">
+        <div class="home-card-icon hci-cyan">📊</div>
+        <div class="home-card-title">Relatório</div>
+      </div>
+
+      <div class="home-card hc-yellow" onclick="openSettings();setTimeout(()=>{switchSettingsTab('catalogo',document.querySelector('[onclick*=catalogo]'))},100)">
+        <div class="home-card-icon hci-yellow">📋</div>
+        <div class="home-card-title">Catálogo</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="screen-input" class="screen">
   <div class="card">
     <div class="card-accent-bar"></div>
     <div style="padding-left:8px">
@@ -1401,6 +2041,9 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       <span class="ag-panel-label">Agendamentos</span>
       <button class="ag-btn-blue" onclick="agToggleForm('agform-visita')">+ Nova visita</button>
     </div>
+    <button class="chat-agenda-btn" onclick="abrirChatAgenda()">
+      💬 Dúvidas sobre o app? Fale com nosso assistente
+    </button>
     <div id="agform-visita" class="ag-form" style="display:none">
       <div class="ag-form-title">📅 Nova Visita</div>
       <input type="text" id="agvisita-cliente" class="ag-input" placeholder="Nome do cliente" autocomplete="off">
@@ -1510,7 +2153,11 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
 </main>
 
 <nav class="bottom-nav">
-  <button class="bottom-nav-btn active" id="bnav-orcamento" onclick="switchMainTab('orcamento')">
+  <button class="bottom-nav-btn active" id="bnav-home" onclick="switchMainTab('home')">
+    <span style="font-size:18px">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="bottom-nav-btn" id="bnav-orcamento" onclick="switchMainTab('orcamento')">
     <span style="font-size:18px">⚡</span>
     <span>Orçamento</span>
   </button>
@@ -1545,6 +2192,9 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
       </button>
       <button class="settings-tab-btn" onclick="switchSettingsTab('backup',this)">
         <span class="tab-icon">☁️</span>Backup
+      </button>
+      <button class="settings-tab-btn" onclick="switchSettingsTab('chat',this)">
+        <span class="tab-icon">💬</span>Chat
       </button>
 
     </nav>
@@ -1632,7 +2282,9 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
           </div>
         </div>
       </div>
+
     </div>
+
 
     <div id="tab-catalogo" class="settings-tab-content" style="padding:0">
       
@@ -1710,12 +2362,40 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
           📱 VEJA OUTROS APPS ↗
         </a>
         <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:-8px;line-height:1.5">Conheça todos os nossos aplicativos</p>
+        <button onclick="compartilharApp()" class="affiliate-btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 4px 16px rgba(34,197,94,.35);border:1px solid rgba(34,197,94,.3);margin-bottom:0;cursor:pointer">
+          👥 INDIQUE UM AMIGO ELETRICISTA ↗
+        </button>
+        <p style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px;line-height:1.5">Compartilhe via WhatsApp, Telegram, SMS e mais</p>
       </div>
     </div>
 
 
 
 
+    </div>
+
+    <!-- ===== ABA CHAT ===== -->
+    <div id="tab-chat" class="settings-tab-content">
+      <div style="padding:14px 16px 8px;border-bottom:1px solid var(--border)">
+        <div style="font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--txt2);line-height:1.5">
+          💬 Tire dúvidas, veja demonstrações e conheça recursos do app com nosso assistente.
+        </div>
+      </div>
+      <div class="chat-card" style="margin:12px 14px;border-radius:16px">
+        <div class="chat-card-header" style="border-radius:16px 16px 0 0">
+          <div class="chat-avatar">⚡</div>
+          <div class="chat-header-info">
+            <div class="chat-header-name">Assistente Eletricista Power</div>
+            <div class="chat-header-status"><span class="chat-status-dot"></span> Online agora</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-left:auto">
+            <button onclick="chatReset()" title="Limpar conversa" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#94a3b8;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center">↺</button>
+            <button onclick="chatFechar()" title="Fechar chat" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#94a3b8;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-options" id="chatOptions"></div>
+      </div>
     </div>
 
     <div id="settings-save-footer" class="settings-footer" style="display:none">
@@ -1858,6 +2538,18 @@ input, select, textarea { font-size: 16px !important; font-family: var(--font-bo
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ===== PAINEL DE NOTIFICAÇÕES ===== -->
+<div id="notifOverlay" class="notif-overlay" onclick="handleNotifOverlayClick(event)">
+  <div class="notif-sheet">
+    <div class="notif-handle"></div>
+    <div class="notif-header">
+      <div class="notif-title">🔔 Notificações</div>
+      <button class="notif-close" onclick="closeNotifPanel()">✕</button>
+    </div>
+    <div class="notif-body" id="notifBody"></div>
   </div>
 </div>
 
@@ -2438,6 +3130,7 @@ else if (w.daysLeft <= 15) nearExpiry.push({item, w});
 });
 const dot = document.getElementById('alertDot');
 if (dot) dot.classList.toggle('show', expired.length > 0 || nearExpiry.length > 0);
+updateNotifDot();
 const banner = document.getElementById('expiredBanner');
 const list = document.getElementById('expiredList');
 const title = document.getElementById('expiredTitle');
@@ -3094,7 +3787,7 @@ setTimeout(() => btn.innerHTML = orig, 2000);
 });
 }
 function showScreen(id) {
-['screen-input','screen-results','screen-agenda','screen-historico'].forEach(sid => {
+['screen-home','screen-input','screen-results','screen-agenda','screen-historico'].forEach(sid => {
 document.getElementById(sid)?.classList.remove('active');
 });
 document.getElementById(id)?.classList.add('active');
@@ -3178,7 +3871,7 @@ if (_settingsDirty) return;
 _settingsDirty = true;
 const footer = document.getElementById('settings-save-footer');
 const activeTab = document.querySelector('.settings-tab-btn.active')?.dataset?.tab;
-const hiddenTabs = ['catalogo', 'backup'];
+const hiddenTabs = ['catalogo', 'backup', 'chat'];
 const currentTab = document.querySelector('.settings-tab-content.active')?.id?.replace('tab-', '');
 if (footer && !hiddenTabs.includes(currentTab)) footer.style.display = 'flex';
 }
@@ -3187,9 +3880,10 @@ document.querySelectorAll('.settings-tab-content').forEach(el => el.classList.re
 document.querySelectorAll('.settings-tab-btn').forEach(el => el.classList.remove('active'));
 document.getElementById('tab-' + tab).classList.add('active');
 if (btn) btn.classList.add('active');
+if (tab === 'chat') chatInit();
 const footer = document.getElementById('settings-save-footer');
 if (footer) {
-const hiddenTabs = ['catalogo', 'backup'];
+const hiddenTabs = ['catalogo', 'backup', 'chat'];
 footer.style.display = (_settingsDirty && !hiddenTabs.includes(tab)) ? 'flex' : 'none';
 }
 }
@@ -3696,11 +4390,13 @@ el.style.animation = 'catFade 2s forwards';
 setTimeout(() => { el.style.display = 'none'; }, 2100);
 }
 function switchMainTab(tab) {
-const screens = { orcamento: 'screen-input', agenda: 'screen-agenda', historico: 'screen-historico' };
-showScreen(screens[tab] || 'screen-input');
+const screens = { home: 'screen-home', orcamento: 'screen-input', agenda: 'screen-agenda', historico: 'screen-historico' };
+showScreen(screens[tab] || 'screen-home');
+document.getElementById('bnav-home').className     = 'bottom-nav-btn' + (tab === 'home'      ? ' active' : '');
 document.getElementById('bnav-orcamento').className = 'bottom-nav-btn' + (tab === 'orcamento' ? ' active' : '');
 document.getElementById('bnav-agenda').className    = 'bottom-nav-btn' + (tab === 'agenda'    ? ' active-agenda' : '');
 document.getElementById('bnav-historico').className = 'bottom-nav-btn' + (tab === 'historico' ? ' active-historico' : '');
+if (tab === 'home') renderHome();
 if (tab === 'agenda') { agListarVisitas(); agListarClientes(); }
 if (tab === 'historico') { renderHistory(); checkWarrantyAlerts(); }
 _tabSwitchCount++;
@@ -3971,11 +4667,52 @@ function miniConfirmResolve(ok) {
 document.getElementById('miniConfirm').style.display = 'none';
 if (_miniConfirmResolve) { _miniConfirmResolve(ok); _miniConfirmResolve = null; }
 }
+function renderHome() {
+  // Saudação
+  const agora = new Date();
+  const hora = agora.getHours();
+  const saudacao = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+  const nome = appState.prestadorPadrao ? appState.prestadorPadrao.split(' ')[0] : '';
+  const greet = document.getElementById('home-greet-txt');
+  if (greet) greet.innerHTML = nome ? `${saudacao}, <span>${nome}! 👷</span>` : `${saudacao}! <span>👷</span>`;
+
+  // Data
+  const sub = document.getElementById('home-sub-txt');
+  if (sub) {
+    const dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+    const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    sub.textContent = `${dias[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]}`;
+  }
+
+  // Stats do mês
+  const mesAtual = agora.getMonth();
+  const anoAtual = agora.getFullYear();
+  const hist = appState.historico || [];
+  const doMes = hist.filter(h => {
+    const p = (h.data||'').split('/');
+    return p.length === 3 && parseInt(p[1],10)-1 === mesAtual && parseInt(p[2],10) === anoAtual;
+  });
+  const fat = doMes.reduce((s,h) => s + (h.total||0), 0);
+  const elFat = document.getElementById('home-stat-fat');
+  const elOrc = document.getElementById('home-stat-orc');
+  if (elFat) elFat.textContent = fat >= 1000 ? 'R$' + (fat/1000).toFixed(1) + 'k' : 'R$' + fat.toFixed(0);
+  if (elOrc) elOrc.textContent = doMes.length;
+
+  // Visitas hoje
+  const hoje = agora.toISOString().split('T')[0];
+  const visitas = appState.visitas || [];
+  const visitasHoje = visitas.filter(v => v.data === hoje && v.status !== 'concluido');
+  const elVis = document.getElementById('home-stat-vis');
+  if (elVis) elVis.textContent = visitasHoje.length;
+}
+
 function _initAppAfterLogin() {
 loadState();
 applyUIFromState();
 checkWarrantyAlerts();
+updateNotifDot();
 requestWarrantyNotifications();
+renderHome();
 const dsEl = document.getElementById('dataServico');
 if (dsEl) dsEl.valueAsDate = new Date();
 const anoEl = document.getElementById('ag-rel-ano');
@@ -4018,6 +4755,372 @@ tag: 'warranty-alert',
 
 
 
+
+/* ===== NOTIFICAÇÕES ===== */
+function updateNotifDot() {
+  const dot  = document.getElementById('notifDot');
+  const btn  = document.getElementById('notifBtn');
+  if (!dot || !btn) return;
+  const alerts = _getNotifAlerts();
+  const hasReal = alerts.length > 0;
+  dot.classList.toggle('show', hasReal);
+  btn.classList.toggle('has-alert', hasReal);
+}
+
+function _getNotifAlerts() {
+  const alerts = [];
+  const hoje = new Date().toISOString().split('T')[0];
+  const visitas = appState.visitas || [];
+
+  // Visitas de hoje
+  visitas.filter(v => v.data === hoje && v.status !== 'concluido').forEach(v => {
+    alerts.push({ type: 'ok', icon: '📅', cor: 'rgba(34,197,94,.12)', title: 'Visita hoje', desc: `${v.cliente} às ${v.hora||'--:--'} — ${v.tipo||'Visita'}` });
+  });
+
+  // Garantias vencidas ou quase
+  (appState.historico || []).forEach(item => {
+    const w = computeWarrantyStatus(item);
+    if (!w) return;
+    if (w.daysLeft <= 0) {
+      alerts.push({ type: 'alert', icon: '🔴', cor: 'rgba(239,68,68,.12)', title: 'Garantia vencida', desc: `${item.cliente} — venceu há ${Math.abs(w.daysLeft)} dia(s)` });
+    } else if (w.daysLeft <= 15) {
+      alerts.push({ type: 'warn', icon: '🟠', cor: 'rgba(249,115,22,.12)', title: 'Garantia expira em breve', desc: `${item.cliente} — vence em ${w.daysLeft} dia(s)` });
+    }
+  });
+  return alerts;
+}
+
+function openNotifPanel() {
+  const overlay = document.getElementById('notifOverlay');
+  const body    = document.getElementById('notifBody');
+  if (!overlay || !body) return;
+  body.innerHTML = '';
+  const alerts = _getNotifAlerts();
+
+  // ── Seção: Hoje ──
+  const visitas = (appState.visitas || []).filter(v => v.data === new Date().toISOString().split('T')[0] && v.status !== 'concluido');
+  const garantiasAlert = _getNotifAlerts().filter(a => a.icon === '🔴' || a.icon === '🟠');
+
+  const lbl1 = document.createElement('div');
+  lbl1.className = 'notif-section-lbl';
+  lbl1.textContent = '📋 Atividade real';
+  body.appendChild(lbl1);
+
+  if (!alerts.length) {
+    const empty = document.createElement('div');
+    empty.className = 'notif-empty';
+    empty.textContent = '✅ Tudo em dia! Nenhum alerta no momento.';
+    body.appendChild(empty);
+  } else {
+    alerts.forEach(a => {
+      const item = document.createElement('div');
+      item.className = `notif-item ${a.type}`;
+      item.innerHTML = `
+        <div class="notif-item-icon" style="background:${a.cor}">${a.icon}</div>
+        <div class="notif-item-text">
+          <div class="notif-item-title">${a.title}</div>
+          <div class="notif-item-desc">${a.desc}</div>
+        </div>`;
+      body.appendChild(item);
+    });
+  }
+
+  // ── Seção PRO bloqueada ──
+  const lbl2 = document.createElement('div');
+  lbl2.className = 'notif-section-lbl';
+  lbl2.textContent = '🔒 Disponível no PRO';
+  body.appendChild(lbl2);
+
+  const locked = document.createElement('div');
+  locked.className = 'notif-locked';
+  locked.innerHTML = `
+    <div class="notif-locked-blur">
+      <div class="notif-item" style="opacity:.6">
+        <div class="notif-item-icon" style="background:rgba(249,115,22,.1)">📦</div>
+        <div class="notif-item-text">
+          <div class="notif-item-title">Orçamento pendente</div>
+          <div class="notif-item-desc">João Silva aguarda resposta há 2 dias</div>
+        </div>
+      </div>
+      <div class="notif-item" style="opacity:.6">
+        <div class="notif-item-icon" style="background:rgba(168,85,247,.1)">🔔</div>
+        <div class="notif-item-text">
+          <div class="notif-item-title">Lembrete automático</div>
+          <div class="notif-item-desc">Visita amanhã às 08:00 com Carlos</div>
+        </div>
+      </div>
+      <div class="notif-item" style="opacity:.6">
+        <div class="notif-item-icon" style="background:rgba(59,130,246,.1)">📊</div>
+        <div class="notif-item-text">
+          <div class="notif-item-title">Meta do mês</div>
+          <div class="notif-item-desc">Você está a 78% da sua meta mensal</div>
+        </div>
+      </div>
+    </div>
+    <div class="notif-locked-overlay">
+      <div class="notif-locked-icon">⚡</div>
+      <div class="notif-locked-title">Notificações PRO</div>
+      <div class="notif-locked-desc">Receba alertas de agendamentos, orçamentos pendentes, lembretes automáticos e muito mais.</div>
+      <a href="${PRO_LINK}" target="_blank" class="notif-pro-btn">🚀 QUERO O PRO AGORA</a>
+    </div>`;
+  body.appendChild(locked);
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNotifPanel() {
+  document.getElementById('notifOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleNotifOverlayClick(e) {
+  if (e.target === document.getElementById('notifOverlay')) closeNotifPanel();
+}
+
+function compartilharApp() {
+  const url = 'https://eletrica-free.inovareletricajs.workers.dev/';
+  const texto = '⚡ Ei! Encontrei esse app GRATUITO para eletricistas fazer orçamentos, agenda, controle de clientes e muito mais. Vale muito a pena testar! 👇\n\n' + url;
+  if (navigator.share) {
+    navigator.share({ title: 'Eletricista Power — App Gratuito', text: texto, url: url })
+      .catch(() => {});
+  } else {
+    const wa = 'https://wa.me/?text=' + encodeURIComponent(texto);
+    window.open(wa, '_blank');
+  }
+}
+
+/* ===== CHATBOT ===== */
+const CHAT_LINKS = {
+  pro:       'https://eletricistapro.com.br/',
+  produtos:  'https://collshp.com/jose_o_souza271?view=storefront',
+  youtube:   'https://www.youtube.com/playlist?list=PLqGGQaKyd2pmgTPjWsd1EQnrQ7Qz3SgA_',
+  indicar:   'compartilharApp()',
+};
+
+const CHAT_FLOW = {
+  inicio: {
+    bot: '👋 Olá! Sou o assistente do <strong>Eletricista Power</strong>. Como posso te ajudar hoje?',
+    opts: [
+      { emoji:'📹', label:'Ver o app funcionando (vídeo)', next:'video' },
+      { emoji:'🚀', label:'Quero conhecer a versão PRO', next:'pro' },
+      { emoji:'🛍️', label:'Ver produtos e ferramentas', next:'produtos' },
+      { emoji:'👥', label:'Indicar para um amigo', next:'indicar' },
+      { emoji:'❓', label:'Tenho dúvidas sobre o app', next:'duvidas' },
+      { emoji:'💰', label:'Quanto custa o PRO?', next:'preco' },
+    ]
+  },
+  video: {
+    bot: '📹 Olha só! Tem uma playlist completa no YouTube mostrando <strong>tudo funcionando</strong> — orçamento, PDF, agenda, clientes e muito mais. Cola o olho aí! 👇',
+    opts: [
+      { emoji:'▶️', label:'Assistir agora no YouTube', acao:'youtube' },
+      { emoji:'🚀', label:'Já vi! Quero o PRO', next:'pro' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  pro: {
+    bot: '⚡ <strong>Eletricista Power PRO</strong> — o app mais completo para eletricista do Brasil! Funciona 100% offline, dados na nuvem, sem bloqueio de senha e com funções avançadas completas. Imagina você chegando na obra e gerando um PDF profissional em menos de 5 minutos! Isso aí muda tudo. 🔥',
+    opts: [
+      { emoji:'👉', label:'Quero o PRO agora!', acao:'pro' },
+      { emoji:'📹', label:'Ver demonstração antes', next:'video' },
+      { emoji:'❓', label:'Ainda tenho dúvidas', next:'duvidas' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  produtos: {
+    bot: '🛍️ Temos uma seleção especial de <strong>materiais e ferramentas</strong> com preços especiais para eletricistas! Produtos selecionados para o dia a dia na obra. Vale muito a pena conferir! 👇',
+    opts: [
+      { emoji:'🛒', label:'Ver ofertas agora', acao:'produtos' },
+      { emoji:'👥', label:'Indicar para um colega', next:'indicar' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  indicar: {
+    bot: '👥 Que ótimo! Compartilha o app com seus colegas eletricistas — quanto mais profissional a categoria, melhor para todo mundo! Escolhe onde quer compartilhar: 👇',
+    opts: [
+      { emoji:'📲', label:'Compartilhar agora (WhatsApp, Telegram...)', acao:'indicar' },
+      { emoji:'🚀', label:'E eu? Quero o PRO também!', next:'pro' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  duvidas: {
+    bot: '❓ Sem problema! Escolhe o que está na sua cabeça agora:',
+    opts: [
+      { emoji:'📄', label:'O app gera PDF profissional?', next:'duvida_pdf' },
+      { emoji:'📶', label:'Funciona sem internet?', next:'duvida_offline' },
+      { emoji:'📱', label:'É difícil de usar?', next:'duvida_uso' },
+      { emoji:'💾', label:'E se eu perder os dados?', next:'duvida_dados' },
+      { emoji:'💼', label:'Sou iniciante, vale pra mim?', next:'duvida_iniciante' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  duvida_pdf: {
+    bot: '📄 Sim! O app gera um <strong>PDF completo e profissional</strong> com seu logotipo, nome, telefone, chave Pix e até o @ do Instagram clicável. O cliente toca e vai direto pro seu perfil! Chega de mandar orçamento no zero a zero pelo WhatsApp. 💪',
+    opts: [
+      { emoji:'📹', label:'Quero ver funcionando no vídeo', next:'video' },
+      { emoji:'🚀', label:'Quero o PRO!', next:'pro' },
+      { emoji:'❓', label:'Tenho outra dúvida', next:'duvidas' },
+    ]
+  },
+  duvida_offline: {
+    bot: '📶 A versão <strong>PRO funciona 100% offline</strong>! Você gera orçamentos na obra, sem sinal, sem Wi-Fi, sem depender de nada. Seus dados ficam salvos na nuvem e nunca se perdem. Isso aí é liberdade de verdade! ⚡',
+    opts: [
+      { emoji:'🚀', label:'Quero o PRO offline!', next:'pro' },
+      { emoji:'❓', label:'Tenho outra dúvida', next:'duvidas' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  duvida_uso: {
+    bot: '📱 Não! O app foi feito <strong>para o eletricista</strong>, não para o técnico de informática. Interface simples, botões grandes, funciona com luva na mão. E tem vídeos explicando cada função passo a passo. Em menos de uma hora você já está mandando PDF pro cliente! 🎯',
+    opts: [
+      { emoji:'📹', label:'Ver os vídeos agora', next:'video' },
+      { emoji:'🚀', label:'Quero testar!', next:'pro' },
+      { emoji:'❓', label:'Tenho outra dúvida', next:'duvidas' },
+    ]
+  },
+  duvida_dados: {
+    bot: '💾 Seus dados estão <strong>100% protegidos</strong>! O PRO salva tudo na nuvem automaticamente. Trocou de celular? Formatou? É só restaurar e continuar de onde parou. Nunca mais perde um cliente ou orçamento! 🔒',
+    opts: [
+      { emoji:'🚀', label:'Quero o PRO com backup na nuvem!', next:'pro' },
+      { emoji:'❓', label:'Tenho outra dúvida', next:'duvidas' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  duvida_iniciante: {
+    bot: '💼 Ainda mais motivo para começar com o <strong>pé direito</strong>! Quando o primeiro cliente receber um orçamento com logo, PDF e chave Pix — vai te indicar para mais 10. A imagem que você constrói desde o começo vale muito. Já pensou fechar seu primeiro serviço com um orçamento mais profissional do que eletricistas com anos de experiência? 🏆',
+    opts: [
+      { emoji:'🚀', label:'Quero começar profissional!', next:'pro' },
+      { emoji:'📹', label:'Ver o app funcionando', next:'video' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+  preco: {
+    bot: '💰 O valor atualizado você encontra direto no site do PRO. Mas pensa assim: <strong>um serviço a mais por mês</strong> já paga o app várias vezes. Eletricistas que usam PDF profissional fecham mais rápido e cobram mais caro — porque o cliente enxerga valor. Isso aí muda tudo! 🔥',
+    opts: [
+      { emoji:'👉', label:'Ver o preço atual do PRO', acao:'pro' },
+      { emoji:'📹', label:'Ver demonstração antes', next:'video' },
+      { emoji:'🏠', label:'Voltar ao início', next:'inicio' },
+    ]
+  },
+};
+
+let _chatStep = 'inicio';
+let _chatInited = false;
+let _chatAberto = true;
+
+function chatRender(step) {
+  _chatStep = step;
+  const flow = CHAT_FLOW[step];
+  if (!flow) return;
+  const msgs = document.getElementById('chatMessages');
+  const opts = document.getElementById('chatOptions');
+  if (!msgs || !opts) return;
+
+  const msgEl = document.createElement('div');
+  msgEl.className = 'chat-msg';
+  msgEl.innerHTML = `
+    <div class="chat-msg-avatar">⚡</div>
+    <div class="chat-bubble">${flow.bot}</div>`;
+  msgs.appendChild(msgEl);
+  setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+
+  opts.innerHTML = '';
+  flow.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'chat-opt-btn';
+    btn.innerHTML = `<span>${opt.emoji}</span> ${opt.label}`;
+    btn.onclick = () => {
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-msg user';
+      userMsg.innerHTML = `
+        <div class="chat-msg-avatar user-av">👷</div>
+        <div class="chat-bubble user">${opt.emoji} ${opt.label}</div>`;
+      msgs.appendChild(userMsg);
+      setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+
+      if (opt.acao) {
+        chatAcao(opt.acao);
+        setTimeout(() => {
+          const confirmEl = document.createElement('div');
+          confirmEl.className = 'chat-msg';
+          const confirmTexts = {
+            youtube:  '▶️ Abrindo a playlist de vídeos agora! Qualquer dúvida depois, volta aqui. 😊',
+            pro:      '🚀 Ótimo! Abrindo o site do PRO agora. Boa sorte na compra! ⚡',
+            produtos: '🛍️ Abrindo as ofertas! Aproveite os preços especiais. 😊',
+            indicar:  '👥 Compartilhamento aberto! Obrigado por indicar para um colega! 🙏',
+          };
+          confirmEl.innerHTML = `
+            <div class="chat-msg-avatar">⚡</div>
+            <div class="chat-bubble">${confirmTexts[opt.acao] || '✅ Pronto!'}</div>`;
+          msgs.appendChild(confirmEl);
+          setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+        }, 400);
+      } else if (opt.next) {
+        setTimeout(() => chatRender(opt.next), 300);
+      }
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function chatAcao(acao) {
+  if (acao === 'youtube')  window.open(CHAT_LINKS.youtube, '_blank');
+  if (acao === 'pro')      window.open(CHAT_LINKS.pro, '_blank');
+  if (acao === 'produtos') window.open(CHAT_LINKS.produtos, '_blank');
+  if (acao === 'indicar')  compartilharApp();
+}
+
+function chatInit() {
+  const card = document.querySelector('.chat-card');
+  if (!card) return;
+  card.style.display = 'block';
+  _chatAberto = true;
+  if (_chatInited) return;
+  _chatInited = true;
+  const msgs = document.getElementById('chatMessages');
+  if (msgs) msgs.innerHTML = '';
+  chatRender('inicio');
+}
+
+function chatReset() {
+  _chatInited = false;
+  _chatAberto = true;
+  const card = document.querySelector('.chat-card');
+  if (card) card.style.display = 'block';
+  const msgs = document.getElementById('chatMessages');
+  if (msgs) msgs.innerHTML = '';
+  chatInit();
+}
+
+function chatFechar() {
+  const card = document.querySelector('.chat-card');
+  if (!card) return;
+  card.style.display = 'none';
+  _chatAberto = false;
+  const opts = document.getElementById('chatOptions');
+  if (opts) {
+    opts.style.display = 'block';
+    opts.innerHTML = `<button class="chat-opt-btn" onclick="chatReabrir()" style="justify-content:center;background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3);color:var(--accent2)">
+      💬 Reabrir assistente
+    </button>`;
+    opts.style.padding = '12px';
+  }
+}
+
+function chatReabrir() {
+  const card = document.querySelector('.chat-card');
+  if (card) card.style.display = 'block';
+  _chatAberto = true;
+  const opts = document.getElementById('chatOptions');
+  if (opts) opts.style.padding = '';
+}
+
+function abrirChatAgenda() {
+  openSettings();
+  setTimeout(() => {
+    switchSettingsTab('chat', document.querySelector('[onclick*="chat"]'));
+  }, 150);
+}
 
 const PRO_LINK = 'http://eletricistapro.com.br/';
 function checkInternet() {
